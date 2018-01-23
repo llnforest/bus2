@@ -1,2 +1,4 @@
 # 忽略提交文件
-.test.tmp
+*.test.tmp
+appadmin/config.php
+appadmin/database.php
