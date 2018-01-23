@@ -6,7 +6,7 @@
     <li><a href="{:Url('order/orderAdd')}">添加订单</a></li>
     {/if}
     {if condition="checkPath('order/selectAnyBus')"}
-    <li class="active"><a href="{:Url('order/selectAnyBus',['id'=>$order.id])}">分批配载</a></li>
+    <li class="active"><a href="{:Url('order/selectAnyBus',['id'=>$order.id])}">分批派车</a></li>
     {/if}
     {if condition="checkPath('bus/bus/busAdd')"}
     <li><a href="{:Url('bus/bus/busAdd',['style'=>'order_any','order_id'=>$order.id])}">添加车辆</a></li>

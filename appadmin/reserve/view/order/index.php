@@ -29,12 +29,12 @@
                         </select>
                     </div>
                     <div class="btn-group layui-form">
-                        <select name="type" class="form-control" lay-verify="">
+                        <select name="status" class="form-control" lay-verify="">
                             <option value="">订单状态</option>
-                            <option value="0" {if input('type') === '0'}selected{/if}>待派单</option>
-                            <option value="1" {if input('type') == 1}selected{/if}>已派单</option>
-                            <option value="2" {if input('type') == 2}selected{/if}>交易成功</option>
-                            <option value="3" {if input('type') == 3}selected{/if}>交易取消</option>
+                            <option value="0" {if input('status') === '0'}selected{/if}>待派单</option>
+                            <option value="1" {if input('status') == 1}selected{/if}>已派单</option>
+                            <option value="2" {if input('status') == 2}selected{/if}>交易成功</option>
+                            <option value="3" {if input('status') == 3}selected{/if}>交易取消</option>
                         </select>
                     </div>
                     <div class="btn-group">
@@ -45,6 +45,9 @@
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">查询</button>
+                        {if checkPath('order/exportOut')}
+                        <button type="button" class="btn btn-success download">导出</button>
+                        {/if}
                     </div>
                 </div>
             </form>
@@ -60,8 +63,8 @@
                 <th width="45">人数</th>
                 <th width="70">设备要求</th>
                 <th width="45">预付</th>
-                <th width="70">订单总额</th>
-                <th width="90">行车路线</th>
+                <th width="70">总额</th>
+                <th width="115">行车路线</th>
                 <th width="100">行车日期<span order="start_date" class="order-sort"> </span></th>
                 <th width="45">备注</th>
                 <th width="80">操作</th>
@@ -70,7 +73,7 @@
             <tbody>
             {foreach $list as $v}
                 <tr>
-                    <td>{$v.id}</td>
+                    <td><span class="span-primary order-detail" data-id="{$v.id}">{$v.id}</span></td>
                     <td>{$v.name}</td>
                     <td>{if $v.status == 1}已派单{elseif $v.status == 2}<span class="blue">交易成功</span>{elseif $v.status == 3}<span class="grey">交易取消</span>{else}<span class="red">待派单</span>{/if}</td>
                     <td>{if $v.order_type == 1}普通单次{elseif $v.order_type == 2}常规班次{/if}</td>
@@ -88,25 +91,31 @@
                         {if $v.customer_type == 2 && $v.status==2 && $v.total_money-$v.true_money >0}<span class="span-primary" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top"
                                                                                                            data-content="随车带回：{$v.total_money-$v.true_money}元">带</span>{/if}
                     </td>
-                    <td><div>起始:{$v.start_address}</div><div>到达:{$v.end_address}</div></td>
-                    <td><div>开始:{$v.start_date}</div><div>结束:{$v.end_date}</div></td>
+                    <td><div><span class="blue">起:</span>{$v.start_prov}{$v.start_city}{$v.start_area}{$v.start_address}</div><div><span class="red">终:</span>{$v.end_prov}{$v.end_city}{$v.end_area}{$v.end_address}</div></td>
+                    <td><div>出发:{$v.start_date|date_create|date_format='Y-m-d H:i'}</div><div>结束:{$v.end_date|date_create|date_format='Y-m-d H:i'}</div></td>
                     <td>{if $v.remark}<span class="span-primary" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top"
                                                   data-content="{$v.remark}">明细</span>{/if}</td>
                     <td>
                         {if condition="checkPath('order/selectBus',['id'=>$v['id']]) && $v.status == 0"}
-                        <a  href="{:url('order/selectBus',['id'=>$v['id']])}">需求单派</a>
+                        <a  href="{:url('order/selectBus',['id'=>$v['id']])}">单次派车</a>
                         {/if}
                         {if condition="checkPath('order/selectAnyBus',['id'=>$v['id']]) && $v.status == 0"}
-                        <a  href="{:url('order/selectAnyBus',['id'=>$v['id']])}">分批配载</a>
+                        <a  href="{:url('order/selectAnyBus',['id'=>$v['id']])}">分批派车</a>
+                        {/if}
+                        {if condition="checkPath('order/orderSend',['id'=>$v['id']]) && $v.status == 0 && $v.record_id"}
+                        <span class="span-post" post-msg="确定已派车完成了吗" post-url="{:url('order/orderSend',['id'=>$v['id']])}">确认派车</span>
                         {/if}
                         {if condition="checkPath('record/index',['order_id'=>$v['id']])"}
                         <a  href="{:url('record/index',['style' => 1,'order_id'=>$v['id']])}">调度记录</a>
                         {/if}
                         {if condition="checkPath('order/orderFollow',['id'=>$v['id']])"}
-                        <a  href="{:url('order/orderFollow',['id'=>$v['id']])}">跟单备注</a>
+                        <a  href="{:url('order/orderFollow',['id'=>$v['id']])}">备注</a>
                         {/if}
-                        {if condition="checkPath('order/orderDelete',['id'=>$v['id']]) && $v.status == 0"}
+                        {if condition="checkPath('order/orderStatus',['id'=>$v['id']]) && $v.status == 0"}
                             <span class="span-post" post-msg="确定要关闭订单吗" post-url="{:url('order/editStatus',['id'=>$v['id']])}">关闭订单</span>
+                        {/if}
+                        {if condition="checkPath('order/orderEdit',['id'=>$v['id']]) && $v.status == 0"}
+                        <a  href="{:url('order/orderEdit',['id'=>$v['id']])}">修改</a>
                         {/if}
                     </td>
                 </tr>
@@ -117,3 +126,25 @@
     <div class="text-center">
         {$page}
     </div>
+<script>
+    $(function(){
+        $(".download").click(function(){
+            url = "{:url('order/exportOut')}?start="+getQueryString('start')+"&end="+getQueryString('end')+"&name="+getQueryString('name')+"&id="+getQueryString('id')+"&status="+getQueryString('status')+"&type="+getQueryString('type');
+            setTimeout(function() {
+                window.location.href = url;
+            },1000);
+        });
+        //查看详情
+        $('.order-detail').click(function(){
+            var id = $(this).attr("data-id");
+            openLayer = layer.open({
+                type: 2,
+                title: '订单详情',
+                shadeClose: true,
+                shade: false,
+                area: ['400px', '420px'],
+                content: "{:url('order/orderInfo','','')}/id/"+id,
+            })
+        })
+    })
+</script>

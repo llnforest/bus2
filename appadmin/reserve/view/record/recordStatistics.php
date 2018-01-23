@@ -77,6 +77,5 @@
         }).mouseout(function(){
             layer.close(openLayer)
         });
-
     })
 </script>

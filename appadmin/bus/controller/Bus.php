@@ -10,11 +10,9 @@ use admin\index\controller\Upload;
 use admin\persion\model\DepartmentModel;
 use admin\persion\model\UserModel;
 use admin\index\controller\BaseController;
-use chromephp\chromephp;
 use think\Config;
 use think\Db;
 use think\Loader;
-use think\Request;
 use think\Validate;
 
 
@@ -184,7 +182,7 @@ class Bus extends BaseController{
     //用车列表
     public function busList(){
         $orderBy  = 'a.update_time desc';
-        $where  = getWhereParam(['a.order_id','d.num','a.status','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.order_id','d.num'=>'like','a.status','a.create_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num';
         $data['list'] = BusRecordModel::alias('a')
@@ -406,6 +404,7 @@ class Bus extends BaseController{
         }
     }
 
+    //处理股东数据
     private function handleUserData(){
         self::$obj['system_id'] = $this->system_id;
         $bus = BusModel::get(['num'=>self::$obj['num']]);
@@ -415,7 +414,11 @@ class Bus extends BaseController{
         self::$obj['bus_id'] = $bus['id'];
         unset(self::$obj['num']);
         unset(self::$obj['name']);
-        if(!empty(BusUserModel::get(self::$obj))) return false;
-        self::$busArr[] = self::$obj;
+        $bus_user = BusUserModel::get(['user_id' => $user['id'],'bus_id' => $bus['id'],'status' => 1]);
+        if(!empty($bus_user)){
+            $bus_user->save(['rate' => self::$obj['rate']]);
+        }else{
+            self::$busArr[] = self::$obj;
+        }
     }
 }

@@ -127,7 +127,7 @@ class Oil extends BaseController{
     public function oilOut(){
         $orderBy  = 'a.id desc';
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $where  = getWhereParam(['a.oil_id','c.num','a.out_date'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.oil_id','c.num'=>'like','a.out_date'=>['start','end']],$this->param);
         $data['list'] = OilOutModel::alias('a')
             ->join('tp_fi_oil b','a.oil_id = b.id','left')
             ->join('tp_bus c','a.bus_id = c.id','left')

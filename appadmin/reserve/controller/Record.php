@@ -21,8 +21,8 @@ class Record extends BaseController{
 
     //调度列表
     public function index(){
-        $orderBy  = 'a.update_time desc';
-        $where  = getWhereParam(['a.order_id','d.num','a.status','a.create_time'=>['start','end']],$this->param);
+        $orderBy  = 'a.status asc,a.update_time desc';
+        $where  = getWhereParam(['a.order_id','d.num'=>'like','a.status','a.create_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num';
         $data['list'] = BusRecordModel::alias('a')
@@ -82,12 +82,13 @@ class Record extends BaseController{
         }
     }
 
-    //关闭订单
+    //取消接单
     public function editOff(){
         if($this->request->isPost()){
             $data['info'] = BusRecordModel::get($this->id);
             if(!$data['info']) return ['code' => 0,'msg' => '参数错误'];;
             if($data['info']->save(['status'=>3])){
+                OrderModel::where(['id' => $data['info']['order_id']])->update(['status' => 0]);
                 return ['code' => 1,'msg' => '车辆已取消,订单请重新派单','url' => url('record/index',$this->param)];
             }else{
                 return ['code' => 0,'msg' => '操作失败'];
@@ -114,10 +115,16 @@ class Record extends BaseController{
         $orderBy  = 'a.create_time desc';
         $where  = getWhereParam(['b.num'=>'like','a.status'=>'in','a.create_time'=>['start','end']],$this->param);
         if(empty($this->param['status'])) $where['a.status'] = ['in','0,1,2'];
-        $fields = 'count(a.id) as total_times,sum(c.total_money) as total_money,a.create_time,b.num,a.bus_id';
+        $fields = 'count(a.id) as total_times,floor(sum(c.total_money/c.num)) as total_money,a.create_time,b.num,a.bus_id';
+        $sql = BusRecordModel::alias('aa')
+            ->join('tp_bus_order bb','aa.order_id = bb.id','left')
+            ->where(['aa.status' => ['in','0,1,2']])
+            ->group('bb.id')
+            ->field('bb.id,bb.total_money,count(1) as num')
+            ->buildSql();
         $data['list'] = BusRecordModel::alias('a')
             ->join('tp_bus b','a.bus_id = b.id','left')
-            ->join('tp_bus_order c','a.order_id = c.id','left')
+            ->join([$sql=> 'c'],'a.order_id = c.id','left')
             ->field($fields)
             ->where($where)
             ->group('a.bus_id')

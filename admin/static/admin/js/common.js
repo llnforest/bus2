@@ -468,8 +468,12 @@ function renderDatePicker(){
             var laydate = layui.laydate;
             $(".date-time").each(function(){
                 var dom = '.'+$(this).attr("dom-class");
+                var format = $(dom).attr("dom-format") || 'yyyy-MM-dd';
+                var type = $(dom).attr("dom-type") || 'date';
                 laydate.render({
                     elem:dom,
+                    format:format,
+                    type:type
                 })
             })
         });

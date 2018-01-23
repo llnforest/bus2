@@ -1,6 +1,6 @@
 {__NOLAYOUT__}
 {include file="publics:topCss"}
-<div class="container-fluid"  style="padding-top:12px;padding-bottom:50px;">
+<div class="container-fluid"  style="padding-top:12px;padding-bottom:12px;">
     <div id="alert"></div>
     <table class="table table-bordered">
            <tbody class="layui-form">

@@ -1,6 +1,8 @@
 <?php
 namespace admin\index\controller;
 
+use admin\index\model\SystemAreaModel;
+use admin\index\model\SystemCityModel;
 use admin\index\model\SystemModel;
 use think\Cache;
 use think\Controller;
@@ -84,5 +86,4 @@ class Publics extends Controller
         Cache::clear();
         echo '缓存清除成功';
     }
-
 }

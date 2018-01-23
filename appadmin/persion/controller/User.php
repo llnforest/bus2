@@ -28,7 +28,7 @@ class User extends BaseController{
     //员工列表页
     public function index(){
         $orderBy  = 'a.create_time desc';
-        $where  = getWhereParam(['a.name'=>'like','a.phone','a.num','a.department_id','a.level_id','a.is_partner','a.is_driver','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.name'=>'like','a.phone','a.num'=>'like','a.department_id','a.level_id','a.is_partner','a.is_driver','a.create_time'=>['start','end']],$this->param);
         $where['status'] = 1;
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,b.name as department_name,c.name as level_name';

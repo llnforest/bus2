@@ -47,7 +47,7 @@
                         </select>
                     </div>
                     <div class="btn-group layui-form">
-                        <select name="corporation_id" class="form-control" lay-verify="">
+                        <select name="corporation_id" class="form-control">
                             <option value="">车辆归属</option>
                             {foreach $corporation as $v}
                             <option value="{$v.id}" {if input('corporation_id') == $v.id}selected{/if}>{$v.name}</option>
@@ -55,7 +55,7 @@
                         </select>
                     </div>
                     <div class="btn-group layui-form">
-                        <select name="department_id" class="form-control" lay-verify="">
+                        <select name="department_id" class="form-control">
                             <option value="">所属部门</option>
                             {foreach $department as $v}
                             <option value="{$v.id}" {if input('department_id') == $v.id}selected{/if}>{$v.name}</option>
@@ -142,7 +142,7 @@
             title: '车辆详情',
             shadeClose: true,
             shade: false,
-            area: ['400px', '500px'],
+            area: ['400px', '420px'],
             content: "{:url('bus/busInfo','','')}/id/"+id,
         })
     }).mouseout(function(){
