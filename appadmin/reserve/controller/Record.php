@@ -63,14 +63,13 @@ class Record extends BaseController{
                         ->field('a.*,b.type as customer_type')
                         ->where(['a.id'=>$data['info']['order_id']])
                         ->find();
-                    if($info['customer_type'] == 1){
-                        $result['money'] = $info['total_money'] - $info['true_money'];
-                        if($result['money'] > 0){
-                            $result['customer_id'] = $info['customer_id'];
-                            $result['order_id'] = $info['id'];
-                            $result['add_date'] = $info['start_date'];
-                            CustomerFinanceModel::create($result);
-                        }
+                    $result['money'] = $info['total_money'] - $info['true_money'];
+                    if($result['money'] > 0){
+                        $result['customer_id'] = $info['customer_id'];
+                        $result['order_id'] = $info['id'];
+                        $result['add_date'] = $info['start_date'];
+                        $result['system_id'] = $this->system_id;
+                        CustomerFinanceModel::create($result);
                     }
                     OrderModel::where(['id'=>$data['info']['order_id']])->update(['status'=>2]);
                     return ['code' => 1,'msg' => "已回车，交易完成",'url' => url('record/index',$this->param)];
