@@ -29,7 +29,7 @@ class Bus extends BaseController{
     //车辆档案列表页
     public function index(){
         $orderBy  = 'create_time desc';
-        $where  = getWhereParam(['a.num','a.type','a.status','a.brand'=>'like','a.engine_code','b.name'=>'like','a.is_bathroom','a.is_tv','a.is_air','a.is_microphone','a.corporation_id','a.department_id','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.num'=>'like','a.type','a.status','a.brand'=>'like','a.engine_code','b.name'=>'like','a.is_bathroom','a.is_tv','a.is_air','a.is_microphone','a.corporation_id','a.department_id','a.create_time'=>['start','end']],$this->param);
         if(!empty($this->param['sec_name'])) $where['c.name'] = ['like','%'.$this->param['sec_name'].'%'];
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.name as corporation_name,e.name as department_name';

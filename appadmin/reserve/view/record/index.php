@@ -62,7 +62,7 @@
             {foreach $list as $v}
                 <tr>
                     <td>{$v.order_id}</td>
-                    <td><span class="span-primary bus-detail" data-id="{$v.id}">{$v.num}</span></td>
+                    <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
                     <td>{if $v.status == 1}租用途中{elseif $v.status == 2}<span class="blue">已回车</span>{elseif $v.status == 3}<span class="grey">取消接单</span>{else}<span class="red">待接单</span>{/if}</td>
                     <td>{$v.start_date}</td>
                     <td>{$v.end_date}</td>
