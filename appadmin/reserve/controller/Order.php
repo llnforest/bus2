@@ -179,7 +179,7 @@ class Order extends BaseController{
 
         $busy_bus = BusRecordModel::alias('ee')
             ->join('tp_bus_order ff','ee.order_id = ff.id','left')
-            ->where("ee.system_id = {$this->system_id} and ee.status != 3 and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))")
+            ->where("ee.system_id = {$this->system_id} and ee.status not in (2,3) and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))")
             ->group('ee.bus_id')
             ->column('ee.bus_id');
         if(!empty($busy_bus)) $where['a.id'] = ['not in',$busy_bus];
@@ -236,7 +236,7 @@ class Order extends BaseController{
 
         $busy_bus = BusRecordModel::alias('ee')
             ->join('tp_bus_order ff','ee.order_id = ff.id','left')
-            ->where("ee.system_id = {$this->system_id} and ee.status != 3 and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))")
+            ->where("ee.system_id = {$this->system_id} and ee.status not in (2,3) and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))")
             ->group('ee.bus_id')
             ->column('ee.bus_id');
         if(!empty($busy_bus)) $where['a.id'] = ['not in',$busy_bus];
