@@ -9,6 +9,7 @@ use admin\bus\model\BusRecordModel;
 use admin\bus\model\CustomerModel;
 use admin\bus\model\OrderModel;
 use admin\bus\model\CorporationModel;
+use admin\finance\model\CustomerFinanceModel;
 use admin\persion\model\DepartmentModel;
 use admin\persion\model\UserModel;
 use admin\index\controller\BaseController;
@@ -19,7 +20,7 @@ use think\Validate;
 
 class Order extends BaseController{
 
-    private $roleValidate = ['customer_id|客户名称' => 'require','start_date|开始日期' => 'require','end_date|结束日期' => 'require','num|乘车人数' => 'require|digit','total_money|订单总额' => 'require'];
+    private $roleValidate = ['customer_id|客户名称' => 'require','xianshou|现收金额'=>'natural','duishou|队收金额'=>'natural','true_money|实收金额'=>'natural','return_money|返利金额'=>'natural','start_date|开始日期' => 'require','end_date|结束日期' => 'require'];
     //构造函数
     public function __construct()
     {
@@ -29,7 +30,7 @@ class Order extends BaseController{
     //订单列表页
     public function index(){
         $orderBy  = 'a.status asc,a.create_time desc';
-        $where  = getWhereParam(['b.name','a.type','a.status','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.id','b.name','a.type','a.status','a.create_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,b.name,b.type as customer_type,c.*,d.id as record_id';
         $data['list'] = OrderModel::alias('a')
@@ -48,13 +49,15 @@ class Order extends BaseController{
     //添加订单
     public function orderAdd(){
         if($this->request->isPost()){
+            if(in_array($this->param['order_type'],[2,3])){
+                $this->param['num'] = 0;
+                $this->param['total_money'] = 0;
+            }else{
+                $this->roleValidate['total_money|订单总额'] = 'require|digit';
+                $this->roleValidate['num|乘车人数'] = 'require|digit';
+            }
             $validate = new Validate($this->roleValidate);
             if(!$validate->check($this->param)) return ['code' => 0, 'msg' => $validate->getError()];
-            if(in_array($this->param['type'],[1,4])){
-                $this->param['true_money'] = $this->param['total_money'];
-            }elseif(in_array($this->param['type'],[6,3])){
-                $this->param['true_money'] = 0;
-            }
             $this->param['id'] =Makeid::makeOrder();
             if(empty($this->param['is_air'])) $this->param['is_air'] = 0;
             if(empty($this->param['is_tv'])) $this->param['is_tv'] = 0;
@@ -77,18 +80,31 @@ class Order extends BaseController{
             ->field($fields)
             ->where(['a.id'=>$this->id])
             ->find();
-        if($data['info']['status'] != 0) $this->error('非待派单状态订单不可改变订单状态');
+
         if($this->request->isPost()){
-            $validate = new Validate($this->roleValidate);
-            if(!$validate->check($this->param)) return ['code' => 0, 'msg' => $validate->getError()];
-            if(in_array($this->param['type'],[1,4])){
-                $this->param['true_money'] = $this->param['total_money'];
-            }elseif(in_array($this->param['type'],[6,3])){
-                $this->param['true_money'] = 0;
+            if($data['info']['status'] == 0){
+                if(!in_array($this->param['order_type'],[2,3])){
+                    $this->roleValidate['total_money|订单总额'] = 'require|digit';
+                    $this->roleValidate['num|乘车人数'] = 'require|digit';
+                }
+                $validate = new Validate($this->roleValidate);
+                if(!$validate->check($this->param)) return ['code' => 0, 'msg' => $validate->getError()];
+                if(empty($this->param['is_air'])) $this->param['is_air'] = 0;
+                if(empty($this->param['is_tv'])) $this->param['is_tv'] = 0;
+                $this->saveOrderAddress($this->param,$this->id);
             }
-            if(empty($this->param['is_air'])) $this->param['is_air'] = 0;
-            if(empty($this->param['is_tv'])) $this->param['is_tv'] = 0;
-            $this->saveOrderAddress($this->param,$this->id);
+
+            if($data['info']['status'] == 2){
+                $result['money'] = $data['info']['total_money'] - $this->param['xianshou']-$this->param['duishou'];
+                if($result['money'] > 0){
+                    $result['customer_id'] = $data['info']['customer_id'];
+                    $result['order_id'] = $this->id;
+                    $result['add_date'] = $data['info']['start_date'];
+                    $result['system_id'] = $this->system_id;
+                    CustomerFinanceModel::create($result);
+                }
+                $this->param['is_sure'] = 1;
+            }
             if($data['info']->save($this->param)){
                 return ['code' => 1,'msg' => '修改成功','url' => url('order/index')];
             }else{
@@ -143,7 +159,7 @@ class Order extends BaseController{
         return view('customerSelect',$data);
     }
 
-    //	需求单派
+    //	单次派车
     public function selectBus(){
         $data['order'] = OrderModel::get($this->id);
         if(empty($data['order']) || $data['order']['status'] != 0) $this->error('该订单不存在或已处理');
@@ -157,29 +173,25 @@ class Order extends BaseController{
         }
         $where  = getWhereParam(['a.num'=>'like','a.type','a.color','a.corporation_id','a.department_id'],$this->param);
         $where['a.status'] = 1;
-        $where['a.site_num'] = ['egt',$data['order']['num']];
+        if($data['order']['order_type'] == 1) $where['a.site_num'] = ['egt',$data['order']['num']];
         if($data['order']['is_tv'] == 1)  $where['a.is_tv'] = $data['order']['is_tv'];
         if($data['order']['is_microphone'] == 1)  $where['a.is_microphone'] = $data['order']['is_microphone'];
         if($data['order']['is_air'] == 1)  $where['a.is_air'] = $data['order']['is_air'];
         if($data['order']['is_bathroom'] == 1)  $where['a.is_bathroom'] = $data['order']['is_bathroom'];
         $orderBy  = 'a.type asc,g.total_money asc,g.num asc,a.site_num asc';
 
-        $sql = BusRecordModel::alias('aa')
-            ->join('tp_bus_order bb','aa.order_id = bb.id','left')
-            ->where(['aa.status' => ['in','0,1,2'],'aa.system_id'=>$this->system_id])
-            ->group('bb.id')
-            ->field('bb.id,floor(bb.total_money/count(1)) as total_money')
-            ->buildSql();
-
         $recordSql = BusRecordModel::alias('cc')
-            ->join([$sql=> 'dd'],'cc.order_id = dd.id','left')
-            ->field('cc.bus_id,count(1) as num,sum(dd.total_money) as total_money')
+            ->field('cc.bus_id,count(1) as num,sum(cc.money) as total_money')
             ->group('cc.bus_id')
             ->buildSql();
 
+        if($data['order']['order_type'] != 2)
+            $time_where = " and ee.status not in (2,3) and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))";
+        else
+            $time_where = '';
         $busy_bus = BusRecordModel::alias('ee')
             ->join('tp_bus_order ff','ee.order_id = ff.id','left')
-            ->where("ee.system_id = {$this->system_id} and ee.status not in (2,3) and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))")
+            ->where("ee.system_id = {$this->system_id}".$time_where)
             ->group('ee.bus_id')
             ->column('ee.bus_id');
         if(!empty($busy_bus)) $where['a.id'] = ['not in',$busy_bus];
@@ -221,22 +233,19 @@ class Order extends BaseController{
         $where['a.status'] = 1;
         $orderBy  = 'a.type asc,g.total_money asc,g.num asc,a.site_num asc';
 
-        $sql = BusRecordModel::alias('aa')
-            ->join('tp_bus_order bb','aa.order_id = bb.id','left')
-            ->where(['aa.status' => ['in','0,1,2'],'aa.system_id'=>$this->system_id])
-            ->group('bb.id')
-            ->field('bb.id,floor(bb.total_money/count(1)) as total_money')
-            ->buildSql();
-
         $recordSql = BusRecordModel::alias('cc')
-            ->join([$sql=> 'dd'],'cc.order_id = dd.id','left')
-            ->field('cc.bus_id,count(1) as num,sum(dd.total_money) as total_money')
+            ->field('cc.bus_id,count(1) as num,sum(cc.money) as total_money')
             ->group('cc.bus_id')
             ->buildSql();
 
+        if($data['order']['order_type'] != 2)
+            $time_where = " and ee.status not in (2,3) and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))";
+        else
+            $time_where = '';
+
         $busy_bus = BusRecordModel::alias('ee')
             ->join('tp_bus_order ff','ee.order_id = ff.id','left')
-            ->where("ee.system_id = {$this->system_id} and ee.status not in (2,3) and ((ff.end_date > '{$data['order']['start_date']}' and ff.end_date < '{$data['order']['end_date']}') or (ff.start_date > '{$data['order']['start_date']}' and ff.start_date < '{$data['order']['end_date']}') or (ff.end_date > '{$data['order']['end_date']}' and ff.start_date < '{$data['order']['start_date']}') or (ff.end_date = '{$data['order']['end_date']}' and ff.start_date = '{$data['order']['start_date']}'))")
+            ->where("ee.system_id = {$this->system_id}".$time_where)
             ->group('ee.bus_id')
             ->column('ee.bus_id');
         if(!empty($busy_bus)) $where['a.id'] = ['not in',$busy_bus];
@@ -383,8 +392,8 @@ class Order extends BaseController{
         foreach ($list as $key => $v) {
             $type = $status = $order_type = $dev = '';
             if($v['status'] == 1) $status = '已派单';
-            elseif($v['status'] == 1) $status = '交易成功';
-            elseif($v['status'] == 1) $status = '交易取消';
+            elseif($v['status'] == 2) $status = '交易成功';
+            elseif($v['status'] == 3) $status = '交易取消';
             else $status = '待派单';
 
             if($v['order_type'] == 1) $order_type = '普通单次';

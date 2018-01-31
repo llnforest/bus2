@@ -33,6 +33,14 @@
                             <option value="3" {if input('status') == 3}selected{/if}>取消接单</option>
                         </select>
                     </div>
+                    <div class="btn-group layui-form">
+                        <select name="order_type" class="form-control" lay-verify="">
+                            <option value="">订单类型</option>
+                            <option value="1" {if input('order_type') == 1}selected{/if}>普通</option>
+                            <option value="2" {if input('order_type') == 2}selected{/if}>交通</option>
+                            <option value="3" {if input('order_type') == 3}selected{/if}>团车</option>
+                        </select>
+                    </div>
                     <div class="btn-group">
                         <input name="start" value="{:input('start')}" placeholder="派单起始日期" dom-class="date-start" class="date-time date-start form-control laydate-icon"  type="text">
                     </div>
@@ -48,13 +56,17 @@
         <table class="table table-hover table-bordered table-list" id="menus-table">
             <thead>
             <tr>
-                <th width="80">订单编号</th>
-                <th width="80">车牌号码</th>
-                <th width="60">调度状态</th>
-                <th width="60">出发日期</th>
-                <th width="60">回车日期</th>
+                <th width="60">订单编号</th>
+                <th width="70">车牌号码</th>
+                <th width="80">调度状态</th>
+                <th width="80">出发日期</th>
+                <th width="80">回车日期</th>
                 <th width="130">派单时间<span order="create_time" class="order-sort"> </span></th>
                 <th width="130">调度时间<span order="update_time" class="order-sort"> </span></th>
+                <th width="60">趟数</th>
+                <th width="60">公里</th>
+                <th width="60">人数</th>
+                <th width="60">金额</th>
                 <th width="100">操作</th>
             </tr>
             </thead>
@@ -63,11 +75,17 @@
                 <tr>
                     <td>{$v.order_id}</td>
                     <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
-                    <td>{if $v.status == 1}租用途中{elseif $v.status == 2}<span class="blue">已回车</span>{elseif $v.status == 3}<span class="grey">取消接单</span>{else}<span class="red">待接单</span>{/if}</td>
+                    <td>{if $v.status == 1}租用途中{elseif $v.status == 2}<span class="blue">已回车</span>{elseif $v.status == 3}<span class="grey">取消接单</span>{else}<span class="red">待接单</span>{/if}
+                    ({if $v.order_type == 1}普通{elseif $v.order_type == 2}交通{else}团车{/if})
+                    </td>
                     <td>{$v.start_date}</td>
                     <td>{$v.end_date}</td>
                     <td>{$v.create_time}</td>
                     <td>{$v.update_time}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>1]) && !in_array($v.status,[2,3])}<input type="text" value="{$v.times != 0?$v.times:''}" post-url="{:url('bus/editDatas',['type'=>1])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.times != 0?$v.times:'--'}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>2]) && !in_array($v.status,[2,3]) && $v.order_type == 3}}<input type="text" value="{$v.km != 0?$v.km:''}" post-url="{:url('bus/editDatas',['type'=>2])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.km != 0?$v.km:'--'}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>3]) && !in_array($v.status,[2,3]) && $v.order_type != 2}<input type="text" value="{$v.number != 0?$v.number:''}" post-url="{:url('bus/editDatas',['type'=>3])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.number != 0?$v.number:'--'}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3])}<input type="text" value="{$v.money != 0?$v.money:''}" post-url="{:url('bus/editDatas',['type'=>4])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money != 0?$v.money:'--'}{/if}</td>
                     <td>
                         {if condition="checkPath('record/editStatus',['id'=>$v['id']]) && $v.status == 0"}
                             <span class="span-post" post-url="{:url('record/editReceive',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">接单出发</span>
@@ -93,6 +111,11 @@
     <div class="text-center">
         {$page}
     </div>
+<style>
+    .input-money{
+        width:60px !important;
+    }
+</style>
 <script>
     $(function(){
         //查看详情

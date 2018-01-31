@@ -40,6 +40,7 @@ class Validate
         'number'      => ':attribute必须是数字',
         'integer'     => ':attribute请填写整数',
         'digit'       => ':attribute请填写正整数',
+        'natural'       => ':attribute请填写0或正整数',
         'float'       => ':attribute必须是浮点数',
         'boolean'     => ':attribute必须是布尔值',
         'email'       => ':attribute格式不符',
@@ -594,6 +595,11 @@ class Validate
                 // 是否为整型
                 $result = $this->filter($value, FILTER_VALIDATE_INT);
                 $result = $result && $value > 0 ? true : false;
+                break;
+            case 'natural':
+                // 是否为整型
+                $result = $this->filter($value, FILTER_VALIDATE_INT);
+                $result = $result && $value >= 0 ? true : false;
                 break;
             case 'email':
                 // 是否为邮箱地址

@@ -12,44 +12,139 @@
             </tr>
             <tr>
                 <th>订单类型</th>
+                <td class="layui-form" id="order_type">
+                    {if isset($info.status) && $info.status != 0}
+                    <input type="radio" name="order_type" value="{$info.order_type}" title="{if $info.order_type == 1}普通班次{elseif $info.order_type==2}交通车{else}团车{/if}" checked>
+                    {else}
+                    <input type="radio" name="order_type" value="1" title="普通班次" {if !isset($info.order_type) ||$info.order_type == 1}checked{/if}>
+                    <input type="radio" name="order_type" value="2" title="交通车" {$info.order_type == 2?'checked':''}>
+                    <input type="radio" name="order_type" value="3" title="团车" {$info.order_type == 3?'checked':''}>
+                    {/if}
+                </td>
+            </tr>
+            <tr>
+                <th>包车类型</th>
                 <td class="layui-form">
-                    <input type="radio" name="order_type" value="1" title="普通单次" {if !isset($info.order_type) ||$info.order_type == 1}checked{/if}>
-                    <input type="radio" name="order_type" value="2" title="常规班次" {$info.order_type == 2?'checked':''}>
+                    <div class="layui-form select">
+                        <select name="type" class="form-control" lay-verify="">
+                            <option value="1" {if empty($info) || $info.type == 1}selected{/if}>全包</option>
+                            <option value="2" {$info.type == 2?'selected':''}>净价</option>
+                        </select>
+                    </div>
+                    <span class="form-required">*</span>
+                </td>
+            </tr>
+            <tr class="tuanche jiaotong" {if isset($info.order_type) && in_array($info.order_type,[2,3])}style="display:none"{/if}>
+                <th>合同金额</th>
+                <td>
+                    {if isset($info) && $info.status != 0}
+                    {$info.total_money}
+                    {else}
+                    <input class="form-control text" type="text" name="total_money" value="{$info.total_money??''}">
+                    <span class="form-required">*</span>
+                    {/if}
+                </td>
+            </tr>
+            <tr>
+                <th>现收金额</th>
+                <td>
+                    <input class="form-control text" type="text" name="xianshou" value="{$info.xianshou??''}">
+                </td>
+            </tr>
+            <tr>
+                <th>队收金额</th>
+                <td>
+                    <input class="form-control text" type="text" name="duishou" value="{$info.duishou??''}">
+                </td>
+            </tr>
+            <tr>
+                <th>队收方式</th>
+                <td>
+                    <div class="layui-form select">
+                        <select name="duishou_type" class="form-control">
+                            <option value="0">未选择</option>
+                            <option value="1" {$info.type == 1?'selected':''}>支付宝</option>
+                            <option value="2" {$info.type == 2?'selected':''}>微信</option>
+                            <option value="3" {$info.type == 3?'selected':''}>现金</option>
+                            <option value="4" {$info.type == 4?'selected':''}>工行卡</option>
+                            <option value="5" {$info.type == 5?'selected':''}>徽行卡</option>
+                            <option value="6" {$info.type == 6?'selected':''}>昌顺对公收</option>
+                            <option value="7" {$info.type == 7?'selected':''}>伟宏对公</option>
+                            <option value="8" {$info.type == 8?'selected':''}>招行卡</option>
+                            <option value="9" {$info.type == 9?'selected':''}>光大卡</option>
+                            <option value="10" {$info.type == 10?'selected':''}>农行卡</option>
+                            <option value="11" {$info.type == 11?'selected':''}>其他卡</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="true_money">
+                <th>实收金额</th>
+                <td>
+                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}">
+                </td>
+            </tr>
+            <tr class="fanli">
+                <th>返利金额</th>
+                <td>
+                    <input class="form-control text" type="text" name="return_money" value="{$info.return_money??''}">
                 </td>
             </tr>
             <tr>
                 <th>出发时间</th>
                 <td>
+                    {if isset($info) && $info.status != 0}
+                    {$info.start_date?date_format(date_create($info.start_date),'Y-m-d H:i'):''}
+                    {else}
                     <input name="start_date" value="{$info.start_date?date_format(date_create($info.start_date),'Y-m-d H:i'):''}"  readonly dom-format="yyyy-MM-dd HH:mm" dom-type="datetime"  dom-class="start-date" class="date-time start-date form-control laydate-icon text"  type="text">
                     <span class="form-required">*</span>
+                    {/if}
                 </td>
             </tr>
             <tr>
                 <th>结束时间</th>
                 <td>
-                    <input name="end_date" value="{$info.start_date?date_format(date_create($info.end_date),'Y-m-d H:i'):''}"  readonly dom-format="yyyy-MM-dd HH:mm" dom-type="datetime" dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text">
+                    {if isset($info) && $info.status != 0}
+                    {$info.end_date?date_format(date_create($info.end_date),'Y-m-d H:i'):''}
+                    {else}
+                    <input name="end_date" value="{$info.end_date?date_format(date_create($info.end_date),'Y-m-d H:i'):''}"  readonly dom-format="yyyy-MM-dd HH:mm" dom-type="datetime" dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text">
                     <span class="form-required">*</span>
+                    {/if}
                 </td>
             </tr>
-            <tr>
+            <tr class="jiaotong tuanche" {if isset($info.order_type) && in_array($info.order_type,[2,3])}style="display:none"{/if}>
+                {if isset($info) && $info.status != 0}
+                {$info.num}
+                {else}
                 <th>乘坐人数</th>
                 <td>
                     <input class="form-control text" type="text" name="num" value="{$info.num??''}">
                     <span class="form-required">*</span>
                 </td>
+                {/if}
             </tr>
             <tr>
                 <th>租车要求</th>
                 <td class="layui-form">
+                    {if isset($info) && $info.status != 0}
+                        {if $info.is_air == 1}<span style="margin-right:10px;">空凋</span>{/if}
+                        {if $info.is_tv == 1}<span style="margin-right:10px;">电视</span>{/if}
+                        {if $info.is_microphone == 1}<span style="margin-right:10px;">麦克风</span>{/if}
+                        {if $info.is_bathroom == 1}<span>卫生间</span>{/if}
+                    {else}
                     <input type="checkbox" name="is_air" value="1" title="空调" {if !isset($info.is_air) ||$info.is_air == 1}checked{/if}>
                     <input type="checkbox" name="is_tv" value="1" title="电视" {if !isset($info.is_tv) ||$info.is_tv == 1}checked{/if}>
                     <input type="checkbox" name="is_microphone" value="1" title="麦克风" {$info.is_microphone == 1?'checked':''}>
                     <input type="checkbox" name="is_bathroom" value="1" title="卫生间" {$info.is_bathroom == 1?'checked':''}>
+                    {/if}
                 </td>
             </tr>
             <tr>
                 <th>起始地点</th>
                 <td>
+                    {if isset($info) && $info.status != 0}
+                        {$info.start_prov}{$info.start_city}{$info.start_area}{$info.start_address}
+                    {else}
                     <div class="layui-form address-area" data-prov="start_prov" data-city="start_city" data-area="start_area" data-provid="{$info.start_provid??''}" data-cityid="{$info.start_cityid??''}" data-areaid="{$info.start_areaid??''}">
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
@@ -67,11 +162,15 @@
                         </div>
                     </div>
                     <input class="form-control text" type="text" name="start_address" value="{$info.start_address??''}" placeholder="起始详细地址">
+                    {/if}
                 </td>
             </tr>
             <tr>
                 <th>到达地点</th>
                 <td>
+                    {if isset($info) && $info.status != 0}
+                    {$info.end_prov}{$info.end_city}{$info.end_area}{$info.end_address}
+                    {else}
                     <div class="layui-form address-area" data-prov="end_prov" data-city="end_city" data-area="end_area" data-provid="{$info.end_provid??''}" data-cityid="{$info.end_cityid??''}" data-areaid="{$info.end_areaid??''}">
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
@@ -89,36 +188,7 @@
                         </div>
                     </div>
                     <input class="form-control text" type="text" name="end_address" value="{$info.end_address??''}" placeholder="到达详细地址">
-                </td>
-            </tr>
-            <tr>
-                <th>订单总额</th>
-                <td>
-                    <input class="form-control text" type="text" name="total_money" value="{$info.total_money??''}">
-                    <span class="form-required">*</span>
-                </td>
-            </tr>
-            <tr>
-                <th>结账类型</th>
-                <td class="layui-form">
-                    <input type="radio" name="type" value="1"  title="全包现收" {$info.type == 1?'checked':''}>
-                    <input type="radio" name="type" value="2"  title="全包预收" {if !isset($info.type) || $info.type == 2}checked{/if}>
-                    <input type="radio" name="type" value="3"  title="全包记账" {$info.type == 3?'checked':''}>
-                    <input type="radio" name="type" value="4"  title="净价现收" {$info.type == 4?'checked':''}>
-                    <input type="radio" name="type" value="5"  title="净价预收" {$info.type == 5?'checked':''}>
-                    <input type="radio" name="type" value="6"  title="净价记账" {$info.type == 6?'checked':''}>
-                </td>
-            </tr>
-            <tr class="true_money" style="{if isset($info.type) && in_array($info.type,[1,3,4,6])}display:none;{/if}">
-                <th>下单支付</th>
-                <td>
-                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}">
-                </td>
-            </tr>
-            <tr class="fanli" style="{if !isset($info.type) || $info.type != 1}display:none{/if}">
-                <th>返利金额</th>
-                <td>
-                    <input class="form-control text" type="text" name="return_money" value="{$info.return_money??''}">
+                    {/if}
                 </td>
             </tr>
             <tr>
@@ -129,7 +199,7 @@
             </tr>
             <tr>
                 <td colspan="2" class="text-center">
-                    <button type="button" class="btn btn-success form-post " >保存</button>
+                    <button type="button" class="btn btn-success form-post" {if $info.status == 2}post-msg="确认保存后，订单将不能再次修改"{/if}>保存</button>
                     <a class="btn btn-default active" href="JavaScript:history.go(-1)">返回</a>
                 </td>
             </tr>
@@ -150,18 +220,16 @@
                 content: "{:url('order/customerSelect','','')}/id/"+id,
             })
         });
-        $("table").on("click",".layui-form-radio",function(){
+        $("#order_type").on("click",".layui-form-radio",function(){
             var id = $(this).prev().val();
             if(id == 1){
-                $(".fanli").show();
-            }else{
-                $(".fanli").hide();
-                $("input[name='return_money']").val('');
-            }
-            if(id == 1 || id == 4 || id == 3 || id == 6){
-                $(".true_money").hide()
-            }else{
-                $(".true_money").show();
+                $(".jiaotong,.tuanche").show();
+            }else if(id == 2){
+                $(".tuanche").show();
+                $(".jiaotong").hide();
+            }else if(id == 3){
+                $(".jiaotong").show();
+                $(".tuanche").hide();
             }
         })
 

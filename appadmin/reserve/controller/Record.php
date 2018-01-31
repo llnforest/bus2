@@ -9,6 +9,7 @@ use admin\bus\model\OrderModel;
 use admin\finance\model\CustomerFinanceModel;
 use admin\index\controller\BaseController;
 use think\Request;
+use think\Validate;
 
 
 class Record extends BaseController{
@@ -22,13 +23,14 @@ class Record extends BaseController{
     //调度列表
     public function index(){
         $orderBy  = 'a.status asc,a.update_time desc';
-        $where  = getWhereParam(['a.order_id','d.num'=>'like','a.status','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.order_id','e.order_type','d.num'=>'like','a.status','a.create_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num';
+        $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num,e.order_type';
         $data['list'] = BusRecordModel::alias('a')
             ->join('tp_hr_user b','a.fir_user_id = b.id','left')
             ->join('tp_hr_user c','a.sec_user_id = c.id','left')
             ->join('tp_bus d','a.bus_id = d.id','left')
+            ->join('tp_bus_order e','a.order_id = e.id','left')
             ->field($fields)
             ->where($where)
             ->order($orderBy)
@@ -63,15 +65,13 @@ class Record extends BaseController{
                         ->field('a.*,b.type as customer_type')
                         ->where(['a.id'=>$data['info']['order_id']])
                         ->find();
-                    $result['money'] = $info['total_money'] - $info['true_money'];
-                    if($result['money'] > 0){
-                        $result['customer_id'] = $info['customer_id'];
-                        $result['order_id'] = $info['id'];
-                        $result['add_date'] = $info['start_date'];
-                        $result['system_id'] = $this->system_id;
-                        CustomerFinanceModel::create($result);
+                    $result = ['status' => 2];
+                    if(in_array($info['order_type'],[2,3])){//团车、交通车统计价格
+                        $money = BusRecordModel::field('sum(money) as total_money,sum(number) as total_number')->where(['order_id'=>$data['info']['order_id']])->find();
+                        $result['num'] = $money['total_number'];
+                        $result['total_money'] = $money['total_money'];
                     }
-                    OrderModel::where(['id'=>$data['info']['order_id']])->update(['status'=>2]);
+                    OrderModel::where(['id'=>$data['info']['order_id']])->update($result);
                     return ['code' => 1,'msg' => "已回车，交易完成",'url' => url('record/index',$this->param)];
                 }
                 return ['code' => 1,'msg' => "已回车",'url' => url('record/index',$this->param)];
@@ -114,16 +114,9 @@ class Record extends BaseController{
         $orderBy  = 'a.create_time desc';
         $where  = getWhereParam(['b.num'=>'like','a.status'=>'in','a.create_time'=>['start','end']],$this->param);
         if(empty($this->param['status'])) $where['a.status'] = ['in','0,1,2'];
-        $fields = 'count(a.id) as total_times,floor(sum(c.total_money/c.num)) as total_money,a.create_time,b.num,a.bus_id';
-        $sql = BusRecordModel::alias('aa')
-            ->join('tp_bus_order bb','aa.order_id = bb.id','left')
-            ->where(['aa.status' => ['in','0,1,2']])
-            ->group('bb.id')
-            ->field('bb.id,bb.total_money,count(1) as num')
-            ->buildSql();
+        $fields = 'count(a.id) as total_times,sum(a.money) as total_money,a.create_time,b.num,a.bus_id';
         $data['list'] = BusRecordModel::alias('a')
             ->join('tp_bus b','a.bus_id = b.id','left')
-            ->join([$sql=> 'c'],'a.order_id = c.id','left')
             ->field($fields)
             ->where($where)
             ->group('a.bus_id')
@@ -169,6 +162,43 @@ class Record extends BaseController{
             } else {
                 return ['code' => 0, 'msg' => '删除失败'];
             }
+        }
+        return ['code'=>0,'msg'=>'请求方式错误'];
+    }
+
+    //修改数据
+    public function  editDatas(){
+        if($this->request->isPost()) {
+            $data  = isset($this->param['data'])?intval($this->param['data']):'';
+            $result = BusRecordModel::get($this->id);
+            if($this->param['type'] == 1){
+                $old = $result['times'];
+                $arr = ['times' => $data];
+                $text = '趟数已更新';
+            }elseif($this->param['type'] == 2){
+                $old = $result['km'];
+                $arr = ['km' => $data];
+                $text = '公里数已更新';
+            }elseif($this->param['type'] == 3){
+                $old = $result['number'];
+                $arr = ['number' => $data];
+                $text = '人数已更新';
+            }else{
+                $old = $result['money'];
+                $arr = ['money' => $data];
+                $text = '金额已更新';
+            }
+            $roleValidate = ['data|数据' => 'require|digit'];
+            $validate = new Validate($roleValidate);
+            if(!$validate->check($this->param)) return ['code' => 0,'msg' => $validate->getError(),'text'=>$old];
+            if(empty($result)){
+                return ['code'=>0,'msg'=>'没有数据'];
+            }else if ($result) {
+                if ($result->save($arr)) {
+                    return ['code' => 1, 'msg' => $text];
+                }
+            }
+            return ['code'=>0,'msg'=>'数据无变化'];
         }
         return ['code'=>0,'msg'=>'请求方式错误'];
     }
