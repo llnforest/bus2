@@ -2,3 +2,5 @@
 *.test.tmp
 appadmin/config.php
 appadmin/database.php
+runtime
+.idea/workspace.xml
