@@ -20,7 +20,7 @@ use think\Validate;
 
 class Order extends BaseController{
 
-    private $roleValidate = ['customer_id|客户名称' => 'require','xianshou|现收金额'=>'natural','duishou|队收金额'=>'natural','true_money|实收金额'=>'natural','return_money|返利金额'=>'natural','start_date|开始日期' => 'require','end_date|结束日期' => 'require'];
+    private $roleValidate = ['customer_id|客户名称' => 'require','xianshou|现收金额'=>'natural','duishou|队收金额'=>'natural','true_money|付款金额'=>'natural','return_money|返利金额'=>'natural','taxation|税款'=>'natural','start_date|开始日期' => 'require','end_date|结束日期' => 'require'];
     //构造函数
     public function __construct()
     {

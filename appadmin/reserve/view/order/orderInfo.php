@@ -29,21 +29,21 @@
                     <td>{$info.end_date?date_format(date_create($info.end_date),'Y-m-d H:i'):''}</td>
                 </tr>
                 <tr>
+                    <td class="bg-gray">结账方式</td>
+                    <td>{if $info.type == 1}全包{elseif $info.type == 2}净价{/if}</td>
+                </tr>
+                {if ($info.order_type == 1 || $info.status == 2) && $info.order_type != 2}
+                <tr>
                     <td class="bg-gray">乘坐人数</td>
                     <td>{$info.num}</td>
                 </tr>
+                {/if}
+                {if $info.order_type == 1 || $info.order_type != 2}
                 <tr>
-                    <td class="bg-gray">结账方式</td>
-                    <td>{if $info.type == 1}全包现收{elseif $info.type == 2}全包预收{elseif $info.type == 3}全包记账{elseif $info.type == 4}净价现收{elseif $info.type == 5}净价预收{elseif $info.type == 6}净价记账{/if}</td>
+                    <td class="bg-gray">未付金额</td>
+                    <td>{$info.total_money-$info.xianshou-$info.duishou}</td>
                 </tr>
-                <tr>
-                    <td class="bg-gray">预付金额</td>
-                    <td>{$info.true_money}</td>
-                </tr>
-                <tr>
-                    <td class="bg-gray">订单金额</td>
-                    <td>{$info.total_money}</td>
-                </tr>
+                {/if}
             </tbody>
         </table>
 </div>

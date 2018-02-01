@@ -6,6 +6,8 @@ html,
 .red{ color: #ff0000; }
 .blue{color:#1abc9c}
 .grey{color:#ccc}
+.rg-margin{margin-right:5px;}
+.lf-margin{margin-left:5px;}
 a{color: #1abc9c;}
 input.layui-upload-file[type=file]{display:none;}
 a:hover, a:focus { color: #1dd2af;text-decoration: underline;}

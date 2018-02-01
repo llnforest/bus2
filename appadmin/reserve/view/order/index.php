@@ -78,20 +78,22 @@
                         {if $v.order_type == 1}
                         <p>合同:{$v.total_money}</p>
                             {if $v.status == 2}
-                            <p>实收:{$v.true_money}</p>
+                            <p>付款:{$v.true_money}</p>
                             {/if}
                         {else}
                             {if $v.status == 2}
                             <p>合同:{$v.total_money}</p>
-                            <p>实收:{$v.true_money}</p>
+                            <p>付款:{$v.true_money}</p>
                             {elseif $v.status == 3}
                             <p>合同:{$v.total_money}</p>
                             {else}
                             --
                             {/if}
                         {/if}
-                        {if $v.return_money}<span class="span-primary" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top"
-                                                  data-content="返现{$v.return_money}元">返</span>{/if}
+                        {if $v.return_money}<span class="span-primary rg-margin" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top"
+                                                  data-content="返利{$v.return_money}元">返利</span>{/if}
+                        {if $v.taxation}<span class="span-primary" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top"
+                                                  data-content="税款{$v.taxation}元">税款</span>{/if}
                     </td>
                     <td>
                         {if $v.xianshou}<p>现收:{$v.xianshou}</p>{/if}

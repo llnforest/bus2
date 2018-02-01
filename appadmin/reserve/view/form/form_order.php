@@ -78,16 +78,22 @@
                     </div>
                 </td>
             </tr>
-            <tr class="true_money">
-                <th>实收金额</th>
-                <td>
-                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}">
-                </td>
-            </tr>
             <tr class="fanli">
                 <th>返利金额</th>
                 <td>
                     <input class="form-control text" type="text" name="return_money" value="{$info.return_money??''}">
+                </td>
+            </tr>
+            <tr class="true_money">
+                <th>付款金额</th>
+                <td>
+                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}">
+                </td>
+            </tr>
+            <tr class="true_money">
+                <th>税款</th>
+                <td>
+                    <input class="form-control text" type="text" name="taxation" value="{$info.taxation??''}">
                 </td>
             </tr>
             <tr>
@@ -199,7 +205,7 @@
             </tr>
             <tr>
                 <td colspan="2" class="text-center">
-                    <button type="button" class="btn btn-success form-post" {if $info.status == 2}post-msg="确认保存后，订单将不能再次修改"{/if}>保存</button>
+                    <button type="button" class="btn btn-success form-post" {if isset($info) && $info.status == 2}post-msg="确认保存后，订单将不能再次修改"{/if}>保存</button>
                     <a class="btn btn-default active" href="JavaScript:history.go(-1)">返回</a>
                 </td>
             </tr>
