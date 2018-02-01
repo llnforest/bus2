@@ -36,6 +36,9 @@
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">查询</button>
+                        {if checkPath('customer/exportOut')}
+                        <button type="button" class="btn btn-success download">导出</button>
+                        {/if}
                     </div>
                 </div>
             </form>
@@ -81,3 +84,13 @@
     <div class="text-center">
         {$page}
     </div>
+<script>
+    $(function(){
+        $(".download").click(function(){
+            url = "{:url('customer/exportOut')}?name="+getQueryString('name')+"&phone="+getQueryString('phone')+"&status="+getQueryString('status')+"&type="+getQueryString('type');
+            setTimeout(function() {
+                window.location.href = url;
+            },1000);
+        });
+    })
+</script>

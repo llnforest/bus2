@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1b995d5-24d1-4a94-9a67-bfae7ffc56e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" afterPath="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/controller/Record.php" afterPath="$PROJECT_DIR$/appadmin/reserve/controller/Record.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/view/record/index.php" afterPath="$PROJECT_DIR$/appadmin/reserve/view/record/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/finance/controller/Customer.php" afterPath="$PROJECT_DIR$/appadmin/finance/controller/Customer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/finance/view/customer/index.php" afterPath="$PROJECT_DIR$/appadmin/finance/view/customer/index.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,6 +14,26 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/appadmin/finance/view/customer/index.php">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="350">
+                    <caret line="62" column="39" lean-forward="true" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
@@ -24,16 +43,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="681">
               <caret line="434" column="64" lean-forward="true" selection-start-line="434" selection-start-column="64" selection-end-line="434" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/static/admin/css/common.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -52,8 +61,18 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/order/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2400">
-              <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="45" selection-end-column="29" />
+            <state relative-caret-position="350">
+              <caret line="148" column="8" lean-forward="true" selection-start-line="148" selection-start-column="8" selection-end-line="153" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Customer.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/appadmin/finance/controller/Customer.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="475">
+              <caret line="129" column="38" lean-forward="true" selection-start-line="129" selection-start-column="38" selection-end-line="129" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -89,21 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orderInfo.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/order/orderInfo.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="34" column="36" lean-forward="false" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Record.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Record.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appadmin/reserve/controller/Record.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="261" column="48" lean-forward="true" selection-start-line="261" selection-start-column="48" selection-end-line="261" selection-end-column="48" />
+            <state relative-caret-position="724">
+              <caret line="289" column="5" lean-forward="true" selection-start-line="206" selection-start-column="4" selection-end-line="289" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -194,6 +203,8 @@
         <option value="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" />
         <option value="$PROJECT_DIR$/appadmin/reserve/view/record/index.php" />
         <option value="$PROJECT_DIR$/appadmin/reserve/controller/Record.php" />
+        <option value="$PROJECT_DIR$/appadmin/finance/view/customer/index.php" />
+        <option value="$PROJECT_DIR$/appadmin/finance/controller/Customer.php" />
       </list>
     </option>
   </component>
@@ -357,7 +368,81 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
+              <option name="myItemId" value="appadmin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bus" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="appadmin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bus" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="appadmin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bus" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="appadmin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -372,58 +457,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bus" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bus" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bus" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bus" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -553,12 +586,12 @@
       <workItem from="1517193702904" duration="637000" />
       <workItem from="1517280010903" duration="10355000" />
       <workItem from="1517362407626" duration="12723000" />
-      <workItem from="1517450033377" duration="8254000" />
+      <workItem from="1517450033377" duration="10257000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98935000" />
+    <option name="totallyTimeSpent" value="100938000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1911" y="-9" width="1938" height="1098" extended-state="6" />
@@ -596,13 +629,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/appadmin/bus/model/BusOrderAddressModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/appadmin/bus/view/bus/busInfo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -815,14 +841,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appadmin/finance/view/customer/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1125">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/appadmin/finance/view/oil/addOilIn.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -929,10 +947,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/record/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="86" column="39" lean-forward="false" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/order/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2400">
-          <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="45" selection-end-column="29" />
+        <state relative-caret-position="350">
+          <caret line="148" column="8" lean-forward="true" selection-start-line="148" selection-start-column="8" selection-end-line="153" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -945,18 +971,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/record/index.php">
+    <entry file="file://$PROJECT_DIR$/appadmin/reserve/controller/Record.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="86" column="39" lean-forward="false" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="39" />
+        <state relative-caret-position="724">
+          <caret line="289" column="5" lean-forward="true" selection-start-line="206" selection-start-column="4" selection-end-line="289" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appadmin/reserve/controller/Record.php">
+    <entry file="file://$PROJECT_DIR$/appadmin/finance/view/customer/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="261" column="48" lean-forward="true" selection-start-line="261" selection-start-column="48" selection-end-line="261" selection-end-column="48" />
+        <state relative-caret-position="350">
+          <caret line="62" column="39" lean-forward="true" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appadmin/finance/controller/Customer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="129" column="38" lean-forward="true" selection-start-line="129" selection-start-column="38" selection-end-line="129" selection-end-column="38" />
           <folding />
         </state>
       </provider>
