@@ -8,6 +8,7 @@ use admin\bus\model\BusRecordModel;
 use admin\bus\model\OrderModel;
 use admin\finance\model\CustomerFinanceModel;
 use admin\index\controller\BaseController;
+use think\Loader;
 use think\Request;
 use think\Validate;
 
@@ -201,5 +202,90 @@ class Record extends BaseController{
             return ['code'=>0,'msg'=>'数据无变化'];
         }
         return ['code'=>0,'msg'=>'请求方式错误'];
+    }
+
+    //导出调度
+    public function exportOut(){
+        $where  = getWhereParam(['a.order_id','e.order_type','d.num'=>'like','a.status','a.create_time'=>['start','end']],$this->param);
+        $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num,e.order_type';
+        $list = BusRecordModel::alias('a')
+            ->join('tp_hr_user b','a.fir_user_id = b.id','left')
+            ->join('tp_hr_user c','a.sec_user_id = c.id','left')
+            ->join('tp_bus d','a.bus_id = d.id','left')
+            ->join('tp_bus_order e','a.order_id = e.id','left')
+            ->field($fields)
+            ->where($where)
+            ->select();
+        Loader::import('PHPExcel.Classes.PHPExcel');
+        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');
+        Loader::import('PHPExcel.Classes.PHPExcel.Reader.Excel2007');
+        Loader::import('PHPExcel.Classes.PHPExcel.Writer.Excel2007');
+        $objPHPExcel = new \PHPExcel();
+        $name = '调度数据';
+        $objPHPExcel->getProperties()->setCreator("汽车管理系统")
+            ->setLastModifiedBy("汽车管理系统")
+            ->setTitle($name."EXCEL导出")
+            ->setSubject($name."EXCEL导出")
+            ->setDescription("订单数据")
+            ->setKeywords("excel")
+            ->setCategory("result file");
+        $objPHPExcel->setActiveSheetIndex(0)
+            //Excel的第A列，uid是你查出数组的键值，下面以此类推
+            ->setCellValue('A1', '订单编号')
+            ->setCellValue('B1', '车牌号码')
+            ->setCellValue('C1', '调度状态')
+            ->setCellValue('D1', '订单类型')
+            ->setCellValue('E1', '主驾驶员')
+            ->setCellValue('F1', '副驾驶员')
+            ->setCellValue('G1', '出发日期')
+            ->setCellValue('H1', '回车日期')
+            ->setCellValue('I1', '派车时间')
+            ->setCellValue('J1', '调度时间')
+            ->setCellValue('K1', '趟数')
+            ->setCellValue('L1', '公里')
+            ->setCellValue('M1', '人数')
+            ->setCellValue('N1', '金额')
+        ;
+        foreach ($list as $key => $v) {
+            $number = $km = $status = $order_type = '';
+            if($v['status'] == 0) $status = '待接单';
+            elseif($v['status'] == 1) $status = '租用途中';
+            elseif($v['status'] == 2) $status = '已回车';
+            elseif($v['status'] == 3) $status = '取消接单';
+
+            if($v['order_type'] == 1) $order_type = '普通班次';
+            elseif($v['order_type'] == 2) $order_type = '交通车';
+            elseif($v['order_type'] == 3) $order_type = '团车';
+
+            if($v['order_type'] != 2) $number = $v['number'];
+            if($v['order_type'] == 3) $km = $v['km'];
+            $objPHPExcel->setActiveSheetIndex(0)
+                //Excel的第A列，uid是你查出数组的键值，下面以此类推
+                ->setCellValueExplicit('A'.($key+2), $v['order_id'],\PHPExcel_Cell_DataType::TYPE_STRING)
+                ->setCellValue('B'.($key+2), $v['num'])
+                ->setCellValue('C'.($key+2), $status)
+                ->setCellValue('D'.($key+2), $order_type)
+                ->setCellValue('E'.($key+2), $v['fir_name'])
+                ->setCellValue('F'.($key+2), $v['sec_name'])
+                ->setCellValue('G'.($key+2), $v['start_date'])
+                ->setCellValue('H'.($key+2), $v['end_date'])
+                ->setCellValue('I'.($key+2), $v['create_time'])
+                ->setCellValue('J'.($key+2), $v['update_time'])
+                ->setCellValue('K'.($key+2), $v['times'])
+                ->setCellValue('L'.($key+2), $km)
+                ->setCellValue('M'.($key+2), $number)
+                ->setCellValue('N'.($key+2), $v['money'])
+            ;
+        }
+        $name = $name.time();
+
+        $objPHPExcel->getActiveSheet()->setTitle('User');
+        $objPHPExcel->setActiveSheetIndex(0);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$name.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit;
     }
 }

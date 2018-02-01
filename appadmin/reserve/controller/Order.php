@@ -382,13 +382,20 @@ class Order extends BaseController{
             ->setCellValue('B1', '客户名称')
             ->setCellValue('C1', '订单状态')
             ->setCellValue('D1', '订单类型')
-            ->setCellValue('E1', '结账类型')
-            ->setCellValue('F1', '乘用人数')
-            ->setCellValue('G1', '设备要求')
-            ->setCellValue('H1', '预付金额')
-            ->setCellValue('I1', '订单总额')
-            ->setCellValue('J1', '行车路线')
-            ->setCellValue('K1', '行车时间');
+            ->setCellValue('E1', '付款类型')
+            ->setCellValue('F1', '合同总额')
+            ->setCellValue('G1', '现收金额')
+            ->setCellValue('H1', '队收金额')
+            ->setCellValue('I1', '未收金额')
+            ->setCellValue('J1', '付款金额')
+            ->setCellValue('K1', '税款')
+            ->setCellValue('L1', '返利')
+            ->setCellValue('M1', '行车路线')
+            ->setCellValue('N1', '行车时间')
+            ->setCellValue('O1', '乘用人数')
+            ->setCellValue('P1', '设备要求')
+            ->setCellValue('Q1', '备注')
+        ;
         foreach ($list as $key => $v) {
             $type = $status = $order_type = $dev = '';
             if($v['status'] == 1) $status = '已派单';
@@ -396,20 +403,21 @@ class Order extends BaseController{
             elseif($v['status'] == 3) $status = '交易取消';
             else $status = '待派单';
 
-            if($v['order_type'] == 1) $order_type = '普通单次';
-            elseif($v['order_type'] == 2) $order_type = '常规班次';
+            if($v['order_type'] == 1) $order_type = '普通班次';
+            elseif($v['order_type'] == 2) $order_type = '交通车';
+            elseif($v['order_type'] == 3) $order_type = '团车';
 
-            if($v['type'] == 1) $type = '全包现收';
-            elseif($v['type'] == 2) $type = '全包预收';
-            elseif($v['type'] == 3) $type = '全包记账';
-            elseif($v['type'] == 4) $type = '净价现收';
-            elseif($v['type'] == 5) $type = '净价预收';
-            elseif($v['type'] == 6) $type = '净价记账';
+            if($v['type'] == 1) $type = '全包';
+            elseif($v['type'] == 2) $type = '净价';
 
             if($v['is_air']) $dev .= '空凋,';
             if($v['is_tv']) $dev .= '电视,';
             if($v['is_microphone']) $dev .= '麦克风,';
             if($v['is_bathroom']) $dev .= '卫生间';
+            $total_money = $weishou = $num = '';
+            if($v['order_type'] == 1 || $v['status'] == 2) $total_money = $v['total_money'];
+            if($v['order_type'] == 1 || $v['status'] == 2) $weishou = $v['total_money'] - $v['duishou'] - $v['xianshou'];
+            if(($v['order_type'] == 1 || $v['status'] == 2) && $v['order_type'] != 2) $num = $v['num'];
             $objPHPExcel->setActiveSheetIndex(0)
                 //Excel的第A列，uid是你查出数组的键值，下面以此类推
                 ->setCellValueExplicit('A'.($key+2), $v['id'],\PHPExcel_Cell_DataType::TYPE_STRING)
@@ -417,12 +425,18 @@ class Order extends BaseController{
                 ->setCellValue('C'.($key+2), $status)
                 ->setCellValue('D'.($key+2), $order_type)
                 ->setCellValue('E'.($key+2), $type)
-                ->setCellValue('F'.($key+2), $v['num'])
-                ->setCellValue('G'.($key+2), $dev)
-                ->setCellValue('H'.($key+2), $v['true_money'])
-                ->setCellValue('I'.($key+2), $v['total_money'])
-                ->setCellValue('J'.($key+2), '起：'.$v['start_prov'].$v['start_city'].$v['start_area'].$v['start_address'].'。 终：'.$v['end_prov'].$v['end_city'].$v['end_area'].$v['end_address'])
-                ->setCellValue('K'.($key+2), '出发:'.date_format(date_create($v['start_date']),'Y-m-d H:i').' 结束:'.date_format(date_create($v['end_date']),'Y-m-d H:i'))
+                ->setCellValue('F'.($key+2), $total_money)
+                ->setCellValue('G'.($key+2), $v['xianshou'])
+                ->setCellValue('H'.($key+2), $v['duishou'])
+                ->setCellValue('I'.($key+2), $weishou)
+                ->setCellValue('J'.($key+2), $v['true_money'])
+                ->setCellValue('K'.($key+2), $v['taxation'])
+                ->setCellValue('L'.($key+2), $v['return_money'])
+                ->setCellValue('M'.($key+2), '起：'.$v['start_prov'].$v['start_city'].$v['start_area'].$v['start_address'].'。 终：'.$v['end_prov'].$v['end_city'].$v['end_area'].$v['end_address'])
+                ->setCellValue('N'.($key+2), '出发:'.date_format(date_create($v['start_date']),'Y-m-d H:i').' 结束:'.date_format(date_create($v['end_date']),'Y-m-d H:i'))
+                ->setCellValue('O'.($key+2), $num)
+                ->setCellValue('P'.($key+2), $dev)
+                ->setCellValue('Q'.($key+2), $v['remark'])
             ;
         }
         $name = $name.time();

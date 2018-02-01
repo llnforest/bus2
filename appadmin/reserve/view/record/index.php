@@ -49,6 +49,9 @@
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">查询</button>
+                        {if checkPath('record/exportOut')}
+                        <button type="button" class="btn btn-success download">导出</button>
+                        {/if}
                     </div>
                 </div>
             </form>
@@ -118,6 +121,13 @@
 </style>
 <script>
     $(function(){
+        $(".download").click(function(){
+            url = "{:url('record/exportOut')}?start="+getQueryString('start')+"&end="+getQueryString('end')+"&order_id="+getQueryString('order_id')+"&num="+getQueryString('num')+"&status="+getQueryString('status')+"&order_type="+getQueryString('order_type');
+            setTimeout(function() {
+                window.location.href = url;
+            },1000);
+        });
+
         //查看详情
         $('.bus-detail').mouseover(function(){
             var id = $(this).attr("data-id");
