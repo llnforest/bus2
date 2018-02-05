@@ -4,6 +4,7 @@
 import ConfigParser
 import time
 import os
+import MySQLdb
 
 class DbBackup:
 
