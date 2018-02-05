@@ -5,6 +5,7 @@ namespace admin\reserve\controller;
 use admin\bus\model\BusModel;
 use admin\bus\model\BusRecordFollowModel;
 use admin\bus\model\BusRecordModel;
+use admin\bus\model\CorporationModel;
 use admin\bus\model\OrderModel;
 use admin\finance\model\CustomerFinanceModel;
 use admin\index\controller\BaseController;
@@ -113,17 +114,19 @@ class Record extends BaseController{
     //调度统计
     public function recordStatistics(){
         $orderBy  = 'a.create_time desc';
-        $where  = getWhereParam(['b.num'=>'like','a.status'=>'in','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['b.corporation_id','b.num'=>'like','a.status'=>'in','a.create_time'=>['start','end']],$this->param);
         if(empty($this->param['status'])) $where['a.status'] = ['in','0,1,2'];
-        $fields = 'count(a.id) as total_times,sum(a.money) as total_money,a.create_time,b.num,a.bus_id';
+        $fields = 'count(a.id) as total_times,sum(a.money) as total_money,a.create_time,b.num,a.bus_id,c.name';
         $data['list'] = BusRecordModel::alias('a')
             ->join('tp_bus b','a.bus_id = b.id','left')
+            ->join('tp_bus_corporation c','b.corporation_id = c.id','left')
             ->field($fields)
             ->where($where)
             ->group('a.bus_id')
             ->order($orderBy)
             ->paginate($this->config_page,'',['query'=>$this->param]);
         $data['page']   = $data['list']->render();
+        $data['corporation'] = CorporationModel::where(['system_id' => $this->system_id,'status'=>1])->order('sort asc')->select();
         return view('recordStatistics',$data);
     }
 
@@ -253,9 +256,10 @@ class Record extends BaseController{
             elseif($v['status'] == 2) $status = '已回车';
             elseif($v['status'] == 3) $status = '取消接单';
 
-            if($v['order_type'] == 1) $order_type = '普通班次';
+            if($v['order_type'] == 1) $order_type = '旅行社用车';
             elseif($v['order_type'] == 2) $order_type = '交通车';
             elseif($v['order_type'] == 3) $order_type = '团车';
+            elseif($v['order_type'] == 3) $order_type = '社会用车';
 
             if($v['order_type'] != 2) $number = $v['number'];
             if($v['order_type'] == 3) $km = $v['km'];
@@ -275,6 +279,59 @@ class Record extends BaseController{
                 ->setCellValue('L'.($key+2), $km)
                 ->setCellValue('M'.($key+2), $number)
                 ->setCellValue('N'.($key+2), $v['money'])
+            ;
+        }
+        $name = $name.time();
+
+        $objPHPExcel->getActiveSheet()->setTitle('User');
+        $objPHPExcel->setActiveSheetIndex(0);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$name.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit;
+    }
+
+    //导出调度统计
+    public function exportOutStatistics(){
+        $where  = getWhereParam(['b.corporation_id','b.num'=>'like','a.status'=>'in','a.create_time'=>['start','end']],$this->param);
+        if(empty($this->param['status'])) $where['a.status'] = ['in','0,1,2'];
+        $fields = 'count(a.id) as total_times,sum(a.money) as total_money,a.create_time,b.num,a.bus_id,c.name';
+        $list = BusRecordModel::alias('a')
+            ->join('tp_bus b','a.bus_id = b.id','left')
+            ->join('tp_bus_corporation c','b.corporation_id = c.id','left')
+            ->field($fields)
+            ->where($where)
+            ->group('a.bus_id')
+            ->select();
+        Loader::import('PHPExcel.Classes.PHPExcel');
+        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');
+        Loader::import('PHPExcel.Classes.PHPExcel.Reader.Excel2007');
+        Loader::import('PHPExcel.Classes.PHPExcel.Writer.Excel2007');
+        $objPHPExcel = new \PHPExcel();
+        $name = '调度统计数据';
+        $objPHPExcel->getProperties()->setCreator("汽车管理系统")
+            ->setLastModifiedBy("汽车管理系统")
+            ->setTitle($name."EXCEL导出")
+            ->setSubject($name."EXCEL导出")
+            ->setDescription("订单数据")
+            ->setKeywords("excel")
+            ->setCategory("result file");
+        $objPHPExcel->setActiveSheetIndex(0)
+            //Excel的第A列，uid是你查出数组的键值，下面以此类推
+            ->setCellValue('A1', '车牌号码')
+            ->setCellValue('B1', '车辆归属')
+            ->setCellValue('C1', '调度次数')
+            ->setCellValue('D1', '调度总金额')
+        ;
+        foreach ($list as $key => $v) {
+            $objPHPExcel->setActiveSheetIndex(0)
+                //Excel的第A列，uid是你查出数组的键值，下面以此类推
+                ->setCellValue('A'.($key+2), $v['num'])
+                ->setCellValue('B'.($key+2), $v['name'])
+                ->setCellValue('C'.($key+2), $v['total_times'])
+                ->setCellValue('D'.($key+2), $v['total_money'])
             ;
         }
         $name = $name.time();

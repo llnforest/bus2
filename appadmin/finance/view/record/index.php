@@ -16,9 +16,10 @@
                     <div class="btn-group layui-form">
                         <select name="order_type" class="form-control" lay-verify="">
                             <option value="">订单类型</option>
-                            <option value="1" {if input('order_type') == 1}selected{/if}>普通</option>
-                            <option value="2" {if input('order_type') == 2}selected{/if}>交通</option>
+                            <option value="1" {if input('order_type') == 1}selected{/if}>旅行社用车</option>
+                            <option value="2" {if input('order_type') == 2}selected{/if}>交通车</option>
                             <option value="3" {if input('order_type') == 3}selected{/if}>团车</option>
+                            <option value="3" {if input('order_type') == 4}selected{/if}>社会用车</option>
                         </select>
                     </div>
                     <div class="btn-group layui-form">

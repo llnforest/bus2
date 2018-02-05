@@ -23,7 +23,7 @@ class Record extends BaseController{
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name';
         $where['a.status'] = 2;
-        $data['corporation'] = CorporationModel::where(['system_id' => $this->system_id])->order('sort asc')->select();
+        $data['corporation'] = CorporationModel::where(['system_id' => $this->system_id,'status'=>1])->order('sort asc')->select();
         $data['list'] = BusRecordModel::alias('a')
             ->join('tp_hr_user b','a.fir_user_id = b.id','left')
             ->join('tp_hr_user c','a.sec_user_id = c.id','left')
@@ -86,9 +86,10 @@ class Record extends BaseController{
         foreach ($list as $key => $v) {
             $order_type = '';
 
-            if($v['order_type'] == 1) $order_type = '普通班次';
+            if($v['order_type'] == 1) $order_type = '旅行社用车';
             elseif($v['order_type'] == 2) $order_type = '交通车';
             elseif($v['order_type'] == 3) $order_type = '团车';
+            elseif($v['order_type'] == 4) $order_type = '社会用车';
 
             $objPHPExcel->setActiveSheetIndex(0)
                 //Excel的第A列，uid是你查出数组的键值，下面以此类推

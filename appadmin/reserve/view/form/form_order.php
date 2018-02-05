@@ -16,7 +16,8 @@
                     {if isset($info.status) && $info.status != 0}
                     <input type="radio" name="order_type" value="{$info.order_type}" title="{if $info.order_type == 1}普通班次{elseif $info.order_type==2}交通车{else}团车{/if}" checked>
                     {else}
-                    <input type="radio" name="order_type" value="1" title="普通班次" {if !isset($info.order_type) ||$info.order_type == 1}checked{/if}>
+                    <input type="radio" name="order_type" value="1" title="旅行社用车" {if !isset($info.order_type) ||$info.order_type == 1}checked{/if}>
+                    <input type="radio" name="order_type" value="4" title="社会用车" {$info.order_type == 4?'checked':''}>
                     <input type="radio" name="order_type" value="2" title="交通车" {$info.order_type == 2?'checked':''}>
                     <input type="radio" name="order_type" value="3" title="团车" {$info.order_type == 3?'checked':''}>
                     {/if}

@@ -57,7 +57,7 @@
                         <a href="<?php echo Url('admin/edit',['id' => $v['id']])?>">编辑</a>
                     {/if}
                     {if condition="checkPath('admin/delete',['id' => $v['id']])"}
-                        <a class="a-post" post-msg="你确定要删除吗" post-url="<?php echo Url('admin/delete',['id' => $v['id']])?>">删除</a>
+                        <span class="span-post" post-msg="你确定要删除吗" post-url="<?php echo Url('admin/delete',['id' => $v['id']])?>">删除</span>
                     {/if}
                     {/if}
                 </td>

@@ -173,7 +173,7 @@ class Order extends BaseController{
         }
         $where  = getWhereParam(['a.num'=>'like','a.type','a.color','a.corporation_id','a.department_id'],$this->param);
         $where['a.status'] = 1;
-        if($data['order']['order_type'] == 1) $where['a.site_num'] = ['egt',$data['order']['num']];
+        if(in_array($data['order']['order_type'],[1,4])) $where['a.site_num'] = ['egt',$data['order']['num']];
         if($data['order']['is_tv'] == 1)  $where['a.is_tv'] = $data['order']['is_tv'];
         if($data['order']['is_microphone'] == 1)  $where['a.is_microphone'] = $data['order']['is_microphone'];
         if($data['order']['is_air'] == 1)  $where['a.is_air'] = $data['order']['is_air'];
@@ -403,9 +403,10 @@ class Order extends BaseController{
             elseif($v['status'] == 3) $status = '交易取消';
             else $status = '待派单';
 
-            if($v['order_type'] == 1) $order_type = '普通班次';
+            if($v['order_type'] == 1) $order_type = '旅行社用车';
             elseif($v['order_type'] == 2) $order_type = '交通车';
             elseif($v['order_type'] == 3) $order_type = '团车';
+            elseif($v['order_type'] == 4) $order_type = '社会用车';
 
             if($v['type'] == 1) $type = '全包';
             elseif($v['type'] == 2) $type = '净价';

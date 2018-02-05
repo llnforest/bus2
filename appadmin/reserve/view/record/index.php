@@ -36,9 +36,10 @@
                     <div class="btn-group layui-form">
                         <select name="order_type" class="form-control" lay-verify="">
                             <option value="">订单类型</option>
-                            <option value="1" {if input('order_type') == 1}selected{/if}>普通</option>
+                            <option value="1" {if input('order_type') == 1}selected{/if}>旅行社</option>
                             <option value="2" {if input('order_type') == 2}selected{/if}>交通</option>
                             <option value="3" {if input('order_type') == 3}selected{/if}>团车</option>
+                            <option value="3" {if input('order_type') == 4}selected{/if}>社会</option>
                         </select>
                     </div>
                     <div class="btn-group">
@@ -79,7 +80,7 @@
                     <td>{$v.order_id}</td>
                     <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
                     <td>{if $v.status == 1}租用途中{elseif $v.status == 2}<span class="blue">已回车</span>{elseif $v.status == 3}<span class="grey">取消接单</span>{else}<span class="red">待接单</span>{/if}
-                    ({if $v.order_type == 1}普通{elseif $v.order_type == 2}交通{else}团车{/if})
+                    ({if $v.order_type == 1}旅行社{elseif $v.order_type == 2}交通{elseif $v.order_type == 4}社会{else}团车{/if})
                     </td>
                     <td>{$v.start_date}</td>
                     <td>{$v.end_date}</td>

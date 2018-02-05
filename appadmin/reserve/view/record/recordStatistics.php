@@ -27,6 +27,14 @@
                             <option value="2" {if input('status') == 2}selected{/if}>成功调度</option>
                         </select>
                     </div>
+                    <div class="btn-group layui-form">
+                        <select name="corporation_id" class="form-control">
+                            <option value="">选择归属</option>
+                            {foreach $corporation as $v}
+                            <option value="{$v.id}" {if input('corporation_id') == $v.id}selected{/if}>{$v.name}</option>
+                            {/foreach}
+                        </select>
+                    </div>
                     <div class="btn-group">
                         <input name="start" value="{:input('start')}" placeholder="派单起始日期" dom-class="date-start" class="date-time date-start form-control laydate-icon"  type="text">
                     </div>
@@ -35,6 +43,9 @@
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">查询</button>
+                        {if checkPath('record/exportOutStatistics')}
+                        <button type="button" class="btn btn-success download">导出</button>
+                        {/if}
                     </div>
                 </div>
             </form>
@@ -43,6 +54,7 @@
             <thead>
             <tr>
                 <th width="80">车牌号码</th>
+                <th width="80">车辆归属</th>
                 <th width="80">调度次数</th>
                 <th width="80">调度总金额</th>
             </tr>
@@ -51,6 +63,7 @@
             {foreach $list as $v}
                 <tr>
                     <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
+                    <td>{$v.name}</td>
                     <td>{$v.total_times}</td>
                     <td>{$v.total_money}</td>
                 </tr>
@@ -63,6 +76,14 @@
     </div>
 <script>
     $(function(){
+
+        $(".download").click(function(){
+            url = "{:url('record/exportOutStatistics')}?start="+getQueryString('start')+"&end="+getQueryString('end')+"&num="+getQueryString('num')+"&status="+getQueryString('status')+"&corporation_id="+getQueryString('corporation_id');
+            setTimeout(function() {
+                window.location.href = url;
+            },1000);
+        });
+
         //查看详情
         $('.bus-detail').mouseover(function(){
             var id = $(this).attr("data-id");

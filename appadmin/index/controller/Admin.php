@@ -160,12 +160,12 @@ class Admin extends BaseController
     public function delete($id)
     {
         if(!$this->request->isAjax()){
-            return abort(404, lang('404 denied access'));
+            return abort(404, lang('删除方式错误'));
         }else if($id==1){
             return $this->error('超级管理员不能删除');
         }
 
-        if($this->adminModel->where(['id'=>$id])->delete()){
+        if(AdminModel::where(['id'=>$id])->delete()){
 
             //删除角色权限
             $authRoleUser = new AuthRoleUser();
