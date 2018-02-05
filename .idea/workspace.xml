@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1b995d5-24d1-4a94-9a67-bfae7ffc56e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/backup/bus.conf" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/backup/shijia.conf" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/backup/backup.py" afterPath="$PROJECT_DIR$/tools/backup/backup.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -103,8 +100,8 @@
       <file leaf-file-name="backup.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tools/backup/backup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="20" column="8" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+            <state relative-caret-position="600">
+              <caret line="23" column="25" lean-forward="true" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -209,6 +206,7 @@
         <option value="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" />
         <option value="$PROJECT_DIR$/appadmin/config.php" />
         <option value="$PROJECT_DIR$/tools/backup/shijia.conf" />
+        <option value="$PROJECT_DIR$/tools/backup/backup.py" />
       </list>
     </option>
   </component>
@@ -694,12 +692,12 @@
       <workItem from="1517362407626" duration="12723000" />
       <workItem from="1517450033377" duration="18785000" />
       <workItem from="1517551481176" duration="206000" />
-      <workItem from="1517792808794" duration="22368000" />
+      <workItem from="1517792808794" duration="22819000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132040000" />
+    <option name="totallyTimeSpent" value="132491000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1938" height="1098" extended-state="0" />
@@ -1141,8 +1139,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/backup/backup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="20" column="8" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+        <state relative-caret-position="600">
+          <caret line="23" column="25" lean-forward="true" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
           <folding />
         </state>
       </provider>
