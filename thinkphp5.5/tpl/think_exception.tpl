@@ -410,10 +410,9 @@
     <?php } ?>
 
     <div class="copyright">
-        <a title="实价科技" href="http://www.shijiashou.cn">实价科技</a>    
-        <span>V1.2</span> 
-        <span>{实价收-正品手机高价回收平台}</span>
-        <a title="联系客服" href="http://m.shijiashou.com/index/sys/service.html">联系客服</a>
+        <a title="大恒科技" href="http://www.shijiashou.cn">大恒科技</a>
+        <span>V1.0</span>
+        <span>{大恒科技-车辆管理系统}</span>
     </div>
     <?php if(\think\App::$debug) { ?>
     <script>
