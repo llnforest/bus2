@@ -20,6 +20,6 @@ class DbBackup:
         os.system("mysqldump -h{} -u{} -p{} {} --default-character-set={} > {}".format(self._cf.get("db","db_host"),self._cf.get("db","db_user"),self._cf.get("db","db_pass"),self._cf.get("db","db_database"),self._cf.get("db","db_charset"),self._dump_file))
 
 if __name__ == "__main__":
-    db_backup = new DbBackup()
+    db_backup = DbBackup()
     db_backup.do_backup()
         
