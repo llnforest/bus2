@@ -62,10 +62,10 @@
         </div>
         <div class="form-actions">
 
-            <button type="button" class="btn btn-primary ajax-post " autocomplete="off">
+            <button type="button" class="btn btn-success form-post " autocomplete="off">
                 保存
             </button>
-            <a class="btn" href="JavaScript:history.go(-1)">返回</a>
+            <a class="btn btn-default active" href="JavaScript:history.go(-1)">返回</a>
         </div>
     </form>
 </div>

@@ -113,13 +113,13 @@
                     <td>{if $v.remark}<span class="span-primary" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top"
                                                   data-content="{$v.remark}">明细</span>{/if}</td>
                     <td>
-                        {if condition="checkPath('order/selectBus',['id'=>$v['id']]) && $v.status == 0"}
+                        {if condition="checkPath('order/selectBus',['id'=>$v['id']]) && $v.status == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                         <a  href="{:url('order/selectBus',['id'=>$v['id']])}">单次派车</a>
                         {/if}
-                        {if condition="checkPath('order/selectAnyBus',['id'=>$v['id']]) && $v.status == 0"}
+                        {if condition="checkPath('order/selectAnyBus',['id'=>$v['id']]) && $v.status == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                         <a  href="{:url('order/selectAnyBus',['id'=>$v['id']])}">分批派车</a>
                         {/if}
-                        {if condition="checkPath('order/orderSend',['id'=>$v['id']]) && $v.status == 0 && $v.record_id"}
+                        {if condition="checkPath('order/orderSend',['id'=>$v['id']]) && $v.status == 0 && $v.record_id && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                         <span class="span-post" post-msg="确定已派车完成了吗" post-url="{:url('order/orderSend',['id'=>$v['id']])}">确认派车</span>
                         {/if}
                         {if condition="checkPath('record/index',['order_id'=>$v['id']])"}
@@ -128,11 +128,14 @@
                         {if condition="checkPath('order/orderFollow',['id'=>$v['id']])"}
                         <a  href="{:url('order/orderFollow',['id'=>$v['id']])}">备注</a>
                         {/if}
-                        {if condition="checkPath('order/orderStatus',['id'=>$v['id']]) && $v.status == 0"}
+                        {if condition="checkPath('order/orderStatus',['id'=>$v['id']]) && $v.status == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span class="span-post" post-msg="确定要关闭订单吗" post-url="{:url('order/editStatus',['id'=>$v['id']])}">关闭订单</span>
                         {/if}
-                        {if condition="checkPath('order/orderEdit',['id'=>$v['id']]) && $v.is_sure == 0 && $v.status != 3"}
+                        {if condition="checkPath('order/orderEdit',['id'=>$v['id']]) && $v.is_sure == 0 && $v.status != 3 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                         <a  href="{:url('order/orderEdit',['id'=>$v['id']])}">修改</a>
+                        {/if}
+                        {if condition="checkPath('order/orderDelete',['id'=>$v['id']]) && $v.status == 0 && $v.status != 3 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
+                        <a  href="{:url('order/orderDelete',['id'=>$v['id']])}">删除</a>
                         {/if}
                     </td>
                 </tr>

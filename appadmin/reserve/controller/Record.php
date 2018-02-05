@@ -9,6 +9,7 @@ use admin\bus\model\CorporationModel;
 use admin\bus\model\OrderModel;
 use admin\finance\model\CustomerFinanceModel;
 use admin\index\controller\BaseController;
+use think\Config;
 use think\Loader;
 use think\Request;
 use think\Validate;
@@ -39,6 +40,9 @@ class Record extends BaseController{
             ->paginate($this->config_page,'',['query'=>$this->param]);
         $data['page']   = $data['list']->render();
         $this->param['style'] = isset($this->param['style'])?$this->param['style']:0;
+        $data['role'] = $this->role;
+        $data['ids'] = Config::get('user.order_ids');
+        $data['user_id'] = $this->uid;
         return view('index',$data);
     }
 
@@ -46,7 +50,9 @@ class Record extends BaseController{
     public function editReceive(){
         if($this->request->isPost()){
             $data['info'] = BusRecordModel::get($this->id);
-            if(!$data['info']) return ['code' => 0,'msg' => '参数错误'];;
+            if(!$data['info']) return ['code' => 0,'msg' => '参数错误'];
+            $order = OrderModel::get($data['info']['order_id']);
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if($data['info']->save(['status'=>1,'start_date'=>date('Y-m-d',time())])){
                 return ['code' => 1,'msg' => '车辆已接单出发','url' => url('record/index',$this->param)];
             }else{
@@ -59,7 +65,9 @@ class Record extends BaseController{
     public function editBack(){
         if($this->request->isPost()){
             $data['info'] = BusRecordModel::get($this->id);
-            if(!$data['info'] || $data['info']['status'] != 1) return ['code' => 0,'msg' => '参数错误'];;
+            if(!$data['info'] || $data['info']['status'] != 1) return ['code' => 0,'msg' => '参数错误'];
+            $order = OrderModel::get($data['info']['order_id']);
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if($data['info']->save(['status'=>2])){
                 if(empty(BusRecordModel::get(['order_id' => $data['info']['order_id'],'status' => ['neq',2]]))){
                     $info = OrderModel::alias('a')
@@ -87,7 +95,9 @@ class Record extends BaseController{
     public function editOff(){
         if($this->request->isPost()){
             $data['info'] = BusRecordModel::get($this->id);
-            if(!$data['info']) return ['code' => 0,'msg' => '参数错误'];;
+            if(!$data['info']) return ['code' => 0,'msg' => '参数错误'];
+            $order = OrderModel::get($data['info']['order_id']);
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if($data['info']->save(['status'=>3])){
                 OrderModel::where(['id' => $data['info']['order_id']])->update(['status' => 0]);
                 return ['code' => 1,'msg' => '车辆已取消,订单请重新派单','url' => url('record/index',$this->param)];
@@ -101,6 +111,8 @@ class Record extends BaseController{
     public function recordDelete(){
         if($this->request->isPost()) {
             $result = BusRecordModel::get($this->id);
+            $order = OrderModel::get($result['order_id']);
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if (empty($result)) return ['code' => 0, 'msg' => '参数错误'];
             if ($result->delete()) {
                 return ['code' => 1, 'msg' => '删除成功', 'url' => url('record/index',$this->param)];
@@ -146,6 +158,8 @@ class Record extends BaseController{
     //添加备注
     function followAdd(){
         if($this->request->isPost()) {
+            $order = BusRecordModel::alias('a')->join('tp_bus_order b','a.order_id = b.id','left')->field('b.admin_id')->where(['a.id' => $this->id])->find();
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             $remarks = isset($this->param['remarks']) ? $this->param['remarks'] : '';
             if (empty($remarks) || empty($this->id)) return ['code' => 0, 'msg' => '必须填写备注内容'];
             if (BusRecordFollowModel::create(['record_id' => $this->id, 'admin_id' => $this->uid, 'remarks' => $remarks])) {
@@ -161,6 +175,8 @@ class Record extends BaseController{
     function followDelete(){
         if($this->request->isPost()) {
             if (empty($this->id) || !isset($this->param['record_id'])) return ['code' => 0, 'msg' => '参数错误'];
+            $order = BusRecordModel::alias('a')->join('tp_bus_order b','a.order_id = b.id','left')->field('b.admin_id')->where(['a.id' => $this->param['record_id']])->find();
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if (BusRecordFollowModel::destroy(['id' => $this->id])) {
                 return ['code' => 1, 'msg' => '删除成功', 'url' => url('record/recordFollow',['id'=>$this->param['record_id']])];
             } else {
@@ -175,6 +191,8 @@ class Record extends BaseController{
         if($this->request->isPost()) {
             $data  = isset($this->param['data'])?intval($this->param['data']):'';
             $result = BusRecordModel::get($this->id);
+            $order = OrderModel::get($result['order_id']);
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if($this->param['type'] == 1){
                 $old = $result['times'];
                 $arr = ['times' => $data];

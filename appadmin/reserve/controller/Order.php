@@ -14,6 +14,7 @@ use admin\persion\model\DepartmentModel;
 use admin\persion\model\UserModel;
 use admin\index\controller\BaseController;
 use fanston\third\Makeid;
+use think\Config;
 use think\Loader;
 use think\Validate;
 
@@ -43,6 +44,9 @@ class Order extends BaseController{
             ->order($orderBy)
             ->paginate($this->config_page,'',['query'=>$this->param]);
         $data['page']   = $data['list']->render();
+        $data['role'] = $this->role;
+        $data['ids'] = Config::get('user.order_ids');
+        $data['user_id'] = $this->uid;
         return view('index',$data);
     }
 
@@ -61,6 +65,7 @@ class Order extends BaseController{
             $this->param['id'] =Makeid::makeOrder();
             if(empty($this->param['is_air'])) $this->param['is_air'] = 0;
             if(empty($this->param['is_tv'])) $this->param['is_tv'] = 0;
+            $this->param['admin_id'] = $this->uid;
             if($bus = OrderModel::create($this->param)){
                 $this->saveOrderAddress($this->param,$bus['id']);
                 return ['code' => 1,'msg' => '添加成功','url' => url('order/index')];
@@ -80,7 +85,7 @@ class Order extends BaseController{
             ->field($fields)
             ->where(['a.id'=>$this->id])
             ->find();
-
+        if($data['info']['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return $this->error('您没有权限操作其他调度员的订单');
         if($this->request->isPost()){
             if($data['info']['status'] == 0){
                 if(!in_array($this->param['order_type'],[2,3])){
@@ -162,6 +167,7 @@ class Order extends BaseController{
     //	单次派车
     public function selectBus(){
         $data['order'] = OrderModel::get($this->id);
+        if($data['order']['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return $this->error('您没有权限操作其他调度员的订单');
         if(empty($data['order']) || $data['order']['status'] != 0) $this->error('该订单不存在或已处理');
         if($this->request->isPost()){
             $result = ['order_id'=>$this->id,'bus_id'=>$this->param['bus_id'],'fir_user_id'=>$this->param['fir_user_id'],'sec_user_id'=>$this->param['sec_user_id']];
@@ -215,6 +221,7 @@ class Order extends BaseController{
     //分批配载
     public function selectAnyBus(){
         $data['order'] = OrderModel::get($this->id);
+        if($data['order']['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return $this->error('您没有权限操作其他调度员的订单');
         if(empty($data['order']) || $data['order']['status'] != 0) $this->error('该订单不存在或已处理');
         if($this->request->isPost()){
             $subList = json_decode($this->param['data'],true);
@@ -265,10 +272,26 @@ class Order extends BaseController{
         return view('selectAnyBus',$data);
     }
 
+    //删除订单
+    public function orderDelete(){
+        if($this->request->isPost()){
+            $result = orderModel::get($this->id);
+            if(!$result || $result['status'] != 0) return ['code' => 0,'msg' => '参数错误'];
+            if($result['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
+            if($result->delete()){
+                BusRecordModel::where(['order_id' => $this->id])->delete();
+                return ['code' => 1,'msg' => '订单已删除','url' => url('order/index')];
+            }else{
+                return ['code' => 0,'msg' => '订单删除失败'];
+            }
+        }
+    }
+
     //关闭订单
     public function editStatus(){
         if($this->request->isPost()){
             $data['info'] = orderModel::get($this->id);
+            if($data['info']['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if(!$data['info'] || $data['info']['status'] != 0) return ['code' => 0,'msg' => '参数错误'];;
             if($data['info']->save(['status'=>3])){
                 return ['code' => 1,'msg' => '订单已关闭','url' => url('order/index')];
@@ -282,6 +305,7 @@ class Order extends BaseController{
     public function orderSend(){
         if($this->request->isPost()){
             $data['info'] = orderModel::get($this->id);
+            if($data['info']['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if(!$data['info'] || $data['info']['status'] != 0) return ['code' => 0,'msg' => '参数错误'];;
             if($data['info']->save(['status'=>1])){
                 return ['code' => 1,'msg' => '确认派车成功','url' => url('order/index')];
@@ -315,6 +339,8 @@ class Order extends BaseController{
     //添加备注
     function followAdd(){
         if($this->request->isPost()) {
+            $order = OrderModel::get($this->id);
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             $remarks = isset($this->param['remarks']) ? $this->param['remarks'] : '';
             if (empty($remarks) || empty($this->id)) return ['code' => 0, 'msg' => '必须填写备注内容'];
             if (BusOrderFollowModel::create(['order_id' => $this->id, 'admin_id' => $this->uid, 'remarks' => $remarks])) {
@@ -330,6 +356,8 @@ class Order extends BaseController{
     function followDelete(){
         if($this->request->isPost()) {
             if (empty($this->id) || !isset($this->param['order_id'])) return ['code' => 0, 'msg' => '参数错误'];
+            $order = OrderModel::get($this->param['order_id']);
+            if($order['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if (BusOrderFollowModel::destroy(['id' => $this->id])) {
                 return ['code' => 1, 'msg' => '删除成功', 'url' => url('order/orderFollow',['id'=>$this->param['order_id']])];
             } else {

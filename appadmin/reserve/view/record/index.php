@@ -86,24 +86,24 @@
                     <td>{$v.end_date}</td>
                     <td>{$v.create_time}</td>
                     <td>{$v.update_time}</td>
-                    <td>{if checkPath('record/editDatas',['type'=>1]) && !in_array($v.status,[2,3])}<input type="text" value="{$v.times != 0?$v.times:''}" post-url="{:url('record/editDatas',['type'=>1])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.times != 0?$v.times:'--'}{/if}</td>
-                    <td>{if checkPath('record/editDatas',['type'=>2]) && !in_array($v.status,[2,3]) && $v.order_type == 3}<input type="text" value="{$v.km != 0?$v.km:''}" post-url="{:url('record/editDatas',['type'=>2])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.km != 0?$v.km:'--'}{/if}</td>
-                    <td>{if checkPath('record/editDatas',['type'=>3]) && !in_array($v.status,[2,3]) && $v.order_type != 2}<input type="text" value="{$v.number != 0?$v.number:''}" post-url="{:url('record/editDatas',['type'=>3])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.number != 0?$v.number:'--'}{/if}</td>
-                    <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3])}<input type="text" value="{$v.money != 0?$v.money:''}" post-url="{:url('record/editDatas',['type'=>4])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money != 0?$v.money:'--'}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>1]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.times != 0?$v.times:''}" post-url="{:url('record/editDatas',['type'=>1])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.times != 0?$v.times:'--'}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>2]) && !in_array($v.status,[2,3]) && $v.order_type == 3 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.km != 0?$v.km:''}" post-url="{:url('record/editDatas',['type'=>2])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.km != 0?$v.km:'--'}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>3]) && !in_array($v.status,[2,3]) && $v.order_type != 2 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.number != 0?$v.number:''}" post-url="{:url('record/editDatas',['type'=>3])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.number != 0?$v.number:'--'}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.money != 0?$v.money:''}" post-url="{:url('record/editDatas',['type'=>4])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money != 0?$v.money:'--'}{/if}</td>
                     <td>
-                        {if condition="checkPath('record/editStatus',['id'=>$v['id']]) && $v.status == 0"}
+                        {if condition="checkPath('record/editStatus',['id'=>$v['id']]) && $v.status == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span class="span-post" post-url="{:url('record/editReceive',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">接单出发</span>
                         {/if}
-                        {if condition="checkPath('record/editStatus',['id'=>$v['id']]) && $v.status == 1"}
+                        {if condition="checkPath('record/editStatus',['id'=>$v['id']]) && $v.status == 1 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span class="span-post" post-url="{:url('record/editBack',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">已回车</span>
                         {/if}
-                        {if condition="checkPath('record/editOff',['id'=>$v['id']]) && !in_array($v.status,[2,3])"}
+                        {if condition="checkPath('record/editOff',['id'=>$v['id']]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span class="span-post" post-url="{:url('record/editOff',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">取消接单</span>
                         {/if}
                         {if condition="checkPath('record/recordFollow',['id'=>$v['id']])"}
                         <a  href="{:url('record/recordFollow',['id'=>$v['id']])}">调度备注</a>
                         {/if}
-                        {if condition="checkPath('record/recordDelete',['id'=>$v['id']]) && $v.status == 3"}
+                        {if condition="checkPath('record/recordDelete',['id'=>$v['id']]) && $v.status == 3 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span  class="span-post" post-msg="确定要删除吗" post-url="{:url('record/recordDelete',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">删除</span>
                         {/if}
                     </td>

@@ -330,6 +330,7 @@ class Rbac
         if($this->request->isPost()){//表单处理
 
             $post   = $this->post;
+            if(empty($post['menuid'])) return ['code'=>0,'msg'=>'请选择所授权限'];
             $menuid = $post['menuid'];
 
             if(empty($this->id)){
@@ -357,7 +358,7 @@ class Rbac
                 if(!empty($data)){
                     $AuthAccess = new AuthAccess();
                     if($AuthAccess->saveAll($data)){
-                        return ['code'=>1,'msg'=>'增加成功','url'=>''];
+                        return ['code'=>1,'msg'=>'增加成功','url'=>url('index/admin/index')];
                     }else{
                         return ['code'=>0,'msg'=>'增加失败'];
                     }
