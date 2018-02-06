@@ -28,7 +28,7 @@ class Record extends BaseController{
         $orderBy  = 'a.status asc,a.update_time desc';
         $where  = getWhereParam(['a.order_id','e.order_type','d.num'=>'like','a.status','a.create_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num,e.order_type';
+        $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num,e.order_type,e.admin_id';
         $data['list'] = BusRecordModel::alias('a')
             ->join('tp_hr_user b','a.fir_user_id = b.id','left')
             ->join('tp_hr_user c','a.sec_user_id = c.id','left')
