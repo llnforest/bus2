@@ -444,9 +444,9 @@ class Order extends BaseController{
             if($v['is_microphone']) $dev .= '麦克风,';
             if($v['is_bathroom']) $dev .= '卫生间';
             $total_money = $weishou = $num = '';
-            if($v['order_type'] == 1 || $v['status'] == 2) $total_money = $v['total_money'];
-            if($v['order_type'] == 1 || $v['status'] == 2) $weishou = $v['total_money'] - $v['duishou'] - $v['xianshou'];
-            if(($v['order_type'] == 1 || $v['status'] == 2) && $v['order_type'] != 2) $num = $v['num'];
+            if(in_array($v['order_type'],[1,4]) || $v['status'] == 2) $total_money = $v['total_money'];
+            if(in_array($v['order_type'],[1,4]) || $v['status'] == 2) $weishou = $v['total_money'] - $v['duishou'] - $v['xianshou'];
+            if((in_array($v['order_type'],[1,4]) || $v['status'] == 2) && $v['order_type'] != 2) $num = $v['num'];
             $objPHPExcel->setActiveSheetIndex(0)
                 //Excel的第A列，uid是你查出数组的键值，下面以此类推
                 ->setCellValueExplicit('A'.($key+2), $v['id'],\PHPExcel_Cell_DataType::TYPE_STRING)

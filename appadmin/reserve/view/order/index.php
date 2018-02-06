@@ -75,7 +75,7 @@
                     <td>{if $v.order_type == 1}旅行社用车{elseif $v.order_type == 2}交通车{elseif $v.order_type == 3}团车{elseif $v.order_type == 4}社会用车{/if}</td>
                     <td>{if $v.type == 1}全包{elseif $v.type == 2}净价{/if}</td>
                     <td>
-                        {if $v.order_type == 1}
+                        {if in_array($v.order_type,[1,4])}
                         <p>合同:{$v.total_money}</p>
                             {if $v.status == 2}
                             <p>付款:{$v.true_money}</p>
@@ -97,11 +97,11 @@
                     <td>
                         {if $v.xianshou}<p>现收:{$v.xianshou}</p>{/if}
                         {if $v.duishou}<p>队收:{$v.duishou}</p>{/if}
-                        {if ($v.order_type == 1 || $v.status == 2) && $v.total_money-$v.xianshou-$v.duishou != 0}<p class="red">未收:{$v.total_money-$v.xianshou-$v.duishou}</p>{/if}
+                        {if (in_array($v.order_type,[1,4]) || $v.status == 2) && $v.total_money-$v.xianshou-$v.duishou != 0}<p class="red">未收:{$v.total_money-$v.xianshou-$v.duishou}</p>{/if}
                     </td>
                     <td><div>出发:{$v.start_date|date_create|date_format='Y-m-d H:i'}</div><div>结束:{$v.end_date|date_create|date_format='Y-m-d H:i'}</div></td>
                     <td><div><span class="blue">起:</span>{$v.start_prov}{$v.start_city}{$v.start_area}{$v.start_address}</div><div><span class="red">终:</span>{$v.end_prov}{$v.end_city}{$v.end_area}{$v.end_address}</div></td>
-                    <td>{if ($v.order_type == 1 || $v.status == 2) && $v.order_type != 2}
+                    <td>{if (in_array($v.order_type,[1,4]) || $v.status == 2) && $v.order_type != 2}
                         {$v.num}
                         {else}
                         --
