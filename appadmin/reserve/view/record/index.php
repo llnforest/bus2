@@ -91,10 +91,10 @@
                     <td>{if checkPath('record/editDatas',['type'=>3]) && !in_array($v.status,[2,3]) && $v.order_type != 2 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.number != 0?$v.number:''}" post-url="{:url('record/editDatas',['type'=>3])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.number != 0?$v.number:'--'}{/if}</td>
                     <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.money != 0?$v.money:''}" post-url="{:url('record/editDatas',['type'=>4])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money != 0?$v.money:'--'}{/if}</td>
                     <td>
-                        {if condition="checkPath('record/editStatus',['id'=>$v['id']]) && $v.status == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
+                        {if condition="checkPath('record/editReceive',['id'=>$v['id']]) && $v.status == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span class="span-post" post-url="{:url('record/editReceive',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">接单出发</span>
                         {/if}
-                        {if condition="checkPath('record/editStatus',['id'=>$v['id']]) && $v.status == 1 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
+                        {if condition="checkPath('record/editBack',['id'=>$v['id']]) && $v.status == 1 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span class="span-post" post-url="{:url('record/editBack',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">已回车</span>
                         {/if}
                         {if condition="checkPath('record/editOff',['id'=>$v['id']]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
