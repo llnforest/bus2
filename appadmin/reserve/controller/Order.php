@@ -170,7 +170,7 @@ class Order extends BaseController{
         if($data['order']['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return $this->error('您没有权限操作其他调度员的订单');
         if(empty($data['order']) || $data['order']['status'] != 0) $this->error('该订单不存在或已处理');
         if($this->request->isPost()){
-            $result = ['order_id'=>$this->id,'bus_id'=>$this->param['bus_id'],'fir_user_id'=>$this->param['fir_user_id'],'sec_user_id'=>$this->param['sec_user_id']];
+            $result = ['order_id'=>$this->id,'bus_id'=>$this->param['bus_id'],'fir_user_id'=>$this->param['fir_user_id'],'sec_user_id'=>$this->param['sec_user_id'],'money'=>$data['order']['total_money']];
             if(BusRecordModel::create($result)){
                 $data['order']->save(['status'=>1]);
                 return ['code'=>1,'msg'=>'派单成功','url'=>url('order/index')];
