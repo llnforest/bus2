@@ -236,7 +236,16 @@ class Order extends BaseController{
             }
             return ['code'=>0,'msg'=>'派单失败'];
         }
-        $where  = getWhereParam(['a.num'=>'like','a.type','a.color','a.corporation_id','a.department_id','a.is_bathroom','a.is_tv','a.is_air','a.is_microphone'],$this->param);
+        $where  = getWhereParam(['a.type','a.color','a.corporation_id','a.department_id','a.is_bathroom','a.is_tv','a.is_air','a.is_microphone'],$this->param);
+        if(!empty($this->param['num'])){
+            $number = $this->param['num'];
+            if(strstr($number,',')){
+                $where['substring(a.num,-4)'] = ['in',$number];
+            }else{
+                $where['a.num'] = ['like','%'.$number.'%'];
+            }
+        }
+
         $where['a.status'] = 1;
         $orderBy  = 'a.type asc,g.total_money asc,g.num asc,a.site_num asc';
 
