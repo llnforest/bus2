@@ -120,10 +120,10 @@
                 </td>
             </tr>
             <tr class="jiaotong tuanche" {if isset($info.order_type) && in_array($info.order_type,[2,3])}style="display:none"{/if}>
-                {if isset($info) && $info.status != 0}
-                {$info.num}
-                {else}
                 <th>乘坐人数</th>
+                {if isset($info) && $info.status != 0}
+                <td>{$info.num}人</td>
+                {else}
                 <td>
                     <input class="form-control text" type="text" name="num" value="{$info.num??''}">
                     <span class="form-required">*</span>
@@ -239,6 +239,5 @@
                 $(".tuanche").hide();
             }
         })
-
     })
 </script>
