@@ -21,7 +21,7 @@ class Record extends BaseController{
         $orderBy  = 'a.update_time desc';
         $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','a.update_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name';
+        $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name';
         $where['a.status'] = 2;
         $data['corporation'] = CorporationModel::where(['system_id' => $this->system_id,'status'=>1])->order('sort asc')->select();
         $data['list'] = BusRecordModel::alias('a')
@@ -43,7 +43,7 @@ class Record extends BaseController{
     public function exportOut(){
         $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','a.update_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $fields = 'a.*,b.name as fir_name,c.name as sec_name,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name';
+        $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name';
         $where['a.status'] = 2;
         $list = BusRecordModel::alias('a')
 //            ->join('tp_hr_user b','a.fir_user_id = b.id','left')
