@@ -67,8 +67,7 @@
                     <td>{$v.order_id}</td>
                     <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
                     <td>
-                        {if $v.fir_name}<p><span class="blue">主:</span>{$v.fir_name}</p>{/if}
-                        {if $v.sec_name}<p><span class="red">副:</span>{$v.sec_name}</p>{/if}
+                        {$v.corporation_name}
                     </td>
                     <td>{$v.money}</td>
                     <td>{$v.times}</td>
