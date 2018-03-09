@@ -5,28 +5,28 @@
             <tr>
                 <th>油卡名称</th>
                 <td>
-                    <input class="form-control text" type="text" name="name" value="{$info.name??''}">
+                    <input class="form-control text" type="text" name="name" value="{$info.name??''}" placeholder="油卡名称">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>油卡面值</th>
                 <td>
-                    <input class="form-control text" type="text" name="money" value="{$info.money??''}">
+                    <input class="form-control text" type="text" name="money" value="{$info.money??''}" placeholder="油卡面值">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>购买金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}">
+                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}" placeholder="购买金额">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>购买日期</th>
                 <td>
-                    <input name="buy_date" value="{$info.buy_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text">
+                    <input name="buy_date" value="{$info.buy_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text" placeholder="选择购买日期">
                 </td>
             </tr>
             <tr>

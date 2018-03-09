@@ -5,7 +5,7 @@
             <tr>
                 <th>配件名称</th>
                 <td>
-                    <input class="form-control text" type="text" name="name" value="{$info.name??''}">
+                    <input class="form-control text" type="text" name="name" value="{$info.name??''}" placeholder="配件名称">
                     <span class="form-required">*</span>
                 </td>
             </tr>

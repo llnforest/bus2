@@ -5,14 +5,14 @@
             <tr>
                 <th>岗位名称</th>
                 <td>
-                    <input class="form-control text" type="text" name="name" value="{$info.name??''}">
+                    <input class="form-control text" type="text" name="name" value="{$info.name??''}" placeholder="岗位名称">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>排序</th>
                 <td>
-                    <input class="form-control text" type="text" name="sort" value="{$info.sort??''}">
+                    <input class="form-control text" type="text" name="sort" value="{$info.sort??''}" placeholder="排序">
                     <span class="form-required">*</span>
                 </td>
             </tr>

@@ -19,9 +19,9 @@ class Record extends BaseController{
     //发车单列表
     public function index(){
         $orderBy  = 'a.update_time desc';
-        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','a.update_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','g.name'=>'like','a.update_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name';
+        $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name,h.name as customer_name';
         $where['a.status'] = 2;
         $data['corporation'] = CorporationModel::where(['system_id' => $this->system_id,'status'=>1])->order('sort asc')->select();
         $data['list'] = BusRecordModel::alias('a')
@@ -31,6 +31,7 @@ class Record extends BaseController{
             ->join('tp_bus_order e','a.order_id = e.id','left')
             ->join('tp_bus_order_address f','e.id = f.order_id','left')
             ->join('tp_bus_corporation g','d.corporation_id = g.id','left')
+            ->join('tp_bus_customer h','h.id = e.customer_id','left')
             ->field($fields)
             ->where($where)
             ->order($orderBy)
@@ -41,9 +42,9 @@ class Record extends BaseController{
 
     //导出发车单
     public function exportOut(){
-        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','a.update_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','g.name'=>'like','a.update_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name';
+        $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name,h.name as customer_name';
         $where['a.status'] = 2;
         $list = BusRecordModel::alias('a')
 //            ->join('tp_hr_user b','a.fir_user_id = b.id','left')
@@ -52,6 +53,7 @@ class Record extends BaseController{
             ->join('tp_bus_order e','a.order_id = e.id','left')
             ->join('tp_bus_order_address f','e.id = f.order_id','left')
             ->join('tp_bus_corporation g','d.corporation_id = g.id','left')
+            ->join('tp_bus_customer h','h.id = e.customer_id','left')
             ->field($fields)
             ->where($where)
             ->select();
@@ -103,7 +105,7 @@ class Record extends BaseController{
                 ->setCellValue('G'.($key+2), ($v['money_type'] == 1?'全包':'净价'))
                 ->setCellValue('H'.($key+2), $v['start_time'].'~'.$v['end_time'])
                 ->setCellValue('I'.($key+2), '起：'.$v['start_prov'].$v['start_city'].$v['start_area'].$v['start_address'].'。 终：'.$v['end_prov'].$v['end_city'].$v['end_area'].$v['end_address'])
-                ->setCellValue('J'.($key+2), $v['corporation_name'])
+                ->setCellValue('J'.($key+2), $v['customer_name'])
                 ->setCellValue('K'.($key+2), $v['update_time'])
             ;
         }

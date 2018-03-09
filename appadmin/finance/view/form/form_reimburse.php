@@ -5,7 +5,7 @@
             <tr>
                 <th>报销项目</th>
                 <td>
-                    <input class="form-control text" type="text" name="title" value="{$info.title??''}">
+                    <input class="form-control text" type="text" name="title" value="{$info.title??''}" placeholder="报销项目">
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -32,14 +32,14 @@
             <tr>
                 <th>报销金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="fee" value="{$info.fee??''}">
+                    <input class="form-control text" type="text" name="fee" value="{$info.fee??''}" placeholder="报销金额">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>报销日期</th>
                 <td>
-                    <input name="reimburse_date" value="{$info.reimburse_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text">
+                    <input name="reimburse_date" value="{$info.reimburse_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text" placeholder="选择报销日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>

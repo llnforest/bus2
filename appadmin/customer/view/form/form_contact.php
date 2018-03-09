@@ -5,7 +5,7 @@
             <tr>
                 <th>单位名称</th>
                 <td>
-                    <input class="form-control text" type="text" name="name" value="{$info.name??''}">
+                    <input class="form-control text" type="text" name="name" value="{$info.name??''}" placeholder="单位名称">
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -28,19 +28,19 @@
             <tr>
                 <th>联系人员</th>
                 <td>
-                    <input class="form-control text" type="text" name="contact" value="{$info.contact??''}">
+                    <input class="form-control text" type="text" name="contact" value="{$info.contact??''}" placeholder="联系人员">
                 </td>
             </tr>
             <tr>
                 <th>联系电话</th>
                 <td>
-                    <input class="form-control text" type="text" name="phone" value="{$info.phone??''}">
+                    <input class="form-control text" type="text" name="phone" value="{$info.phone??''}" placeholder="联系电话">
                 </td>
             </tr>
             <tr>
                 <th>单位地址</th>
                 <td>
-                    <input class="form-control text" type="text" name="address" value="{$info.address??''}">
+                    <input class="form-control text" type="text" name="address" value="{$info.address??''}" placeholder="单位地址">
                 </td>
             </tr>
             <tr>

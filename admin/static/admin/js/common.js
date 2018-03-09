@@ -446,6 +446,12 @@ function formPost(_this,url,dom){
             $('#alert').html(alertDanger(xhr.responseText));
         }
     });
+
+    //关闭弹框
+    $(".layui-off").click(function(){
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index);
+    });
 }
 //渲染switch框
 function renderSwitch(){
@@ -487,8 +493,20 @@ function renderPopover(){
     }
 }
 
-//关闭弹框
-$(".layui-off").click(function(){
-    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-    parent.layer.close(index);
-});
+//发送异步post请求
+function ajaxPost(url,data,successFunc){
+    $.ajax(
+        {
+            url : url,
+            data: data,
+            type : 'post',
+            dataType : 'json',
+            success : function (json){
+                successFunc(json);
+            },
+            error:function(xhr){          //上传失败
+                $('#alert').html(alertDanger(xhr.responseText));
+            }
+        });
+}
+

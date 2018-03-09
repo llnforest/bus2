@@ -19,14 +19,14 @@
             <tr>
                 <th>维保日期</th>
                 <td>
-                    <input name="protect_date" value="{$info.protect_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text">
+                    <input name="protect_date" value="{$info.protect_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text" placeholder="选择维保日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>维保备注</th>
                 <td>
-                    <textarea name="remark" class="form-control text">{$info.remark??''}</textarea>
+                    <textarea name="remark" class="form-control text" placeholder="维保备注">{$info.remark??''}</textarea>
                 </td>
             </tr>
             <tr>

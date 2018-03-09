@@ -29,14 +29,14 @@
             <tr>
                 <th>入账金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="money" value="">
+                    <input class="form-control text" type="text" name="money" value="" placeholder="入账金额">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>入账日期</th>
                 <td>
-                    <input name="add_date" value="{$info.add_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text">
+                    <input name="add_date" value="{$info.add_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text" placeholder="选择入账日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>

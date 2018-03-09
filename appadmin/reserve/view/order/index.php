@@ -134,7 +134,7 @@
                         {if condition="checkPath('order/orderEdit',['id'=>$v['id']]) && $v.is_sure == 0 && $v.status != 3 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                         <a  href="{:url('order/orderEdit',['id'=>$v['id']])}">修改</a>
                         {/if}
-                        {if condition="checkPath('order/orderDelete',['id'=>$v['id']]) && $v.status == 0 && $v.status != 3 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
+                        {if condition="checkPath('order/orderDelete',['id'=>$v['id']]) && $v.is_sure == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                         <span class="span-post" post-msg="确定要删除订单吗" post-url="{:url('order/orderDelete',['id'=>$v['id']])}">删除</span>
                         {/if}
                     </td>

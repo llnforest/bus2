@@ -19,7 +19,7 @@
             <tr>
                 <th>事发日期</th>
                 <td>
-                    <input name="accident_date" value="{$info.accident_date??''}"  readonly dom-class="accident-date" class="date-time accident-date form-control laydate-icon text"  type="text">
+                    <input name="accident_date" value="{$info.accident_date??''}"  readonly dom-class="accident-date" class="date-time accident-date form-control laydate-icon text"  type="text" placeholder="选择事发日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -33,7 +33,7 @@
             <tr class="hidden">
                 <th>损失金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="lose" value="{$info.lose??''}">
+                    <input class="form-control text" type="text" name="lose" value="{$info.lose??''}" placeholder="损失金额">
                 </td>
             </tr>
             <tr>
@@ -52,13 +52,13 @@
             <tr class="hidden">
                 <th>保险理赔</th>
                 <td>
-                    <input class="form-control text" type="text" name="insurance_money" value="{$info.insurance_money??''}">
+                    <input class="form-control text" type="text" name="insurance_money" value="{$info.insurance_money??''}" placeholder="保险金额">
                 </td>
             </tr>
             <tr>
                 <th>事故备注</th>
                 <td>
-                    <textarea name="remark" class="form-control text">{$info.remark??''}</textarea>
+                    <textarea name="remark" class="form-control text" placeholder="事故备注">{$info.remark??''}</textarea>
                 </td>
             </tr>
             <tr>

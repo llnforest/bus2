@@ -285,9 +285,10 @@ class Order extends BaseController{
     public function orderDelete(){
         if($this->request->isPost()){
             $result = orderModel::get($this->id);
-            if(!$result || $result['status'] != 0) return ['code' => 0,'msg' => '参数错误'];
+            if(!$result || $result['is_sure'] == 1) return ['code' => 0,'msg' => '参数错误'];
             if($result['admin_id'] != $this->uid && !in_array($this->uid,Config::get('user.order_ids')) && $this->role != 1) return ['code'=>0,'msg'=>'您没有权限操作其他调度员的订单'];
             if($result->delete()){
+                BusOrderAddressModel::where(['order_id' => $this->id])->delete();
                 BusRecordModel::where(['order_id' => $this->id])->delete();
                 return ['code' => 1,'msg' => '订单已删除','url' => url('order/index')];
             }else{
@@ -487,5 +488,13 @@ class Order extends BaseController{
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('php://output');
         exit;
+    }
+
+    //渲染客户列表
+    public function customerList(){
+        if(empty($this->param['name'])) return ['code'=>0,'data'=>[]];
+        $customerList = CustomerModel::where(['status'=>1,'system_id' => $this->system_id,'name'=>['like','%'.$this->param['name'].'%']])->select();
+        if(count($customerList) == 0) return ['code'=>2,'data'=>$customerList];
+        else return ['code'=>1,'data'=>$customerList];
     }
 }

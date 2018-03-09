@@ -12,21 +12,21 @@
             <tr>
                 <th>开始日期</th>
                 <td>
-                    <input name="start_date" value="{$info.start_date??''}"  readonly dom-class="start-date" class="date-time start-date form-control laydate-icon text"  type="text">
+                    <input name="start_date" value="{$info.start_date??''}"  readonly dom-class="start-date" class="date-time start-date form-control laydate-icon text"  type="text" placeholder="选择开始日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>结束日期</th>
                 <td>
-                    <input name="end_date" value="{$info.end_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text">
+                    <input name="end_date" value="{$info.end_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text" placeholder="选择结束日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>请假天数</th>
                 <td>
-                    <input class="form-control text" type="text" name="days" value="{$info.days??''}">
+                    <input class="form-control text" type="text" name="days" value="{$info.days??''}" placeholder="请假天数">
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -45,7 +45,7 @@
             <tr>
                 <th>请假备注</th>
                 <td>
-                    <textarea name="remark" class="form-control text">{$info.remark??''}</textarea>
+                    <textarea name="remark" class="form-control text" placeholder="请假备注">{$info.remark??''}</textarea>
                 </td>
             </tr>
             <tr>

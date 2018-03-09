@@ -26,21 +26,21 @@
             <tr class="hidden">
                 <th>年检费用</th>
                 <td>
-                    <input class="form-control text" type="text" name="fee" value="{$info.fee??'0'}">
+                    <input class="form-control text" type="text" name="fee" value="{$info.fee??'0'}" placeholder="年检费用">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>年检日期</th>
                 <td>
-                    <input name="check_date" value="{$info.check_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text">
+                    <input name="check_date" value="{$info.check_date??''}"  readonly dom-class="check-date" class="date-time check-date form-control laydate-icon text"  type="text" placeholder="选择年检日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>到期日期</th>
                 <td>
-                    <input name="end_date" value="{$info.end_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text">
+                    <input name="end_date" value="{$info.end_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text" placeholder="选择到期日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>

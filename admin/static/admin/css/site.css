@@ -6,6 +6,18 @@ html,
 .red{ color: #ff0000; }
 .blue{color:#1abc9c}
 .grey{color:#ccc}
+.list-group .list-group-item{
+    cursor:pointer;
+}
+.list-group .list-group-item:hover:not(.disabled){
+    background-color: #1dd2af;
+    color:#fff;
+}
+.list-group .list-group-item.active{
+    color:#fff;
+    background-color: #1abc9c;
+    border:none;
+}
 .rg-margin{margin-right:5px;}
 .lf-margin{margin-left:5px;}
 a{color: #1abc9c;}

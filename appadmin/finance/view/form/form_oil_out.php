@@ -25,14 +25,14 @@
             <tr>
                 <th>加油金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="fee" value="{$info.fee??''}">
+                    <input class="form-control text" type="text" name="fee" value="{$info.fee??''}" placeholder="加油金额">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>加油日期</th>
                 <td>
-                    <input name="out_date" value="{$info.out_date??''}"  readonly dom-class="out-date" class="date-time out-date form-control laydate-icon text"  type="text">
+                    <input name="out_date" value="{$info.out_date??''}"  readonly dom-class="out-date" class="date-time out-date form-control laydate-icon text"  type="text" placeholder="选择加油日期">
                 </td>
             </tr>
             <tr>

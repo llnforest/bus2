@@ -5,9 +5,13 @@
             <tr>
                 <th>租车客户</th>
                 <td>
-                    <span class="span-primary select-customer fl">{$info.name?:'选择客户'}</span>
-                    {if !isset($info.id)}<a href="{:url('customer/customer/customerAdd',['skip_type'=>'order'])}" style="margin-left:20px;">添加客户</a>{/if}
-                    <input id="customer_id" class="form-control" type="hidden" name="customer_id" value="{$info.customer_id??''}">
+<!--                    <span class="span-primary select-customer fl">{$info.name?:'选择客户'}</span>-->
+                    <input class="form-control text customer" type="text" name="customer_name" value="{$info.name??''}" placeholder="请输入想要查找的租车客户">
+                    <span class="form-required">*</span>
+                    <ul class="list-group customer-wrap text" style="margin-top:35px;position: absolute;z-index: 9999;">
+                    </ul>
+                    {if !isset($info.id)}<a href="{:url('customer/customer/customerAdd',['skip_type'=>'order'])}" style="line-height:34px;margin-left:20px;">添加客户</a>{/if}
+                    <input id="customer_id" class="form-control customer-id" type="hidden" name="customer_id" value="{$info.customer_id??''}">
                 </td>
             </tr>
             <tr>
@@ -41,7 +45,7 @@
                     {if isset($info) && $info.status != 0}
                     {$info.total_money}
                     {else}
-                    <input class="form-control text" type="text" name="total_money" value="{$info.total_money??''}">
+                    <input class="form-control text" type="text" name="total_money" value="{$info.total_money??''}"  placeholder="合同金额">
                     <span class="form-required">*</span>
                     {/if}
                 </td>
@@ -49,13 +53,13 @@
             <tr>
                 <th>现收金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="xianshou" value="{$info.xianshou??''}">
+                    <input class="form-control text" type="text" name="xianshou" value="{$info.xianshou??''}" placeholder="现收金额">
                 </td>
             </tr>
             <tr>
                 <th>队收金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="duishou" value="{$info.duishou??''}">
+                    <input class="form-control text" type="text" name="duishou" value="{$info.duishou??''}" placeholder="队收金额">
                 </td>
             </tr>
             <tr>
@@ -82,19 +86,19 @@
             <tr class="fanli">
                 <th>返利金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="return_money" value="{$info.return_money??''}">
+                    <input class="form-control text" type="text" name="return_money" value="{$info.return_money??''}" placeholder="返利金额">
                 </td>
             </tr>
             <tr class="true_money">
                 <th>付款金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}">
+                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}" placeholder="付款金额">
                 </td>
             </tr>
             <tr class="true_money">
                 <th>税款</th>
                 <td>
-                    <input class="form-control text" type="text" name="taxation" value="{$info.taxation??''}">
+                    <input class="form-control text" type="text" name="taxation" value="{$info.taxation??''}" placeholder="税款">
                 </td>
             </tr>
             <tr>
@@ -103,7 +107,7 @@
                     {if isset($info) && $info.status != 0}
                     {$info.start_date?date_format(date_create($info.start_date),'Y-m-d H:i'):''}
                     {else}
-                    <input name="start_date" value="{$info.start_date?date_format(date_create($info.start_date),'Y-m-d H:i'):''}"  readonly dom-format="yyyy-MM-dd HH:mm" dom-type="datetime"  dom-class="start-date" class="date-time start-date form-control laydate-icon text"  type="text">
+                    <input name="start_date" value="{$info.start_date?date_format(date_create($info.start_date),'Y-m-d H:i'):''}"  readonly dom-format="yyyy-MM-dd HH:mm" dom-type="datetime"  dom-class="start-date" class="date-time start-date form-control laydate-icon text"  type="text" placeholder="请选择出发时间">
                     <span class="form-required">*</span>
                     {/if}
                 </td>
@@ -114,7 +118,7 @@
                     {if isset($info) && $info.status != 0}
                     {$info.end_date?date_format(date_create($info.end_date),'Y-m-d H:i'):''}
                     {else}
-                    <input name="end_date" value="{$info.end_date?date_format(date_create($info.end_date),'Y-m-d H:i'):''}"  readonly dom-format="yyyy-MM-dd HH:mm" dom-type="datetime" dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text">
+                    <input name="end_date" value="{$info.end_date?date_format(date_create($info.end_date),'Y-m-d H:i'):''}"  readonly dom-format="yyyy-MM-dd HH:mm" dom-type="datetime" dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text" placeholder="请选择结束时间">
                     <span class="form-required">*</span>
                     {/if}
                 </td>
@@ -125,7 +129,7 @@
                 <td>{$info.num}人</td>
                 {else}
                 <td>
-                    <input class="form-control text" type="text" name="num" value="{$info.num??''}">
+                    <input class="form-control text" type="text" name="num" value="{$info.num??''}" placeholder="乘坐人数">
                     <span class="form-required">*</span>
                 </td>
                 {/if}
@@ -201,7 +205,7 @@
             <tr>
                 <th>订单备注</th>
                 <td>
-                    <textarea name="remark" class="form-control text">{$info.remark??''}</textarea>
+                    <textarea name="remark" class="form-control text" placeholder="订单备注">{$info.remark??''}</textarea>
                 </td>
             </tr>
             <tr>
@@ -238,6 +242,38 @@
                 $(".jiaotong").show();
                 $(".tuanche").hide();
             }
+        })
+
+        //填写车辆归属
+        $('.customer').bind("input propertychange",function(){
+            var name = $(this).val().trim();
+            var customer_id = $(".customer-id").val();
+            ajaxPost('{:url("order/customerList")}'
+                ,{name:name}
+                ,function(data){
+                    var html = ''
+                    if(data.code == 1){
+                        $.each(data.data,function(index,item){
+                            var active = item.id == customer_id ? 'active':'';
+                            html += '<li class="list-group-item customer-list '+active+'" data-id="'+item.id+'">'+item.name+'</li>'
+                        })
+                    }else if(data.code == 0){
+                    }else{
+                        html = '<li class="list-group-item customer-list disabled" data-id="">没有找到匹配的客户</li>';
+                    }
+                    $(".customer-wrap").html(html);
+                }
+            )
+        })
+
+        //选择车辆归属
+        $(".customer-wrap").on('click','.customer-list:not(".disabled")',function(){
+            var _this = $(this);
+            var id = _this.attr("data-id");
+            var value = _this.text();
+            $(".customer-wrap").html('');
+            $(".customer-id").val(id);
+            $(".customer").val(value);
         })
     })
 </script>

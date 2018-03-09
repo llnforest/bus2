@@ -12,21 +12,21 @@
             <tr>
                 <th>充值面值</th>
                 <td>
-                    <input class="form-control text" type="text" name="money" value="{$info.money??''}">
+                    <input class="form-control text" type="text" name="money" value="{$info.money??''}" placeholder="充值面值">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>充值金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}">
+                    <input class="form-control text" type="text" name="true_money" value="{$info.true_money??''}" placeholder="充值金额">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>充值日期</th>
                 <td>
-                    <input name="in_date" value="{$info.in_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text">
+                    <input name="in_date" value="{$info.in_date??''}"  readonly dom-class="end-date" class="date-time end-date form-control laydate-icon text"  type="text" placeholder="选择充值日期">
                 </td>
             </tr>
             <tr>

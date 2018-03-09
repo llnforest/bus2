@@ -5,7 +5,7 @@
             <tr>
                 <th>客户名称</th>
                 <td>
-                    <input class="form-control text" type="text" name="name" value="{$info.name??''}">
+                    <input class="form-control text" type="text" name="name" value="{$info.name??''}" placeholder="客户名称">
                     <input class="form-control text" type="hidden" name="skip_type" value="{$skip_type??''}">
                     <span class="form-required">*</span>
                 </td>
@@ -20,7 +20,7 @@
             <tr>
                 <th>客户姓名</th>
                 <td>
-                    <input class="form-control text" type="text" name="user_name" value="{$info.user_name??''}">
+                    <input class="form-control text" type="text" name="user_name" value="{$info.user_name??''}" placeholder="客户姓名">
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -34,7 +34,7 @@
             <tr>
                 <th>联系电话</th>
                 <td>
-                    <input class="form-control text" type="text" name="phone" value="{$info.phone??''}">
+                    <input class="form-control text" type="text" name="phone" value="{$info.phone??''}" placeholder="联系电话">
                     <span class="form-required">*</span>
                 </td>
             </tr>

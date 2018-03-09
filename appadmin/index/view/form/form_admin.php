@@ -20,28 +20,28 @@
         <tr>
             <th>密码</th>
             <td>
-                <input class="form-control text" type="text" name="password" value="">
+                <input class="form-control text" type="text" name="password" value="" placeholder="密码">
                 <span class="form-required">*<span style="font-size:12px;position:relative;top:-5px;">{$info.name?="填写则修改密码，不填则保持原密码"}</span> </span>
             </td>
         </tr>
         <tr>
             <th>姓名</th>
             <td>
-                <input class="form-control text" type="text" name="nick_name" value="{$info.nick_name??''}">
+                <input class="form-control text" type="text" name="nick_name" value="{$info.nick_name??''}" placeholder="姓名">
                 <span class="form-required">*</span>
             </td>
         </tr>
         <tr>
             <th>手机</th>
             <td>
-                <input class="form-control text" type="text" name="phone" value="{$info.phone??''}">
+                <input class="form-control text" type="text" name="phone" value="{$info.phone??''}" placeholder="手机">
                 <span class="form-required">*</span>
             </td>
         </tr>
         <tr>
             <th>邮箱</th>
             <td>
-                <input class="form-control text" type="text" name="email" value="{$info.email??''}">
+                <input class="form-control text" type="text" name="email" value="{$info.email??''}" placeholder="邮箱">
                 <span class="form-required">*</span>
             </td>
         </tr>

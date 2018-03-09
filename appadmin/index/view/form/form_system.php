@@ -6,19 +6,19 @@
         <tr>
             <th>企业名称</th>
             <td>
-                <input class="form-control text" type="text" name="name" value="">
+                <input class="form-control text" type="text" name="name" value="" placeholder="企业名称">
                 <span class="form-required">*</span>
             </td>
         </tr><tr>
             <th>企业简称</th>
             <td>
-                <input class="form-control text" type="text" name="code" value="">
+                <input class="form-control text" type="text" name="code" value="" placeholder="企业简称">
                 <span class="form-required">*</span>
             </td>
         </tr><tr>
             <th>联系方式</th>
             <td>
-                <input class="form-control text" type="text" name="phone" value="">
+                <input class="form-control text" type="text" name="phone" value="" placeholder="联系方式">
             </td>
         </tr>
         <tr>

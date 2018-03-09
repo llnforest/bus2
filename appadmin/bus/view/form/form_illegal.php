@@ -19,26 +19,26 @@
             <tr>
                 <th>违章日期</th>
                 <td>
-                    <input name="illegal_date" value="{$info.illegal_date??''}"  readonly dom-class="illegal-date" class="date-time illegal-date form-control laydate-icon text"  type="text">
+                    <input name="illegal_date" value="{$info.illegal_date??''}"  readonly dom-class="illegal-date" class="date-time illegal-date form-control laydate-icon text"  type="text" placeholder="选择违章日期">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr class="hidden">
                 <th>罚款金额</th>
                 <td>
-                    <input class="form-control text" type="text" name="money" value="{$info.money??''}">
+                    <input class="form-control text" type="text" name="money" value="{$info.money??''}" placeholder="罚款金额">
                 </td>
             </tr>
             <tr>
                 <th>违章扣分</th>
                 <td>
-                    <input class="form-control text" type="text" name="score" value="{$info.score??''}">
+                    <input class="form-control text" type="text" name="score" value="{$info.score??''}" placeholder="违章扣分">
                 </td>
             </tr>
             <tr>
                 <th>违章备注</th>
                 <td>
-                    <textarea name="remark" class="form-control text">{$info.remark??''}</textarea>
+                    <textarea name="remark" class="form-control text" placeholder="违章备注">{$info.remark??''}</textarea>
                 </td>
             </tr>
             <tr>

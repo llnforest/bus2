@@ -19,7 +19,7 @@ use think\Validate;
 class Bus extends BaseController{
     private static $obj;
     private static $busArr = [];
-    private $roleValidate = ['num|车牌号码' => 'require','brand|厂牌型号' => 'require','site_num|座位数量' => 'require|digit','fir_user_id|主驾驶员' => 'require'];
+    private $roleValidate = ['num|车牌号码' => 'require','brand|厂牌型号' => 'require','site_num|座位数量' => 'require|digit','fir_user_id|主驾驶员' => 'require','corporation_id|车辆归属' => 'require|digit'];
     //构造函数
     public function __construct()
     {
@@ -74,7 +74,6 @@ class Bus extends BaseController{
                 return ['code' => 0,'msg' => '添加失败'];
             }
         }
-        $data['corporation'] = CorporationModel::where(['status'=>1,'system_id'=>$this->system_id])->order('sort')->select();
         $data['department'] = DepartmentModel::where(['system_id'=>$this->system_id])->order('sort')->select();
         return view('busAdd',$data);
     }
@@ -84,7 +83,8 @@ class Bus extends BaseController{
         $data['info'] = BusModel::alias('a')
             ->join('tp_hr_user b','a.fir_user_id = b.id','left')
             ->join('tp_hr_user c','a.sec_user_id = c.id','left')
-            ->field('a.*,b.name as fir_name,c.name as sec_name')
+            ->join('tp_bus_corporation d','a.corporation_id = d.id','left')
+            ->field('a.*,b.name as fir_name,c.name as sec_name,d.name as corporation_name')
             ->where(['a.id' => $this->id])
             ->find();
         if(!$data['info']) $this->error('参数错误');
@@ -126,7 +126,6 @@ class Bus extends BaseController{
             ->where(['a.bus_id' => $this->id,'a.status' => 1])
             ->column('b.name','a.user_id');
         $data['user_name'] = implode(',',$user_arr);
-        $data['corporation'] = CorporationModel::where(['status'=>1,'system_id'=>$this->system_id])->order('sort')->select();
         $data['user_ids'] = implode(',',array_keys($user_arr));
         $data['department'] = DepartmentModel::where(['system_id'=>$this->system_id])->order('sort')->select();
         return view('busEdit',$data);
@@ -420,5 +419,13 @@ class Bus extends BaseController{
         }else{
             self::$busArr[] = self::$obj;
         }
+    }
+
+    //渲染车辆归属列表
+    public function corporationList(){
+        if(empty($this->param['name'])) return ['code'=>0,'data'=>[]];
+        $corporationList = CorporationModel::where(['status'=>1,'system_id' => $this->system_id,'name'=>['like','%'.$this->param['name'].'%']])->order('sort asc')->select();
+        if(count($corporationList) == 0) return ['code'=>2,'data'=>$corporationList];
+        else return ['code'=>1,'data'=>$corporationList];
     }
 }

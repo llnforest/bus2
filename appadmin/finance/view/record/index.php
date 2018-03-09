@@ -13,6 +13,9 @@
                     <div class="btn-group">
                         <input name="num" class="form-control" value="{:input('num')}"  placeholder="车牌号码" type="text">
                     </div>
+                    <div class="btn-group">
+                        <input name="name" class="form-control" value="{:input('name')}"  placeholder="用车人" type="text">
+                    </div>
                     <div class="btn-group layui-form">
                         <select name="order_type" class="form-control" lay-verify="">
                             <option value="">订单类型</option>
@@ -75,7 +78,7 @@
                     <td>{if $v.money_type == 1}全包{elseif $v.money_type == 2}净价{/if}</td>
                     <td><div><span class="blue">开始:</span>{$v.start_time}</div><div><span class="red">结束:</span>{$v.end_time}</div></td>
                     <td><div><span class="blue">起:</span>{$v.start_prov}{$v.start_city}{$v.start_area}{$v.start_address}</div><div><span class="red">终:</span>{$v.end_prov}{$v.end_city}{$v.end_area}{$v.end_address}</div></td>
-                    <td>{$v.corporation_name}</td>
+                    <td>{$v.customer_name}</td>
                     <td>{$v.update_time}</td>
                 </tr>
             {/foreach}
@@ -93,7 +96,7 @@
 <script>
     $(function(){
         $(".download").click(function(){
-            url = "{:url('record/exportOut')}?start="+getQueryString('start')+"&end="+getQueryString('end')+"&order_id="+getQueryString('order_id')+"&num="+getQueryString('num')+"&corporation_id="+getQueryString('corporation_id')+"&order_type="+getQueryString('order_type');
+            url = "{:url('record/exportOut')}?start="+getQueryString('start')+"&end="+getQueryString('end')+"&order_id="+getQueryString('order_id')+"&num="+getQueryString('num')+"&corporation_id="+getQueryString('corporation_id')+"&order_type="+getQueryString('order_type')+"&name="+getQueryString('name');
             setTimeout(function() {
                 window.location.href = url;
             },1000);

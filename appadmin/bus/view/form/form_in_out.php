@@ -29,7 +29,7 @@
             <tr>
                 <th>{$name}数量</th>
                 <td>
-                    <input class="form-control text" type="text" name="num" value="{$info.num??'1'}">
+                    <input class="form-control text" type="text" name="num" value="{$info.num??'1'}" placeholder="{$name}数量">
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -37,9 +37,9 @@
                 <th>{$name}日期</th>
                 <td>
                     {if $type == 1}
-                    <input name="in_date" value="{$info.in_date??''}"  readonly dom-class="in-date" class="date-time in-date form-control laydate-icon text"  type="text">
+                    <input name="in_date" value="{$info.in_date??''}"  readonly dom-class="in-date" class="date-time in-date form-control laydate-icon text"  type="text" placeholder="选择{$name}日期">
                     {else}
-                    <input name="out_date" value="{$info.out_date??''}"  readonly dom-class="out-date" class="date-time out-date form-control laydate-icon text"  type="text">
+                    <input name="out_date" value="{$info.out_date??''}"  readonly dom-class="out-date" class="date-time out-date form-control laydate-icon text"  type="text" placeholder="选择{$name}日期">
                     {/if}
                     <span class="form-required">*</span>
                 </td>

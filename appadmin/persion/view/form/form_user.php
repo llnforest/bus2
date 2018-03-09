@@ -5,21 +5,21 @@
             <tr>
                 <th>员工编号</th>
                 <td>
-                    <input class="form-control text" type="text" name="num" value="{$info.num??''}">
+                    <input class="form-control text" type="text" name="num" value="{$info.num??''}" placeholder="员工编号">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>员工姓名</th>
                 <td>
-                    <input class="form-control text" type="text" name="name" value="{$info.name??''}">
+                    <input class="form-control text" type="text" name="name" value="{$info.name??''}" placeholder="员工姓名">
                     <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>手机号码</th>
                 <td>
-                    <input class="form-control text" type="text" name="phone" value="{$info.phone??''}">
+                    <input class="form-control text" type="text" name="phone" value="{$info.phone??''}" placeholder="手机号码">
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -39,7 +39,7 @@
             <tr>
                 <th>身份证号</th>
                 <td>
-                    <input class="form-control text" type="text" name="code" value="{$info.code??''}">
+                    <input class="form-control text" type="text" name="code" value="{$info.code??''}" placeholder="身份证号">
                 </td>
             </tr>
             <tr>
@@ -81,13 +81,13 @@
             <tr>
                 <th>入职日期</th>
                 <td>
-                    <input name="join_date" value="{$info.join_date??''}"  readonly dom-class="date-join" class="date-time date-join form-control laydate-icon text"  type="text">
+                    <input name="join_date" value="{$info.join_date??''}"  readonly dom-class="date-join" class="date-time date-join form-control laydate-icon text"  type="text" placeholder="选择入职日期">
                 </td>
             </tr>
             <tr>
                 <th>离职日期</th>
                 <td>
-                    <input name="out_date" value="{$info.out_date??''}"  readonly dom-class="date-out" class="date-time date-out form-control laydate-icon text"  type="text">
+                    <input name="out_date" value="{$info.out_date??''}"  readonly dom-class="date-out" class="date-time date-out form-control laydate-icon text"  type="text" placeholder="选择离职日期">
                 </td>
             </tr>
             <tr>
