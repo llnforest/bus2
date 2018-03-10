@@ -19,7 +19,7 @@ class Record extends BaseController{
     //发车单列表
     public function index(){
         $orderBy  = 'a.update_time desc';
-        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','g.name'=>'like','a.update_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','h.name'=>'like','a.update_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name,h.name as customer_name';
         $where['a.status'] = 2;
@@ -42,7 +42,7 @@ class Record extends BaseController{
 
     //导出发车单
     public function exportOut(){
-        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','g.name'=>'like','a.update_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.order_id','d.corporation_id','e.order_type','e.type','d.num'=>'like','h.name'=>'like','a.update_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
         $fields = 'a.*,d.num,e.type as money_type,e.order_type,date_format(e.start_date,"%Y-%m-%d %H:%i") as start_time,date_format(e.end_date,"%Y-%m-%d %H:%i") as end_time,f.*,g.name as corporation_name,h.name as customer_name';
         $where['a.status'] = 2;
@@ -97,7 +97,7 @@ class Record extends BaseController{
                 //Excel的第A列，uid是你查出数组的键值，下面以此类推
                 ->setCellValueExplicit('A'.($key+2), $v['order_id'],\PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValue('B'.($key+2), $v['num'])
-                ->setCellValue('C'.($key+2), $v['corporation_name'])
+                ->setCellValue('C'.($key+2), $v['customer_name'])
 //                ->setCellValue('D'.($key+2), $v['sec_name'])
                 ->setCellValue('D'.($key+2), $v['money'])
                 ->setCellValue('E'.($key+2), $v['times'])
@@ -105,7 +105,7 @@ class Record extends BaseController{
                 ->setCellValue('G'.($key+2), ($v['money_type'] == 1?'全包':'净价'))
                 ->setCellValue('H'.($key+2), $v['start_time'].'~'.$v['end_time'])
                 ->setCellValue('I'.($key+2), '起：'.$v['start_prov'].$v['start_city'].$v['start_area'].$v['start_address'].'。 终：'.$v['end_prov'].$v['end_city'].$v['end_area'].$v['end_address'])
-                ->setCellValue('J'.($key+2), $v['customer_name'])
+                ->setCellValue('J'.($key+2), $v['corporation_name'])
                 ->setCellValue('K'.($key+2), $v['update_time'])
             ;
         }

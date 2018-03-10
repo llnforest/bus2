@@ -70,7 +70,7 @@
                     <td>{$v.order_id}</td>
                     <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
                     <td>
-                        {$v.corporation_name}
+                        {$v.customer_name}
                     </td>
                     <td>{$v.money}</td>
                     <td>{$v.times}</td>
@@ -78,7 +78,7 @@
                     <td>{if $v.money_type == 1}全包{elseif $v.money_type == 2}净价{/if}</td>
                     <td><div><span class="blue">开始:</span>{$v.start_time}</div><div><span class="red">结束:</span>{$v.end_time}</div></td>
                     <td><div><span class="blue">起:</span>{$v.start_prov}{$v.start_city}{$v.start_area}{$v.start_address}</div><div><span class="red">终:</span>{$v.end_prov}{$v.end_city}{$v.end_area}{$v.end_address}</div></td>
-                    <td>{$v.customer_name}</td>
+                    <td>{$v.corporation_name}</td>
                     <td>{$v.update_time}</td>
                 </tr>
             {/foreach}
