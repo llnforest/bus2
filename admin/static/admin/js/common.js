@@ -256,6 +256,13 @@ $(function() {
             }
             window.location.href = url;
         });
+
+        //关闭弹框
+        $(".layui-off").click(function(){
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index);
+        });
+
     }
 })
 //渲染排序样式
@@ -446,13 +453,8 @@ function formPost(_this,url,dom){
             $('#alert').html(alertDanger(xhr.responseText));
         }
     });
-
-    //关闭弹框
-    $(".layui-off").click(function(){
-        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-        parent.layer.close(index);
-    });
 }
+
 //渲染switch框
 function renderSwitch(){
     var dom = $("input[lay-skin='switch']");
@@ -466,6 +468,7 @@ function renderSwitch(){
         })
     }
 }
+
 //渲染日历方法
 function renderDatePicker(){
     if($(".date-time").length > 0){
