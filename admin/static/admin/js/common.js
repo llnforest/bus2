@@ -263,6 +263,49 @@ $(function() {
             parent.layer.close(index);
         });
 
+        //--------------点击输入框渲染功能-------------
+        //点击输入框显示列表
+        $('.click-show').bind("input propertychange",function(){
+            var _this = $(this);
+            var name = _this.val().trim();
+            var data_id = _this.next(".click-id").val();
+            var data_url = _this.attr("data-url");
+            var data_msg = _this.attr("data-msg");
+            ajaxPost(data_url
+                ,{name:name}
+                ,function(data){
+                    var html = ''
+                    if(data.code == 1){
+                        $.each(data.data,function(index,item){
+                            var active = item.id == data_id ? 'active':'';
+                            html += '<li class="list-group-item click-show-list '+active+'" data-id="'+item.id+'">'+item.name+'</li>'
+                        })
+                    }else if(data.code == 0){
+                    }else{
+                        html = '<li class="list-group-item click-show-list disabled" data-id="">没有找到您匹配的'+data_msg+'</li>';
+                    }
+                    _this.siblings('.click-show-wrap').html(html);
+                }
+            )
+        })
+
+        //点击列表中选项
+        $(".click-show-wrap").on('click','.click-show-list:not(".disabled")',function(){
+            var _this = $(this);
+            var id = _this.attr("data-id");
+            var text = _this.text();
+            _this.parent(".click-show-wrap").siblings('.click-id').val(id);
+            _this.parent(".click-show-wrap").siblings('.click-show').val(text);
+            _this.parent(".click-show-wrap").html('');
+        })
+        //点击列表中不可点击选项
+        $(".click-show-wrap").on('click','.click-show-list.disabled',function(){
+            var _this = $(this);
+            _this.parent(".click-show-wrap").siblings('.click-id').val('');
+            _this.parent(".click-show-wrap").siblings('.click-show').val('');
+            _this.parent(".click-show-wrap").html('');
+        })
+
     }
 })
 //渲染排序样式

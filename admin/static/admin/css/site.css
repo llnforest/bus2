@@ -18,6 +18,9 @@ html,
     background-color: #1abc9c;
     border:none;
 }
+.click-show-wrap{
+    margin-top:35px;position: absolute;z-index: 9999;
+}
 .rg-margin{margin-right:5px;}
 .lf-margin{margin-left:5px;}
 a{color: #1abc9c;}

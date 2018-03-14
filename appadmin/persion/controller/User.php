@@ -212,4 +212,11 @@ class User extends BaseController{
         return view('userInfo',$data);
     }
 
+    //渲染驾驶员列表
+    public function busUserList(){
+        if(empty($this->param['name'])) return ['code'=>0,'data'=>[]];
+        $busUserList = UserModel::where(['status'=>1,'is_driver'=>1,'system_id' => $this->system_id,'name'=>['like','%'.$this->param['name'].'%']])->order('num asc')->select();
+        if(count($busUserList) == 0) return ['code'=>2,'data'=>$busUserList];
+        else return ['code'=>1,'data'=>$busUserList];
+    }
 }

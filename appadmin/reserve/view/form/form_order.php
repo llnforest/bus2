@@ -6,12 +6,12 @@
                 <th>租车客户</th>
                 <td>
 <!--                    <span class="span-primary select-customer fl">{$info.name?:'选择客户'}</span>-->
-                    <input class="form-control text customer" type="text" name="customer_name" value="{$info.name??''}" placeholder="请输入想要查找的租车客户">
+                    <input class="form-control text click-show" type="text" value="{$info.name??''}" placeholder="请输入想要查找的租车客户" data-url="{:url('order/customerList')}" data-msg="租车客户">
                     <span class="form-required">*</span>
-                    <ul class="list-group customer-wrap text" style="margin-top:35px;position: absolute;z-index: 9999;">
+                    <ul class="list-group click-show-wrap text">
                     </ul>
                     {if !isset($info.id)}<a href="{:url('customer/customer/customerAdd',['skip_type'=>'order'])}" style="line-height:34px;margin-left:20px;">添加客户</a>{/if}
-                    <input id="customer_id" class="form-control customer-id" type="hidden" name="customer_id" value="{$info.customer_id??''}">
+                    <input id="customer_id" class="form-control click-id" type="hidden" name="customer_id" value="{$info.customer_id??''}">
                 </td>
             </tr>
             <tr>
@@ -242,38 +242,6 @@
                 $(".jiaotong").show();
                 $(".tuanche").hide();
             }
-        })
-
-        //填写车辆归属
-        $('.customer').bind("input propertychange",function(){
-            var name = $(this).val().trim();
-            var customer_id = $(".customer-id").val();
-            ajaxPost('{:url("order/customerList")}'
-                ,{name:name}
-                ,function(data){
-                    var html = ''
-                    if(data.code == 1){
-                        $.each(data.data,function(index,item){
-                            var active = item.id == customer_id ? 'active':'';
-                            html += '<li class="list-group-item customer-list '+active+'" data-id="'+item.id+'">'+item.name+'</li>'
-                        })
-                    }else if(data.code == 0){
-                    }else{
-                        html = '<li class="list-group-item customer-list disabled" data-id="">没有找到匹配的客户</li>';
-                    }
-                    $(".customer-wrap").html(html);
-                }
-            )
-        })
-
-        //选择车辆归属
-        $(".customer-wrap").on('click','.customer-list:not(".disabled")',function(){
-            var _this = $(this);
-            var id = _this.attr("data-id");
-            var value = _this.text();
-            $(".customer-wrap").html('');
-            $(".customer-id").val(id);
-            $(".customer").val(value);
         })
     })
 </script>

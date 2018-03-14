@@ -26,15 +26,20 @@
             <tr>
                 <th>主驾驶员</th>
                 <td>
-                    <span class="span-primary select-fir fl">{$info.fir_name?:'选择主驾驶员'}</span>
-                    <input id="fir_id" class="form-control" type="hidden" name="fir_user_id" value="{$info.fir_user_id??''}">
+                    <input class="form-control text click-show" type="text" data-url="{:url("persion/user/busUserList")}" value="{$info.fir_name??''}" placeholder="请输入想要查找的主驾驶员" data-msg="主驾驶员">
+                    <input class="form-control text click-id" type="hidden" name="fir_user_id" value="{$info.fir_user_id??''}">
+                    <ul class="list-group click-show-wrap text">
+                    </ul>
+                    <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
                 <th>副驾驶员</th>
                 <td>
-                    <span class="span-primary select-sec fl">{$info.sec_name?:'选择副驾驶员'}</span>
-                    <input id="sec_id" class="form-control" type="hidden" name="sec_user_id" value="{$info.sec_user_id??''}">
+                    <input class="form-control text click-show" type="text" data-url="{:url("persion/user/busUserList")}" value="{$info.sec_name??''}" placeholder="请输入想要查找的副驾驶员" data-msg="副驾驶员">
+                    <input class="form-control text click-id" type="hidden" name="sec_user_id" value="{$info.sec_user_id??''}">
+                    <ul class="list-group click-show-wrap text">
+                    </ul>
                 </td>
             </tr>
             <tr>
@@ -64,12 +69,10 @@
             <tr>
                 <th>车辆归属</th>
                 <td>
-                    <div class="layui-form select">
-                        <input class="form-control text corporation" type="text" name="corporation_name" value="{$info.corporation_name??''}" placeholder="请输入想要查找的车辆归属">
-                        <input class="form-control text corporation-id" type="hidden" name="corporation_id" value="{$info.corporation_id??''}">
-                        <ul class="list-group corporation-wrap text" style="margin-top:35px;position: absolute;z-index: 9999;">
-                        </ul>
-                    </div>
+                    <input class="form-control text click-show" type="text" data-url="{:url("bus/corporationList")}" value="{$info.corporation_name??''}" placeholder="请输入想要查找的车辆归属" data-msg="车辆归属">
+                    <input class="form-control text click-id" type="hidden" name="corporation_id" value="{$info.corporation_id??''}">
+                    <ul class="list-group click-show-wrap text">
+                    </ul>
                     <span class="form-required">*</span>
                 </td>
             </tr>
@@ -174,37 +177,5 @@
             })
         });
 
-        //填写车辆归属
-        $('.corporation').bind("input propertychange",function(){
-            var name = $(this).val().trim();
-            var corporation_id = $(".corporation-id").val();
-            ajaxPost('{:url("bus/corporationList")}'
-                ,{name:name}
-                ,function(data){
-                    var html = ''
-//                    $(".corporation-id").val('');
-                    if(data.code == 1){
-                        $.each(data.data,function(index,item){
-                            var active = item.id == corporation_id ? 'active':'';
-                            html += '<li class="list-group-item corporation-list '+active+'" data-id="'+item.id+'">'+item.name+'</li>'
-                        })
-                    }else if(data.code == 0){
-                    }else{
-                        html = '<li class="list-group-item corporation-list disabled" data-id="">没有找到您匹配的车辆归属</li>';
-                    }
-                    $(".corporation-wrap").html(html);
-                }
-            )
-        })
-
-        //选择车辆归属
-        $(".corporation-wrap").on('click','.corporation-list:not(".disabled")',function(){
-            var _this = $(this);
-            var id = _this.attr("data-id");
-            var value = _this.text();
-            $(".corporation-wrap").html('');
-            $(".corporation-id").val(id);
-            $(".corporation").val(value);
-        })
     })
 </script>
