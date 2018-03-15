@@ -29,6 +29,7 @@
                 <td class="layui-form">
                     <input type="radio" name="type" {if !isset($info.type) || $info.type == 1}checked{/if} value="1" title="合作客户">
                     <input type="radio" name="type" {$info.type == 2?'checked':''}  value="2" title="临时客户">
+                    <input type="radio" name="type" {$info.type == 3?'checked':''}  value="3" title="同行">
                 </td>
             </tr>
             <tr>

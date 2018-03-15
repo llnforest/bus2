@@ -29,6 +29,7 @@
                             <option value="">客户类型</option>
                             <option value="1" {if input('type') == 1}selected{/if}>合作客户</option>
                             <option value="2" {if input('type') == 2}selected{/if}>临时客户</option>
+                            <option value="3" {if input('type') == 3}selected{/if}>同行</option>
                         </select>
                     </div>
                     <div class="btn-group layui-form">

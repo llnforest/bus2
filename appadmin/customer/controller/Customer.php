@@ -156,7 +156,7 @@ class Customer extends BaseController{
                 self::$obj['user_type'] = $value == '公司'?1:2;
                 break;
             case 'E':
-                self::$obj['type'] = $value == '合作客户'?1:2;
+                self::$obj['type'] = str_replace(['合作客户','临时客户','同行'],[1,2,3],$value);
                 break;
             default:
                 break;
