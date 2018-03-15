@@ -52,26 +52,27 @@ class Bus extends BaseController{
     public function busAdd(){
         $data['style'] = isset($this->param['style'])?$this->param['style']:'bus';
         $data['order_id'] = isset($this->param['order_id'])?$this->param['order_id']:'';
-        if($this->request->isPost()){
+        if($this->request->isPost()) {
             $validate = new Validate($this->roleValidate);
-            if(!$validate->check($this->param)) return ['code' => 0, 'msg' => $validate->getError()];
-            if(empty($this->param['is_air'])) $this->param['is_air'] = 0;
-            if(empty($this->param['is_tv'])) $this->param['is_tv'] = 0;
-            if($bus = BusModel::create($this->param)){
-                if(!empty($this->param['bus_user_id'])){
-                    $bus_user = explode(',',$this->param['bus_user_id']);
+            if (!$validate->check($this->param)) return ['code' => 0, 'msg' => $validate->getError()];
+            if (empty($this->param['is_air'])) $this->param['is_air'] = 0;
+            if (empty($this->param['is_tv'])) $this->param['is_tv'] = 0;
+            if ($bus = BusModel::create($this->param)) {
+                if (!empty($this->param['partner_data'])) {
+                    $partner_data = json_decode($this->param['partner_data'], true);
                     $arr = [];
-                    foreach($bus_user as $v){
-                        $arr[] = ['user_id'=>$v,'bus_id'=>$bus['id'],'system_id'=>$this->system_id];
+                    foreach ($partner_data as $k => $v) {
+                        if (empty($k)) continue;
+                        $arr[] = ['user_id' => $k, 'bus_id' => $bus['id'], 'system_id' => $this->system_id, 'rate' => $v];
                     }
                     $busUser = new BusUserModel();
                     $busUser->saveAll($arr);
                 }
-                if($data['style'] == 'bus') return ['code' => 1,'msg' => '添加成功','url' => url('bus/index')];
-                if($data['style'] == 'order_one') return ['code' => 1,'msg' => '添加成功','url' => url('reserve/order/selectBus',['id'=>$this->param['order_id']])];
-                if($data['style'] == 'order_any') return ['code' => 1,'msg' => '添加成功','url' => url('reserve/order/selectAnyBus',['id'=>$this->param['order_id']])];
-            }else{
-                return ['code' => 0,'msg' => '添加失败'];
+                if ($data['style'] == 'bus') return ['code' => 1, 'msg' => '添加成功', 'url' => url('bus/index')];
+                if ($data['style'] == 'order_one') return ['code' => 1, 'msg' => '添加成功', 'url' => url('reserve/order/selectBus', ['id' => $this->param['order_id']])];
+                if ($data['style'] == 'order_any') return ['code' => 1, 'msg' => '添加成功', 'url' => url('reserve/order/selectAnyBus', ['id' => $this->param['order_id']])];
+            } else {
+                return ['code' => 0, 'msg' => '添加失败'];
             }
         }
         $data['department'] = DepartmentModel::where(['system_id'=>$this->system_id])->order('sort')->select();
@@ -94,18 +95,19 @@ class Bus extends BaseController{
             if(empty($this->param['is_air'])) $this->param['is_air'] = 0;
             if(empty($this->param['is_tv'])) $this->param['is_tv'] = 0;
             if($data['info']->save($this->param)){
-                if($this->param['bus_user_id']){
+                if(!empty($this->param['partner_data'])){
+                    $partner_data = json_decode($this->param['partner_data'],true);
                     $sql = 'select group_concat(user_id) as ids from tp_bus_user where bus_id = '.$this->id.' group by bus_id';
                     $user_arr = Db::query($sql);
                     if(isset($user_arr[0]['ids'])) $user_ids = explode(',',$user_arr[0]['ids']);
                     else $user_ids = [];
-                    $new_ids = explode(',',$this->param['bus_user_id']);
+                    $new_ids = array_filter(array_keys($partner_data));
                     $new_arr = array_diff($new_ids,$user_ids);
                     $busUser = new BusUserModel();
                     if($new_arr){
                         $arr = [];
                         foreach($new_arr as $v){
-                            $arr[] = ['user_id'=>$v,'bus_id'=>$this->id,'system_id'=>$this->system_id];
+                            $arr[] = ['user_id'=>$v,'bus_id'=>$this->id,'system_id'=>$this->system_id,'rate'=>$partner_data[$v]];
                         }
                         $busUser->saveAll($arr);
                     }
@@ -115,18 +117,23 @@ class Bus extends BaseController{
                             BusUserModel::where(['user_id'=>$v,'bus_id'=>$this->id])->update(['status'=>2]);
                         }
                     }
+                    $now_arr = array_intersect($user_ids,$new_ids);
+                    if($now_arr){
+                        foreach($now_arr as $v){
+                            BusUserModel::where(['user_id'=>$v,'bus_id'=>$this->id])->update(['rate'=>$partner_data[$v]]);
+                        }
+                    }
                 }
                 return ['code' => 1,'msg' => '修改成功','url' => url('bus/index')];
             }else{
                 return ['code' => 0,'msg' => '修改失败'];
             }
         }
-        $user_arr = BusUserModel::alias('a')
+        $data['partnerList'] = BusUserModel::alias('a')
             ->join('tp_hr_user b','a.user_id = b.id','left')
             ->where(['a.bus_id' => $this->id,'a.status' => 1])
-            ->column('b.name','a.user_id');
-        $data['user_name'] = implode(',',$user_arr);
-        $data['user_ids'] = implode(',',array_keys($user_arr));
+            ->field('b.name,a.user_id,a.rate')
+            ->select();
         $data['department'] = DepartmentModel::where(['system_id'=>$this->system_id])->order('sort')->select();
         return view('busEdit',$data);
     }

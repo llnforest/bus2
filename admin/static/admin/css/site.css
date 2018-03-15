@@ -21,6 +21,14 @@ html,
 .click-show-wrap{
     margin-top:35px;position: absolute;z-index: 9999;
 }
+.clear-float:after{
+    content:".";
+    clear:both;
+    display:block;
+    height:0;
+    overflow:hidden;
+    visibility:hidden;
+}
 .rg-margin{margin-right:5px;}
 .lf-margin{margin-left:5px;}
 a{color: #1abc9c;}

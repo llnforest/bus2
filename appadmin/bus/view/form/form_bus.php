@@ -45,8 +45,40 @@
             <tr>
                 <th>股东人员</th>
                 <td>
-                    <span class="span-primary select-bus-user fl">{$user_name?:'选择股东'}</span>
-                    <input id="bus_user_id" class="form-control" type="hidden" name="bus_user_id" value="{$user_ids??''}">
+                    <div class="partner-wrap">
+                        <div class="partner-area">
+                            {if isset($partnerList)}
+                            {foreach $partnerList as $item}
+                            <div class="partner-list clear-float">
+                                <input class="form-control text click-show" type="text" data-url="{:url("persion/user/busPartnerList")}" value="{$item.name??''}" placeholder="请输入想要查找的股东" data-msg="股东人员">
+                                <input class="form-control text click-id" type="hidden" name="partner_id" value="{$item.user_id??''}">
+                                <ul class="list-group click-show-wrap text">
+                                </ul>
+                                <input class="form-control partner-rate" placeholder="股份比例" value="{$item.rate}">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm partner-delete">
+                                    <i class="layui-icon">&#xe640;</i>
+                                </button>
+                            </div>
+                            {/foreach}
+                            {/if}
+                        </div>
+                        <div class="partner-clone clear-float">
+                            <input class="form-control text click-show" type="text" data-url="{:url("persion/user/busPartnerList")}" value="" placeholder="请输入想要查找的股东" data-msg="股东人员">
+                            <input class="form-control text click-id" type="hidden" name="partner_id" value="">
+                            <ul class="list-group click-show-wrap text">
+                            </ul>
+                            <input class="form-control partner-rate" placeholder="股份比例">
+                            <button class="layui-btn layui-btn-primary layui-btn-sm partner-delete">
+                                <i class="layui-icon">&#xe640;</i>
+                            </button>
+                        </div>
+                        <div class="partner-btn">
+                            <button class="layui-btn layui-btn-sm add-partner">
+                                <i class="layui-icon">&#xe654;</i>添加
+                            </button>
+                        </div>
+                    </div>
+                    <input id="partner_data" class="form-control" type="hidden" name="partner_data" value="">
                 </td>
             </tr>
             <tr>
@@ -136,6 +168,31 @@
         </tbody>
     </table>
 </div>
+<style>
+    .partner-wrap .click-show{
+        width:192px;
+    }
+    .partner-rate{
+        width:100px;
+        float:left;
+        margin-left:8px;
+    }
+    .partner-btn{
+        width:300px;
+        text-align:center;
+    }
+    .partner-list{
+        clear:both;
+        margin-bottom:12px;
+    }
+    .partner-clone{
+        display:none;
+    }
+    .partner-delete{
+        margin-left:8px;
+        margin-top:2px;
+    }
+</style>
 <script>
     $(function(){
         //选择主驾驶
@@ -177,5 +234,24 @@
             })
         });
 
+        $(".add-partner").click(function(){
+            var _clone = $(".partner-clone").clone(true,true).removeClass("partner-clone").addClass("partner-list");
+            $(".partner-area").append(_clone);
+            return false;
+        })
+
+        $(".partner-delete").click(function(){
+            $(this).parents('.partner-list').remove();
+        })
+
+        $(".form-post").click(function(){
+            var sublist = {};
+           $(".partner-area .partner-list").each(function(index,item){
+               var partner_id = $(item).find(".click-id").val();
+               var rate = $(item).find(".partner-rate").val().trim();
+               sublist[partner_id] = rate;
+           })
+            $("#partner_data").val(JSON.stringify(sublist));
+        })
     })
 </script>
