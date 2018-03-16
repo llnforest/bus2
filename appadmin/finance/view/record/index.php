@@ -34,10 +34,10 @@
                         </select>
                     </div>
                     <div class="btn-group">
-                        <input name="start" value="{:input('start')}" placeholder="回车起始日期" dom-class="date-start" class="date-time date-start form-control laydate-icon"  type="text">
+                        <input name="start" value="{if(empty(input('end')) && empty(input('start')))}<?php echo date('Y-m-01',time());?>{else}{:input('start')}{/if}" placeholder="回车起始日期" dom-class="date-start" class="date-time date-start form-control laydate-icon"  type="text">
                     </div>
                     <div class="btn-group">
-                        <input name="end" value="{:input('end')}" placeholder="回车截止日期" dom-class="date-end" class="date-time date-end form-control laydate-icon"  type="text">
+                        <input name="end" value="{if(empty(input('end')) && empty(input('start')))}<?php echo date('Y-m-d',time());?>{else}{:input('end')}{/if}" placeholder="回车截止日期" dom-class="date-end" class="date-time date-end form-control laydate-icon"  type="text">
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">查询</button>
