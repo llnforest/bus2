@@ -47,12 +47,14 @@ class User extends BaseController{
 
     //添加员工
     public function userAdd(){
+        $data['skip_type'] = empty($this->param['skip_type'])?'':$this->param['skip_type'];
         if($this->request->isPost()){
             $validate = new Validate($this->roleValidate);
             if(!$validate->check($this->param)) return ['code' => 0, 'msg' => $validate->getError()];
             $this->param['num'] = sprintf('%06s',$this->param['num']);
             if(UserModel::create($this->param)){
-                return ['code' => 1,'msg' => '添加成功','url' => url('user/index')];
+                if($data['skip_type'] == 'bus') return ['code' => 1,'msg' => '添加成功','url' => url('bus/bus/busAdd')];
+                else return ['code' => 1,'msg' => '添加成功','url' => url('persion/user/index')];
             }else{
                 return ['code' => 0,'msg' => '添加失败'];
             }

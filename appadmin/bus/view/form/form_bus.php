@@ -31,6 +31,9 @@
                     <ul class="list-group click-show-wrap text">
                     </ul>
                     <span class="form-required">*</span>
+                    {if condition="checkPath('persion/user/userAdd')"}
+                    <a href="{:url('persion/user/userAdd',['skip_type'=>'bus'])}" style="line-height:34px;margin-left:20px;">添加驾驶员</a>
+                    {/if}
                 </td>
             </tr>
             <tr>
