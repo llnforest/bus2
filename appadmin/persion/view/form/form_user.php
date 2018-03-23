@@ -69,7 +69,7 @@
             <tr>
                 <th>驾驶员</th>
                 <td class="layui-form">
-                    <input type="checkbox" data-name="is_driver" lay-skin="switch" lay-text="是|否" {$info.is_driver === 0?'':'checked'} data-value="1|0">
+                    <input type="checkbox" data-name="is_driver" lay-skin="switch" lay-text="是|否" {if !isset($info.is_driver) || $info.is_driver == 1}checked{/if} data-value="1|0">
                 </td>
             </tr>
             <tr>
