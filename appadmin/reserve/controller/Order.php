@@ -73,7 +73,8 @@ class Order extends BaseController{
                 return ['code' => 0,'msg' => '添加失败'];
             }
         }
-        return view('orderAdd');
+        $data['customerList'] = CustomerModel::where(['status'=>1,'system_id' => $this->system_id])->field('id,name,user_name,phone')->select();
+        return view('orderAdd',$data);
     }
 
     //修改订单
@@ -116,6 +117,7 @@ class Order extends BaseController{
                 return ['code' => 1,'msg' => '修改成功','url' => url('order/index')];
             }
         }
+        $data['customerList'] = json_encode(CustomerModel::where(['status'=>1,'system_id' => $this->system_id])->field('id,name,user_name,phone')->select());
         return view('orderEdit',$data);
     }
 
@@ -123,27 +125,27 @@ class Order extends BaseController{
     private function saveOrderAddress($address,$id = null){
         $data = [];
         //起始地址
-        $prov = explode('_',$address['start_prov']);
-        $data['start_prov'] = $prov[1];
-        $data['start_provid'] = $prov[0];
-        $city = explode('_',$address['start_city']);
-        $data['start_city'] = $city[1];
-        $data['start_cityid'] = $city[0];
-        $area = explode('_',$address['start_area']);
-        $data['start_area'] = $area[1];
-        $data['start_areaid'] = $area[0];
+//        $prov = explode('_',$address['start_prov']);
+//        $data['start_prov'] = $prov[1];
+//        $data['start_provid'] = $prov[0];
+//        $city = explode('_',$address['start_city']);
+//        $data['start_city'] = $city[1];
+//        $data['start_cityid'] = $city[0];
+//        $area = explode('_',$address['start_area']);
+//        $data['start_area'] = $area[1];
+//        $data['start_areaid'] = $area[0];
         $data['start_address'] = $address['start_address'];
 
         //到达地址
-        $prov = explode('_',$address['end_prov']);
-        $data['end_prov'] = $prov[1];
-        $data['end_provid'] = $prov[0];
-        $city = explode('_',$address['end_city']);
-        $data['end_city'] = $city[1];
-        $data['end_cityid'] = $city[0];
-        $area = explode('_',$address['end_area']);
-        $data['end_area'] = $area[1];
-        $data['end_areaid'] = $area[0];
+//        $prov = explode('_',$address['end_prov']);
+//        $data['end_prov'] = $prov[1];
+//        $data['end_provid'] = $prov[0];
+//        $city = explode('_',$address['end_city']);
+//        $data['end_city'] = $city[1];
+//        $data['end_cityid'] = $city[0];
+//        $area = explode('_',$address['end_area']);
+//        $data['end_area'] = $area[1];
+//        $data['end_areaid'] = $area[0];
         $data['end_address'] = $address['end_address'];
 
         $dbModel = BusOrderAddressModel::get(['order_id' => $id]);
@@ -445,9 +447,11 @@ class Order extends BaseController{
             elseif($v['order_type'] == 2) $order_type = '交通车';
             elseif($v['order_type'] == 3) $order_type = '团车';
             elseif($v['order_type'] == 4) $order_type = '社会用车';
+            elseif($v['order_type'] == 5) $order_type = '同行';
 
             if($v['type'] == 1) $type = '全包';
             elseif($v['type'] == 2) $type = '净价';
+            elseif($v['type'] == 3) $type = '赞助';
 
             if($v['is_air']) $dev .= '空凋,';
             if($v['is_tv']) $dev .= '电视,';

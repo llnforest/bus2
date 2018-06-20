@@ -89,7 +89,7 @@
                 <td class="layui-form">
                     <input type="radio" name="type" value="1" {if !isset($info.type) ||$info.type == 1}checked{/if} title="自有车">
                     <input type="radio" name="type" value="2" {$info.type == 2?'checked':''} title="加盟车">
-                    <input type="radio" name="type" value="3" {$info.type == 3?'checked':''} title="外请车">
+                    <input type="radio" name="type" value="3" {$info.type == 3?'checked':''} title="同行车">
                 </td>
             </tr>
             <tr>

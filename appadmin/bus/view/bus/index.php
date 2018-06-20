@@ -34,7 +34,7 @@
                             <option value="">车辆类型</option>
                             <option value="1" {if input('type') == 1}selected{/if}>自有车</option>
                             <option value="2" {if input('type') == 2}selected{/if}>加盟车</option>
-                            <option value="3" {if input('type') == 3}selected{/if}>外请车</option>
+                            <option value="3" {if input('type') == 3}selected{/if}>同行车</option>
                         </select>
                     </div>
                     <div class="btn-group layui-form">
@@ -104,7 +104,7 @@
                     <td>{$v.fir_name}</td>
                     <td>{$v.sec_name}</td>
                     <td>{if $v.status == 1}<span class="blue">正常</span>{elseif $v.type == 2}维修{elseif $v.type == 3}报废{else}<span class="red">停用</span>{/if}</td>
-                    <td>{if $v.type == 1}自有车{elseif $v.type == 2}加盟车{else}外请车{/if}</td>
+                    <td>{if $v.type == 1}自有车{elseif $v.type == 2}加盟车{else}同行车{/if}</td>
                     <td >
                         {$v.site_num}
                     </td>

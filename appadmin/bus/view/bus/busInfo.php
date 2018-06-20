@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td class="bg-gray">入驻类型</td>
-                    <td>{if $info.type == 1}自有车{elseif $info.type == 2}加盟车{else}外请车{/if}</td>
+                    <td>{if $info.type == 1}自有车{elseif $info.type == 2}加盟车{else}同行车{/if}</td>
                     <td class="bg-gray">厂牌型号</td>
                     <td>{$info.brand}</td>
                 </tr>

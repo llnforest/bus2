@@ -93,7 +93,6 @@ $(function () {
     	openapp($(this).attr("app-url"), $(this).attr("app-id"), $(this).attr("app-name"));
     	var appurl =  $(this).attr("app-url");
     	var dom = $(".nav_wraper a[onclick *= '"+appurl+"' ]");
-    	console.log(dom);
         if(dom.length > 0 && !dom.hasClass("now-nav")){//选择不是同一个菜单项
             dom.parents(".nav_wraper").find(".now-nav").removeClass("now-nav");
             dom.addClass("now-nav");

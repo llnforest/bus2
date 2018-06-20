@@ -18,7 +18,7 @@ use think\Validate;
 class Customer extends BaseController{
     private static $obj;
     private static $customerArr = [];
-    private $roleValidate = ['name|客户名称' => 'require','user_name'=>'require','type|客户类型' => 'require','phone|联系电话' => 'contact'];
+    private $roleValidate = ['name|客户名称' => 'require','user_name|客户姓名'=>'require','type|客户类型' => 'require'];//,'phone|联系电话' => 'contact'
     //构造函数
     public function __construct()
     {

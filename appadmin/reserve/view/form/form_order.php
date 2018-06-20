@@ -4,26 +4,35 @@
         <tbody>
             <tr>
                 <th>租车客户</th>
-                <td>
-<!--                    <span class="span-primary select-customer fl">{$info.name?:'选择客户'}</span>-->
-                    <input class="form-control text click-show" type="text" value="{$info.name??''}" placeholder="请输入想要查找的租车客户" data-url="{:url('order/customerList')}" data-msg="租车客户">
+<!--                <td>-->
+<!--                    <input id="nope" class="form-control text" type="text" value="{$info.name??''}{$info.user_name?'—'.$info.user_name:''}" placeholder="请输入想要查找的客户名称和姓名">-->
+<!--                    <span class="form-required">*</span>-->
+<!--                    {if !isset($info.id)}<a href="{:url('customer/customer/customerAdd',['skip_type'=>'order'])}" style="line-height:34px;margin-left:20px;">添加客户</a>{/if}-->
+<!--                    <input id="customer_id" class="form-control click-id" type="hidden" name="customer_id" value="{$info.customer_id??''}">-->
+<!--                </td>-->
+                <td class="layui-form">
+                    <div class="layui-form select">
+                        <select name="type" class="form-control" lay-search>
+                            <option value="">请输入客户名称或姓名或手机号</option>
+                            {foreach $customerList as $v}
+                            <option value="{$v.id}">{$v.name}/{$v.user_name}/{$v.phone}</option>
+                            {/foreach}
+                        </select>
+                    </div>
                     <span class="form-required">*</span>
-                    <ul class="list-group click-show-wrap text">
-                    </ul>
-                    {if !isset($info.id)}<a href="{:url('customer/customer/customerAdd',['skip_type'=>'order'])}" style="line-height:34px;margin-left:20px;">添加客户</a>{/if}
-                    <input id="customer_id" class="form-control click-id" type="hidden" name="customer_id" value="{$info.customer_id??''}">
                 </td>
             </tr>
             <tr>
                 <th>订单类型</th>
                 <td class="layui-form" id="order_type">
                     {if isset($info.status) && $info.status != 0}
-                    <input type="radio" name="order_type" value="{$info.order_type}" title="{if $info.order_type == 1}旅行社用车{elseif $info.order_type==2}交通车{elseif $info.order_type == 3}团车{elseif $info.order_type == 4}社会用车{/if}" checked>
+                    <input type="radio" name="order_type" value="{$info.order_type}" title="{if $info.order_type == 1}旅行社用车{elseif $info.order_type==2}交通车{elseif $info.order_type == 3}团车{elseif $info.order_type == 4}社会用车{elseif $info.order_type == 5}同行{/if}" checked>
                     {else}
                     <input type="radio" name="order_type" value="1" title="旅行社用车" {if !isset($info.order_type) ||$info.order_type == 1}checked{/if}>
                     <input type="radio" name="order_type" value="4" title="社会用车" {$info.order_type == 4?'checked':''}>
                     <input type="radio" name="order_type" value="2" title="交通车" {$info.order_type == 2?'checked':''}>
                     <input type="radio" name="order_type" value="3" title="团车" {$info.order_type == 3?'checked':''}>
+                    <input type="radio" name="order_type" value="5" title="同行" {$info.order_type == 5?'checked':''}>
                     {/if}
                 </td>
             </tr>
@@ -34,6 +43,7 @@
                         <select name="type" class="form-control" lay-verify="">
                             <option value="1" {if empty($info) || $info.type == 1}selected{/if}>全包</option>
                             <option value="2" {$info.type == 2?'selected':''}>净价</option>
+                            <option value="3" {$info.type == 3?'selected':''}>赞助</option>
                         </select>
                     </div>
                     <span class="form-required">*</span>
@@ -156,22 +166,22 @@
                     {if isset($info) && $info.status != 0}
                         {$info.start_prov}{$info.start_city}{$info.start_area}{$info.start_address}
                     {else}
-                    <div class="layui-form address-area" data-prov="start_prov" data-city="start_city" data-area="start_area" data-provid="{$info.start_provid??''}" data-cityid="{$info.start_cityid??''}" data-areaid="{$info.start_areaid??''}">
-                        <div class="layui-form-item">
-                            <div class="layui-input-inline">
-                                <select name="start_prov" id="start_prov" lay-filter="start_prov">
-                                </select>
-                            </div>
-                            <div class="layui-input-inline">
-                                <select name="start_city" id="start_city" lay-filter="start_city">
-                                </select>
-                            </div>
-                            <div class="layui-input-inline">
-                                <select name="start_area" id="start_area" lay-filter="start_area">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="layui-form address-area" data-prov="start_prov" data-city="start_city" data-area="start_area" data-provid="{$info.start_provid??''}" data-cityid="{$info.start_cityid??''}" data-areaid="{$info.start_areaid??''}">-->
+<!--                        <div class="layui-form-item">-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="start_prov" id="start_prov" lay-filter="start_prov">-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="start_city" id="start_city" lay-filter="start_city">-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="start_area" id="start_area" lay-filter="start_area">-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <input class="form-control text" type="text" name="start_address" value="{$info.start_address??''}" placeholder="起始详细地址">
                     {/if}
                 </td>
@@ -182,22 +192,22 @@
                     {if isset($info) && $info.status != 0}
                     {$info.end_prov}{$info.end_city}{$info.end_area}{$info.end_address}
                     {else}
-                    <div class="layui-form address-area" data-prov="end_prov" data-city="end_city" data-area="end_area" data-provid="{$info.end_provid??''}" data-cityid="{$info.end_cityid??''}" data-areaid="{$info.end_areaid??''}">
-                        <div class="layui-form-item">
-                            <div class="layui-input-inline">
-                                <select name="end_prov" id="end_prov" lay-filter="end_prov">
-                                </select>
-                            </div>
-                            <div class="layui-input-inline">
-                                <select name="end_city" id="end_city" lay-filter="end_city">
-                                </select>
-                            </div>
-                            <div class="layui-input-inline">
-                                <select name="end_area" id="end_area" lay-filter="end_area">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="layui-form address-area" data-prov="end_prov" data-city="end_city" data-area="end_area" data-provid="{$info.end_provid??''}" data-cityid="{$info.end_cityid??''}" data-areaid="{$info.end_areaid??''}">-->
+<!--                        <div class="layui-form-item">-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="end_prov" id="end_prov" lay-filter="end_prov">-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="end_city" id="end_city" lay-filter="end_city">-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="end_area" id="end_area" lay-filter="end_area">-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <input class="form-control text" type="text" name="end_address" value="{$info.end_address??''}" placeholder="到达详细地址">
                     {/if}
                 </td>
@@ -217,8 +227,31 @@
         </tbody>
     </table>
 </div>
+<script src="__PublicAdmin__/js/plugins/jquery.autocompleter.js?001"></script>
 <script>
     $(function(){
+        var data = [{0,1,2}];
+        $('#nope1').autocompleter({
+            // marker for autocomplete matches
+            highlightMatches: true,
+            // object to local or url to remote search
+            source: data,
+            // custom template
+            template: '{{ id }}{{name}}',
+            // show hint
+            hint: true,
+            // abort source if empty field
+            empty: false,
+            // max results
+            limit: 10,
+
+            callback: function (value, index, selected) {
+                if (selected) {
+                    $('#customer_id').val(selected.id);
+                }
+            }
+        });
+
         //选择主驾驶
         $('.select-customer').click(function(){
             var id = $("#customer_id").val();

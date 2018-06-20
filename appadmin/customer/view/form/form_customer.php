@@ -36,7 +36,6 @@
                 <th>联系电话</th>
                 <td>
                     <input class="form-control text" type="text" name="phone" value="{$info.phone??''}" placeholder="联系电话">
-                    <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>
