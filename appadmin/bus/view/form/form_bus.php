@@ -10,13 +10,6 @@
                 </td>
             </tr>
             <tr>
-                <th>厂牌型号</th>
-                <td>
-                    <input class="form-control text" type="text" name="brand" value="{$info.brand??''}" placeholder="厂牌型号">
-                    <span class="form-required">*</span>
-                </td>
-            </tr>
-            <tr>
                 <th>座位数量</th>
                 <td>
                     <input class="form-control text" type="text" name="site_num" value="{$info.site_num??''}" placeholder="座位数量">
@@ -43,6 +36,22 @@
                     <input class="form-control text click-id" type="hidden" name="sec_user_id" value="{$info.sec_user_id??''}">
                     <ul class="list-group click-show-wrap text">
                     </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>车辆归属</th>
+                <td>
+                    <input class="form-control text click-show" type="text" data-url="{:url("bus/corporationList")}" value="{$info.corporation_name??''}" placeholder="请输入想要查找的车辆归属" data-msg="车辆归属">
+                    <input class="form-control text click-id" type="hidden" name="corporation_id" value="{$info.corporation_id??''}">
+                    <ul class="list-group click-show-wrap text">
+                    </ul>
+                    <span class="form-required">*</span>
+                </td>
+            </tr>
+            <tr>
+                <th>厂牌型号</th>
+                <td>
+                    <input class="form-control text" type="text" name="brand" value="{$info.brand??''}" placeholder="厂牌型号">
                 </td>
             </tr>
             <tr>
@@ -99,16 +108,6 @@
                     <input type="checkbox" name="is_tv" value="1" {if !isset($info.is_tv) ||$info.is_tv == 1}checked{/if}  title="电视">
                     <input type="checkbox" name="is_microphone" value="1" {$info.is_microphone == 1?'checked':''}  title="麦克风">
                     <input type="checkbox" name="is_bathroom" value="1" {$info.is_bathroom == 1?'checked':''}  title="卫生间">
-                </td>
-            </tr>
-            <tr>
-                <th>车辆归属</th>
-                <td>
-                    <input class="form-control text click-show" type="text" data-url="{:url("bus/corporationList")}" value="{$info.corporation_name??''}" placeholder="请输入想要查找的车辆归属" data-msg="车辆归属">
-                    <input class="form-control text click-id" type="hidden" name="corporation_id" value="{$info.corporation_id??''}">
-                    <ul class="list-group click-show-wrap text">
-                    </ul>
-                    <span class="form-required">*</span>
                 </td>
             </tr>
             <tr>

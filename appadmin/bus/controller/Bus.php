@@ -19,7 +19,7 @@ use think\Validate;
 class Bus extends BaseController{
     private static $obj;
     private static $busArr = [];
-    private $roleValidate = ['num|车牌号码' => 'require','brand|厂牌型号' => 'require','site_num|座位数量' => 'require|digit','fir_user_id|主驾驶员' => 'require','corporation_id|车辆归属' => 'require|digit'];
+    private $roleValidate = ['num|车牌号码' => 'require','site_num|座位数量' => 'require|digit','fir_user_id|主驾驶员' => 'require','corporation_id|车辆归属' => 'require|digit'];
     //构造函数
     public function __construct()
     {

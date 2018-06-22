@@ -205,10 +205,24 @@ class Record extends BaseController{
                 $old = $result['number'];
                 $arr = ['number' => $data];
                 $text = '人数已更新';
-            }else{
+            }elseif($this->param['type'] == 4){
                 $old = $result['money'];
                 $arr = ['money' => $data];
-                $text = '金额已更新';
+                $text = '合同金额已更新';
+            }elseif($this->param['type'] == 5){
+                $old = $result['money'];
+                $arr = ['xianshou' => $data];
+                $text = '现收金额已更新';
+            }
+            elseif($this->param['type'] == 6){
+                $old = $result['money'];
+                $arr = ['pay_money' => $data];
+                $text = '付款金额已更新';
+            }
+            elseif($this->param['type'] == 7){
+                $old = $result['money'];
+                $arr = ['taxation' => $data];
+                $text = '税款金额已更新';
             }
             $roleValidate = ['data|数据' => 'require|digit'];
             $validate = new Validate($roleValidate);
@@ -277,7 +291,8 @@ class Record extends BaseController{
             if($v['order_type'] == 1) $order_type = '旅行社用车';
             elseif($v['order_type'] == 2) $order_type = '交通车';
             elseif($v['order_type'] == 3) $order_type = '团车';
-            elseif($v['order_type'] == 3) $order_type = '社会用车';
+            elseif($v['order_type'] == 4) $order_type = '社会用车';
+            elseif($v['order_type'] == 5) $order_type = '同行';
 
             if($v['order_type'] != 2) $number = $v['number'];
             if($v['order_type'] == 3) $km = $v['km'];

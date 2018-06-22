@@ -31,9 +31,9 @@ class Order extends BaseController{
     //订单列表页
     public function index(){
         $orderBy  = 'a.status asc,a.create_time desc';
-        $where  = getWhereParam(['a.id','b.name','a.type','a.status','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.id','b.name','b.user_name','b.phone','a.type','a.status','a.create_time'=>['start','end']],$this->param);
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
-        $fields = 'a.*,b.name,b.type as customer_type,c.*,d.id as record_id';
+        $fields = 'a.*,b.name,b.user_name,b.phone,b.type as customer_type,c.*,d.id as record_id';
         $data['list'] = OrderModel::alias('a')
             ->join('tp_bus_customer b','a.customer_id = b.id','left')
             ->join('tp_bus_order_address c','a.id = c.order_id','left')

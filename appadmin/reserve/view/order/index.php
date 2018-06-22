@@ -17,6 +17,12 @@
                     <div class="btn-group">
                         <input name="name" class="form-control" value="{:input('name')}"  placeholder="客户名称" type="text">
                     </div>
+                    <div class="btn-group">
+                        <input name="user_name" class="form-control" value="{:input('user_name')}"  placeholder="客户姓名" type="text">
+                    </div>
+                    <div class="btn-group">
+                        <input name="phone" class="form-control" value="{:input('phone')}"  placeholder="客户联系方式" type="text">
+                    </div>
                     <div class="btn-group layui-form">
                         <select name="type" class="form-control" lay-verify="">
                             <option value="">结账类型</option>
@@ -53,7 +59,7 @@
             <thead>
             <tr>
                 <th width="60">订单编号</th>
-                <th width="70">客户名称</th>
+                <th width="70">客户</th>
                 <th width="55">状态</th>
                 <th width="70">订单类型</th>
                 <th width="70">结账类型</th>
@@ -71,7 +77,11 @@
             {foreach $list as $v}
                 <tr>
                     <td><span class="span-primary order-detail" data-id="{$v.id}">{$v.id}</span></td>
-                    <td>{$v.name}</td>
+                    <td>
+                        <p>{$v.name}</p>
+                        <p>{$v.user_name}</p>
+                        <p>{$v.phone}</p>
+                    </td>
                     <td>{if $v.status == 1}已派单{elseif $v.status == 2}<span class="blue">交易成功</span>{elseif $v.status == 3}<span class="grey">交易取消</span>{else}<span class="red">待派单</span>{/if}</td>
                     <td>{if $v.order_type == 1}旅行社用车{elseif $v.order_type == 2}交通车{elseif $v.order_type == 3}团车{elseif $v.order_type == 4}社会用车{elseif $v.order_type == 5}同行{/if}</td>
                     <td>{if $v.type == 1}全包{elseif $v.type == 2}净价{elseif $v.type == 3}赞助{/if}</td>

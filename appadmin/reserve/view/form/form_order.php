@@ -4,15 +4,9 @@
         <tbody>
             <tr>
                 <th>租车客户</th>
-<!--                <td>-->
-<!--                    <input id="nope" class="form-control text" type="text" value="{$info.name??''}{$info.user_name?'—'.$info.user_name:''}" placeholder="请输入想要查找的客户名称和姓名">-->
-<!--                    <span class="form-required">*</span>-->
-<!--                    {if !isset($info.id)}<a href="{:url('customer/customer/customerAdd',['skip_type'=>'order'])}" style="line-height:34px;margin-left:20px;">添加客户</a>{/if}-->
-<!--                    <input id="customer_id" class="form-control click-id" type="hidden" name="customer_id" value="{$info.customer_id??''}">-->
-<!--                </td>-->
                 <td class="layui-form">
                     <div class="layui-form select">
-                        <select name="type" class="form-control" lay-search>
+                        <select name="customer_id" class="form-control" lay-search>
                             <option value="">请输入客户名称或姓名或手机号</option>
                             {foreach $customerList as $v}
                             <option value="{$v.id}">{$v.name}/{$v.user_name}/{$v.phone}</option>
@@ -20,6 +14,7 @@
                         </select>
                     </div>
                     <span class="form-required">*</span>
+                    {if !isset($info.id)}<a href="{:url('customer/customer/customerAdd',['skip_type'=>'order'])}" style="line-height:34px;margin-left:20px;">添加客户</a>{/if}
                 </td>
             </tr>
             <tr>

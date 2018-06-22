@@ -39,7 +39,8 @@
                             <option value="1" {if input('order_type') == 1}selected{/if}>旅行社</option>
                             <option value="2" {if input('order_type') == 2}selected{/if}>交通</option>
                             <option value="3" {if input('order_type') == 3}selected{/if}>团车</option>
-                            <option value="3" {if input('order_type') == 4}selected{/if}>社会</option>
+                            <option value="4" {if input('order_type') == 4}selected{/if}>社会</option>
+                            <option value="5" {if input('order_type') == 5}selected{/if}>同行</option>
                         </select>
                     </div>
                     <div class="btn-group">
@@ -70,7 +71,10 @@
                 <th width="60">趟数</th>
                 <th width="60">公里</th>
                 <th width="60">人数</th>
-                <th width="60">金额</th>
+                <th width="60">合同金额</th>
+                <th width="60">现收金额</th>
+                <th width="60">付款金额</th>
+                <th width="60">税款</th>
                 <th width="100">操作</th>
             </tr>
             </thead>
@@ -80,7 +84,7 @@
                     <td>{$v.order_id}</td>
                     <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
                     <td>{if $v.status == 1}租用途中{elseif $v.status == 2}<span class="blue">已回车</span>{elseif $v.status == 3}<span class="grey">取消接单</span>{else}<span class="red">待接单</span>{/if}
-                    ({if $v.order_type == 1}旅行社{elseif $v.order_type == 2}交通{elseif $v.order_type == 4}社会{else}团车{/if})
+                    ({if $v.order_type == 1}旅行社{elseif $v.order_type == 2}交通{elseif $v.order_type == 4}社会{elseif $v.order_type == 3}团车{elseif $v.order_type == 5}同行{/if})
                     </td>
                     <td>{$v.start_date}</td>
                     <td>{$v.end_date}</td>
@@ -90,6 +94,9 @@
                     <td>{if checkPath('record/editDatas',['type'=>2]) && !in_array($v.status,[2,3]) && $v.order_type == 3 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.km != 0?$v.km:''}" post-url="{:url('record/editDatas',['type'=>2])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{elseif $v.order_type == 3}{$v.km}{else}--{/if}</td>
                     <td>{if checkPath('record/editDatas',['type'=>3]) && !in_array($v.status,[2,3]) && $v.order_type != 2 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.number != 0?$v.number:''}" post-url="{:url('record/editDatas',['type'=>3])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{elseif $v.order_type != 2}{$v.number}{else}--{/if}</td>
                     <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.money != 0?$v.money:''}" post-url="{:url('record/editDatas',['type'=>4])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.xianshou != 0?$v.xianshou:''}" post-url="{:url('record/editDatas',['type'=>5])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.pay_money != 0?$v.pay_money:''}" post-url="{:url('record/editDatas',['type'=>6])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money}{/if}</td>
+                    <td>{if checkPath('record/editDatas',['type'=>4]) && !in_array($v.status,[2,3]) && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))}<input type="text" value="{$v.taxation != 0?$v.taxation:''}" post-url="{:url('record/editDatas',['type'=>7])}" post-id="{$v.id}" class="change-data form-control input-money" placeholder="0">{else}{$v.money}{/if}</td>
                     <td>
                         {if condition="checkPath('record/editReceive',['id'=>$v['id']]) && $v.status == 0 && ($role == 1 || $v.admin_id == $user_id || in_array($v.admin_id,$ids))"}
                             <span class="span-post" post-url="{:url('record/editReceive',['style'=>input('style'),'order_id'=>input('order_id'),'id'=>$v['id']])}">接单出发</span>
