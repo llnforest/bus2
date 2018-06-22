@@ -41,6 +41,7 @@
                             <option value="3" {if input('order_type') == 3}selected{/if}>团车</option>
                             <option value="4" {if input('order_type') == 4}selected{/if}>社会</option>
                             <option value="5" {if input('order_type') == 5}selected{/if}>同行</option>
+                            <option value="6" {if input('order_type') == 6}selected{/if}>昌顺员工</option>
                         </select>
                     </div>
                     <div class="btn-group">
@@ -84,7 +85,7 @@
                     <td>{$v.order_id}</td>
                     <td><span class="span-primary bus-detail" data-id="{$v.bus_id}">{$v.num}</span></td>
                     <td>{if $v.status == 1}租用途中{elseif $v.status == 2}<span class="blue">已回车</span>{elseif $v.status == 3}<span class="grey">取消接单</span>{else}<span class="red">待接单</span>{/if}
-                    ({if $v.order_type == 1}旅行社{elseif $v.order_type == 2}交通{elseif $v.order_type == 4}社会{elseif $v.order_type == 3}团车{elseif $v.order_type == 5}同行{/if})
+                    ({if $v.order_type == 1}旅行社{elseif $v.order_type == 2}交通{elseif $v.order_type == 4}社会{elseif $v.order_type == 3}团车{elseif $v.order_type == 5}同行{elseif $v.order_type == 6}昌顺员工{/if})
                     </td>
                     <td>{$v.start_date}</td>
                     <td>{$v.end_date}</td>

@@ -293,6 +293,7 @@ class Record extends BaseController{
             elseif($v['order_type'] == 3) $order_type = '团车';
             elseif($v['order_type'] == 4) $order_type = '社会用车';
             elseif($v['order_type'] == 5) $order_type = '同行';
+            elseif($v['order_type'] == 6) $order_type = '昌顺员工';
 
             if($v['order_type'] != 2) $number = $v['number'];
             if($v['order_type'] == 3) $km = $v['km'];

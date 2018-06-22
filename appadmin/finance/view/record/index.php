@@ -22,7 +22,9 @@
                             <option value="1" {if input('order_type') == 1}selected{/if}>旅行社用车</option>
                             <option value="2" {if input('order_type') == 2}selected{/if}>交通车</option>
                             <option value="3" {if input('order_type') == 3}selected{/if}>团车</option>
-                            <option value="3" {if input('order_type') == 4}selected{/if}>社会用车</option>
+                            <option value="4" {if input('order_type') == 4}selected{/if}>社会用车</option>
+                            <option value="5" {if input('order_type') == 5}selected{/if}>同行</option>
+                            <option value="6" {if input('order_type') == 6}selected{/if}>昌顺员工</option>
                         </select>
                     </div>
                     <div class="btn-group layui-form">
@@ -74,7 +76,7 @@
                     </td>
                     <td>{$v.money}</td>
                     <td>{$v.times}</td>
-                    <td>{if $v.order_type == 1}普通班次{elseif $v.order_type == 2}交通车{else}团车{/if}</td>
+                    <td>{if $v.order_type == 1}旅行社{elseif $v.order_type == 2}交通{elseif $v.order_type == 4}社会{elseif $v.order_type == 3}团车{elseif $v.order_type == 5}同行{elseif $v.order_type == 6}昌顺员工{/if}</td>
                     <td>{if $v.money_type == 1}全包{elseif $v.money_type == 2}净价{/if}</td>
                     <td><div><span class="blue">开始:</span>{$v.start_time}</div><div><span class="red">结束:</span>{$v.end_time}</div></td>
                     <td><div><span class="blue">起:</span>{$v.start_prov}{$v.start_city}{$v.start_area}{$v.start_address}</div><div><span class="red">终:</span>{$v.end_prov}{$v.end_city}{$v.end_area}{$v.end_address}</div></td>

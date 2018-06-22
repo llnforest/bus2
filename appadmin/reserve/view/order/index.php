@@ -83,7 +83,7 @@
                         <p>{$v.phone}</p>
                     </td>
                     <td>{if $v.status == 1}已派单{elseif $v.status == 2}<span class="blue">交易成功</span>{elseif $v.status == 3}<span class="grey">交易取消</span>{else}<span class="red">待派单</span>{/if}</td>
-                    <td>{if $v.order_type == 1}旅行社用车{elseif $v.order_type == 2}交通车{elseif $v.order_type == 3}团车{elseif $v.order_type == 4}社会用车{elseif $v.order_type == 5}同行{/if}</td>
+                    <td>{if $v.order_type == 1}旅行社用车{elseif $v.order_type == 2}交通车{elseif $v.order_type == 3}团车{elseif $v.order_type == 4}社会用车{elseif $v.order_type == 5}同行{elseif $v.order_type == 6}昌顺员工{/if}</td>
                     <td>{if $v.type == 1}全包{elseif $v.type == 2}净价{elseif $v.type == 3}赞助{/if}</td>
                     <td>
                         {if in_array($v.order_type,[1,4])}

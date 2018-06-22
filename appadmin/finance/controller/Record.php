@@ -96,6 +96,8 @@ class Record extends BaseController{
             elseif($v['order_type'] == 2) $order_type = '交通车';
             elseif($v['order_type'] == 3) $order_type = '团车';
             elseif($v['order_type'] == 4) $order_type = '社会用车';
+            elseif($v['order_type'] == 5) $order_type = '同行';
+            elseif($v['order_type'] == 6) $order_type = '昌顺员工';
 
             $objPHPExcel->setActiveSheetIndex(0)
                 //Excel的第A列，uid是你查出数组的键值，下面以此类推
