@@ -117,7 +117,7 @@ class Order extends BaseController{
                 return ['code' => 1,'msg' => '修改成功','url' => url('order/index')];
             }
         }
-        $data['customerList'] = json_encode(CustomerModel::where(['status'=>1,'system_id' => $this->system_id])->field('id,name,user_name,phone')->select());
+        $data['customerList'] = CustomerModel::where(['status'=>1,'system_id' => $this->system_id])->field('id,name,user_name,phone')->select();
         return view('orderEdit',$data);
     }
 

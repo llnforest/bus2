@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1b995d5-24d1-4a94-9a67-bfae7ffc56e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/finance/controller/Record.php" afterPath="$PROJECT_DIR$/appadmin/finance/controller/Record.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/finance/view/record/index.php" afterPath="$PROJECT_DIR$/appadmin/finance/view/record/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" afterPath="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/controller/Record.php" afterPath="$PROJECT_DIR$/appadmin/reserve/controller/Record.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/view/form/form_order.php" afterPath="$PROJECT_DIR$/appadmin/reserve/view/form/form_order.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/view/order/index.php" afterPath="$PROJECT_DIR$/appadmin/reserve/view/order/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appadmin/reserve/view/record/index.php" afterPath="$PROJECT_DIR$/appadmin/reserve/view/record/index.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,8 +21,8 @@
       <file leaf-file-name="Order.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appadmin/reserve/controller/Order.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5860">
-              <caret line="392" column="4" lean-forward="false" selection-start-line="392" selection-start-column="4" selection-end-line="495" selection-end-column="5" />
+            <state relative-caret-position="675">
+              <caret line="117" column="13" lean-forward="true" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -37,8 +31,18 @@
       <file leaf-file-name="form_order.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/form/form_order.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="26" column="10" lean-forward="true" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
+            <state relative-caret-position="275">
+              <caret line="11" column="89" lean-forward="false" selection-start-line="11" selection-start-column="89" selection-end-line="11" selection-end-column="89" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="orderEdit.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/order/orderEdit.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -47,7 +51,7 @@
       <file leaf-file-name="form_bus.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appadmin/bus/view/form/form_bus.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
+            <state relative-caret-position="1250">
               <caret line="50" column="12" lean-forward="false" selection-start-line="50" selection-start-column="12" selection-end-line="55" selection-end-column="17" />
               <folding />
             </state>
@@ -77,21 +81,11 @@
       <file leaf-file-name="Statistics.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appadmin/finance/controller/Statistics.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="69" column="59" lean-forward="true" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="59" />
+            <state relative-caret-position="1650">
+              <caret line="69" column="59" lean-forward="false" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="59" />
               <folding>
                 <element signature="e#51#86#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="recordStatistics.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/record/recordStatistics.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1650">
-              <caret line="66" column="39" lean-forward="false" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="39" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -100,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/appadmin/finance/view/statistics/inMoney.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1975">
-              <caret line="79" column="85" lean-forward="true" selection-start-line="79" selection-start-column="85" selection-end-line="79" selection-end-column="85" />
+              <caret line="79" column="85" lean-forward="false" selection-start-line="79" selection-start-column="85" selection-end-line="79" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -220,11 +214,11 @@
         <option value="$PROJECT_DIR$/appadmin/bus/view/form/form_bus.php" />
         <option value="$PROJECT_DIR$/appadmin/reserve/view/record/index.php" />
         <option value="$PROJECT_DIR$/appadmin/reserve/controller/Record.php" />
-        <option value="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" />
         <option value="$PROJECT_DIR$/appadmin/reserve/view/order/index.php" />
         <option value="$PROJECT_DIR$/appadmin/finance/view/statistics/inMoney.php" />
         <option value="$PROJECT_DIR$/appadmin/finance/view/statistics/outMoney.php" />
         <option value="$PROJECT_DIR$/appadmin/finance/controller/Statistics.php" />
+        <option value="$PROJECT_DIR$/appadmin/reserve/controller/Order.php" />
         <option value="$PROJECT_DIR$/appadmin/reserve/view/form/form_order.php" />
       </list>
     </option>
@@ -541,11 +535,12 @@
       <workItem from="1529480332405" duration="10433000" />
       <workItem from="1529631371527" duration="14134000" />
       <workItem from="1529679774254" duration="793000" />
+      <workItem from="1531063067920" duration="427000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170110000" />
+    <option name="totallyTimeSpent" value="170537000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -555,7 +550,6 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -567,6 +561,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -831,14 +826,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/order/orderEdit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/static/admin/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2090">
@@ -864,7 +851,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="21" column="53" lean-forward="false" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -880,7 +866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3000">
           <caret line="129" column="4" lean-forward="false" selection-start-line="129" selection-start-column="4" selection-end-line="156" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -903,7 +888,7 @@
     <entry file="file://$PROJECT_DIR$/appadmin/finance/view/statistics/inMoney.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1975">
-          <caret line="79" column="85" lean-forward="true" selection-start-line="79" selection-start-column="85" selection-end-line="79" selection-end-column="85" />
+          <caret line="79" column="85" lean-forward="false" selection-start-line="79" selection-start-column="85" selection-end-line="79" selection-end-column="85" />
           <folding />
         </state>
       </provider>
@@ -918,8 +903,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/appadmin/finance/controller/Statistics.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="69" column="59" lean-forward="true" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="59" />
+        <state relative-caret-position="1650">
+          <caret line="69" column="59" lean-forward="false" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="59" />
           <folding>
             <element signature="e#51#86#0#PHP" expanded="true" />
           </folding>
@@ -928,7 +913,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/appadmin/bus/view/form/form_bus.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
+        <state relative-caret-position="1250">
           <caret line="50" column="12" lean-forward="false" selection-start-line="50" selection-start-column="12" selection-end-line="55" selection-end-column="17" />
           <folding />
         </state>
@@ -950,18 +935,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/order/orderEdit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/appadmin/reserve/controller/Order.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5860">
-          <caret line="392" column="4" lean-forward="false" selection-start-line="392" selection-start-column="4" selection-end-line="495" selection-end-column="5" />
+        <state relative-caret-position="675">
+          <caret line="117" column="13" lean-forward="true" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/appadmin/reserve/view/form/form_order.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="26" column="10" lean-forward="true" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
+        <state relative-caret-position="275">
+          <caret line="11" column="89" lean-forward="false" selection-start-line="11" selection-start-column="89" selection-end-line="11" selection-end-column="89" />
           <folding />
         </state>
       </provider>

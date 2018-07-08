@@ -9,7 +9,7 @@
                         <select name="customer_id" class="form-control" lay-search>
                             <option value="">请输入客户名称或姓名或手机号</option>
                             {foreach $customerList as $v}
-                            <option value="{$v.id}">{$v.name}/{$v.user_name}/{$v.phone}</option>
+                            <option value="{$v.id}" {$info.customer_id == $v.id?'selected':''}>{$v.name}/{$v.user_name}/{$v.phone}</option>
                             {/foreach}
                         </select>
                     </div>
